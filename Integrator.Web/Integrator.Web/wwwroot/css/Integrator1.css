@@ -3,10 +3,12 @@
     line-height: 1.8;
     color: #818181;
 }
+
 .fa-address-book {
     color: #ffffff;
-    font-size: 30px;
-    padding-right:15px;
+    font-size: 50px;
+    padding-right: 15px;
+    padding-top: 10px;
 }
 
 h2 {
