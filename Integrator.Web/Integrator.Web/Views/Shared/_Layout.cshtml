@@ -16,39 +16,68 @@
               crossorigin="anonymous"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
-    <link rel="stylesheet" href="~/css/Integrator.css" />
+    <link rel="stylesheet" href="~/css/Integrator1.css" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
 
-    <nav class="navbar navbar-expand-md navbar-Custom bg-Custom  fixed-top" style="padding-bottom:0px; margin:0px; padding-top:0px;">
-        <a class="navbar-brand " href="#">Integrator</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" style="padding: 0px;" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">ABOUT</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#services">SERVICES</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#portfolio">PORTFOLIO</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#pricing">PRICING</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">CONTACT</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-md  navbar-default fixed-top">
+        <div class="container">
+            @*<div class="navbar-header">*@
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            @*<a class="navbar-brand" href="#myPage">Logo</a>*@
+            <a class="navbar-brand " href="#" style="font-size:35px;">Integrator</a>
+
+            @*</div>*@
+            <div class="collapse navbar-collapse justify-content-center" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#about">ABOUT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">SERVICES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">PORTFOLIO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">PRICING</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#login"><span class="fas fa-key">&nbsp;</span>Member LogIn</a></li>
+
+                </ul>
+            </div>
         </div>
     </nav>
+
+    @*<nav class="navbar navbar-expand-md navbar-Custom bg-Custom fixed-top" style="padding-bottom:0px; margin:0px; padding-top:0px;">
+            <a class="navbar-brand " href="#">Integrator</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" style="padding: 0px;" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">ABOUT</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#services">SERVICES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">PORTFOLIO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">PRICING</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">CONTACT</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>*@
+
+
     @*<header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
@@ -79,12 +108,13 @@
     @*</div>*@
 
 
+
+
     <footer class="container-fluid text-center">
         <a href="#myPage" title="To Top">
-            @*<span class="glyphicon glyphicon-chevron-up"></span>*@
-            <span class="fas fa-igloo"></span>
+            <span class="fas fa-chevron-up logo-small"></span>
         </a>
-        <p>Example Theme Made By <a href="#" title="Visit w3schools">Brendan Wood</a></p>
+        <p>Made By Brendan Wood</p>
     </footer>
 
     @*<footer class="border-top footer text-muted">
