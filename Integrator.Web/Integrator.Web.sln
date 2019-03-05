@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrator.Web", "Integrator.Web\Integrator.Web.csproj", "{90A18AF9-D518-4112-9ACC-176DB0998A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Web", "Integrator.Web\Integrator.Web.csproj", "{90A18AF9-D518-4112-9ACC-176DB0998A68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrator.Services", "Integrator.Services\Integrator.Services.csproj", "{9C188AF5-A20E-40A2-B147-BFADB04849AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Services", "Integrator.Services\Integrator.Services.csproj", "{9C188AF5-A20E-40A2-B147-BFADB04849AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrator.Data", "Integrator.Data\Integrator.Data.csproj", "{8B0521A8-9CF9-4A35-849B-5B6FD48A2F6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Data", "Integrator.Data\Integrator.Data.csproj", "{8B0521A8-9CF9-4A35-849B-5B6FD48A2F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrator.Factories", "Integrator.Factories\Integrator.Factories.csproj", "{5AEFDEC6-7A80-4F93-BB2D-6A94A7789613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Factories", "Integrator.Factories\Integrator.Factories.csproj", "{5AEFDEC6-7A80-4F93-BB2D-6A94A7789613}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrator.Models", "Integrator.Models\Integrator.Models.csproj", "{498F046E-D6AE-4DEB-A70F-93D42A70C38D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5AEFDEC6-7A80-4F93-BB2D-6A94A7789613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AEFDEC6-7A80-4F93-BB2D-6A94A7789613}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AEFDEC6-7A80-4F93-BB2D-6A94A7789613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{498F046E-D6AE-4DEB-A70F-93D42A70C38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498F046E-D6AE-4DEB-A70F-93D42A70C38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498F046E-D6AE-4DEB-A70F-93D42A70C38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498F046E-D6AE-4DEB-A70F-93D42A70C38D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
