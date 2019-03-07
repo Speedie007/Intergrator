@@ -206,6 +206,120 @@ footer .fas {
     visibility: visible;
 }
 
+/*Integrator Button*/
+.btn-Integrator {
+    color: #fff;
+    background-color: #f4511e;
+    border-color: #f4511e;
+}
+
+/*End Integrator Button*/
+
+/*Login Page styles*/
+
+.page-title {
+    min-height: 50px;
+    margin: 0 0 25px;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 10px;
+}
+
+.page-title-Centered {
+    min-height: 50px;
+    margin: 0 0 25px;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 10px;
+}
+
+.page {
+    min-height: 200px;
+    text-align: center;
+}
+
+.login-page {
+}
+
+    .login-page h1 {
+        padding: 25px;
+    }
+
+    .login-page .new-wrapper {
+        margin: 0;
+        padding: 15px;
+    }
+
+        .login-page .new-wrapper .body {
+            background-color: #eeeeee;
+            color: #000000;
+            padding: 20px;
+            min-height: 200px;
+            border-radius: 5px;
+            min-height: 300px;
+        }
+
+        .login-page .new-wrapper .heading {
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+            .login-page .new-wrapper .heading h4 {
+            }
+
+
+        .login-page .new-wrapper .heading-icon {
+            font-weight: bold;
+            color: #f4511e;
+        }
+
+        .login-page .new-wrapper .register-btn {
+            margin-top: 5px;
+        }
+
+    .login-page .returning-wrapper {
+        padding: 15px;
+        margin: 0;
+    }
+
+        .login-page .returning-wrapper .heading-icon {
+            font-weight: bold;
+            color: #f4511e;
+        }
+
+        .login-page .returning-wrapper .login-btn {
+            margin-top: 5px;
+        }
+
+        .login-page .returning-wrapper .body {
+            background-color: #eeeeee;
+            color: #000000;
+            padding: 20px;
+            min-height: 200px;
+            border-radius: 5px;
+            min-height: 300px;
+        }
+
+        .login-page .returning-wrapper .form-fields {
+            min-height: 200px;
+            padding: 30px 0 0;
+        }
+
+        .login-page .returning-wrapper .inputs label {
+            width: 110px;
+        }
+
+        .login-page .returning-wrapper input[type="text"],
+        .login-page .returning-wrapper input[type="email"],
+        .login-page .returning-wrapper input[type="password"] {
+            width: 300px;
+        }
+
+        .login-page .returning-wrapper .buttons {
+            background-color: #fff;
+            padding: 30px 0;
+        }
+
+/*End PAge Styles*/
+
 @keyframes slide {
     0% {
         opacity: 0;
@@ -247,3 +361,72 @@ footer .fas {
         font-size: 150px;
     }
 }
+/*Footer*/
+.footer {
+    text-align: justify;
+    background-color: #ded6d6;
+    color: #000000;
+}
+
+    .footer .container {
+        padding: 15px;
+    }
+
+    .footer .footer-menu-item {
+        padding-top: 8px;
+    }
+
+        .footer .footer-menu-item .facebook {
+            color: blue;
+            font-size: 55px;
+            padding-right: 5px;
+            padding-left: 5px;
+            border-radius: 5px;
+            background-color: #ffffff;
+        }
+
+        .footer .footer-menu-item .twitter {
+            color: #05a0f6;
+            font-size: 55px;
+            padding-right: 5px;
+            padding-left: 5px;
+            border-radius: 5px;
+            background-color: #ffffff;
+        }
+
+        .footer .footer-menu-item .youtube {
+            color: red;
+            font-size: 55px;
+            padding-right: 5px;
+            padding-left: 5px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+
+        .footer .footer-menu-item .googleplus {
+            color: orange;
+            background-color: #ffffff;
+            font-size: 55px;
+            padding-right: 5px;
+            padding-left: 5px;
+            border-radius: 5px;
+        }
+
+        .footer .footer-menu-item a {
+            color: #303030;
+        }
+
+    .footer .footer-heading {
+        color: #303030;
+        font-size: 20px;
+    }
+
+        .footer .footer-heading a {
+            color: #303030;
+        }
+/*Logo images for footer*/
+
+/*End image for logos for footer*/
+/*End Footer*/
+
+

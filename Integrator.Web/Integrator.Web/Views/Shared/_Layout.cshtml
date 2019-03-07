@@ -14,7 +14,7 @@
               crossorigin="anonymous"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
-    
+
     <link href="~/fontawesome/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Integrator1.css" />
 
@@ -43,8 +43,13 @@
                     <li class="nav-item"><a class="nav-link" href="#pricing">PRICING</a></li>
                     @*<li class="nav-item " style="padding-top:8px;">|</li>*@
                     <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
-                    @*<li class="nav-item " style="padding-top:8px;">|</li>*@
-                    <li class="nav-item"><a class="nav-link" href="#login"><span class="fas fa-key">&nbsp;</span>Member LogIn</a></li>
+                    
+                    <li class="nav-item">
+                        @*<a class="nav-link" href="#login">*@
+                            @Html.ActionLink("LOGIN","login","User",null,new { @class = "nav-link" })
+                            @*<span class="fas fa-key">&nbsp;</span>Member LogIn*@
+                        @*</a>*@
+                    </li>
 
                 </ul>
             </div>
@@ -109,13 +114,13 @@
 
 
 
-
-    <footer class="container-fluid text-center">
+    <partial name="_Footer" />
+    @*<footer class="container-fluid text-center">
         <a href="#myPage" title="To Top">
             <span class="fas fa-chevron-up logo-small"></span>
         </a>
         <p>Made By Brendan Wood</p>
-    </footer>
+    </footer>*@
 
     @*<footer class="border-top footer text-muted">
             <div class="container">
@@ -142,7 +147,7 @@
         </script>
     </environment>
 
-   
+
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/fontawesome/js/all.js" asp-append-version="true"></script>

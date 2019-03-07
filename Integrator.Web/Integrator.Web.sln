@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Models", "Integr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Common", "Integrator.Common\Integrator.Common.csproj", "{A1F9440E-9267-4680-B107-B202F1EA83F9}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Integrator.Database", "Integrator.Database\Integrator.Database.sqlproj", "{1ED14411-A0B4-4863-A564-B979A0549D2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,12 @@ Global
 		{A1F9440E-9267-4680-B107-B202F1EA83F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1F9440E-9267-4680-B107-B202F1EA83F9}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1F9440E-9267-4680-B107-B202F1EA83F9}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

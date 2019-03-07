@@ -66,7 +66,18 @@
 
 
   <ItemGroup>
+    <Folder Include="Areas\Agents\Controllers\" />
+    <Folder Include="Areas\Agents\Views\" />
+    <Folder Include="Areas\Companies\Controllers\" />
+    <Folder Include="Areas\Companies\Data\" />
+    <Folder Include="Areas\Companies\Models\" />
+    <Folder Include="Areas\Companies\Views\" />
+    <Folder Include="Areas\Individuals\Controllers\" />
+    <Folder Include="Areas\Individuals\Data\" />
+    <Folder Include="Areas\Individuals\Models\" />
+    <Folder Include="Areas\Individuals\Views\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Authentication\" />
   </ItemGroup>
 
 </Project>
