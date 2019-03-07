@@ -4,33 +4,42 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-Integrator.Web-0653EB03-A97F-4D9E-B46D-F20FADED671E</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <StartupObject>Integrator.Web.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
     <Compile Remove="wwwroot\fontawesome\less\**" />
     <Compile Remove="wwwroot\fontawesome\metadata\**" />
     <Compile Remove="wwwroot\fontawesome\scss\**" />
     <Compile Remove="wwwroot\fontawesome\sprites\**" />
     <Compile Remove="wwwroot\fontawesome\svgs\**" />
     <Compile Remove="wwwroot\fontawesome\webfonts\**" />
+    <Content Remove="Data\Migrations\**" />
     <Content Remove="wwwroot\fontawesome\less\**" />
     <Content Remove="wwwroot\fontawesome\metadata\**" />
     <Content Remove="wwwroot\fontawesome\scss\**" />
     <Content Remove="wwwroot\fontawesome\sprites\**" />
     <Content Remove="wwwroot\fontawesome\svgs\**" />
     <Content Remove="wwwroot\fontawesome\webfonts\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\less\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\metadata\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\scss\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\sprites\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\svgs\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\webfonts\**" />
+    <None Remove="Data\Migrations\**" />
     <None Remove="wwwroot\fontawesome\less\**" />
     <None Remove="wwwroot\fontawesome\metadata\**" />
     <None Remove="wwwroot\fontawesome\scss\**" />
     <None Remove="wwwroot\fontawesome\sprites\**" />
     <None Remove="wwwroot\fontawesome\svgs\**" />
     <None Remove="wwwroot\fontawesome\webfonts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\ApplicationDbContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +53,20 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Integrator.Common\Integrator.Common.csproj" />
+    <ProjectReference Include="..\Integrator.Data\Integrator.Data.csproj" />
+    <ProjectReference Include="..\Integrator.Factories\Integrator.Factories.csproj" />
+    <ProjectReference Include="..\Integrator.Models\Integrator.Models.csproj" />
+    <ProjectReference Include="..\Integrator.Services\Integrator.Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>
