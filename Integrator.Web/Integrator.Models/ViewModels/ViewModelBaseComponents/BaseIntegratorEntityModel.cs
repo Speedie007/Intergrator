@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Integrator.Models.ViewModels.ViewModelBaseComponents
 {
-    class BaseIntegratorEntityModel : BaseIntegratorModel
+    public partial class BaseIntegratorEntityModel : BaseIntegratorViewModel
     {
         /// <summary>
         /// Gets or sets model identifier

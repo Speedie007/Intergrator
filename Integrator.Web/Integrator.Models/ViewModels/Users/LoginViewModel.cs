@@ -12,6 +12,7 @@ namespace Integrator.Models.ViewModels.Users
 
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
+        [Required]
         public string Email { get; set; }
 
         public bool UsernamesEnabled { get; set; }
@@ -20,6 +21,7 @@ namespace Integrator.Models.ViewModels.Users
 
         [DataType(DataType.Password)]
         [Display(Name = "User Password")]
+        [Required]
         public string Password { get; set; }
 
         [Display(Name = "Remember Me")]

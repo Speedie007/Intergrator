@@ -1,4 +1,4 @@
-﻿
+﻿@model LoginViewModel
 
 @{
     ViewData["Title"] = "Login";
@@ -10,6 +10,18 @@
     <div class="login-page">
         <div class="text-center heading">
             <h1>Welcome To Integrator!</h1>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+
+        </div>
+        <div class="form-group">
+            
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                
+            </div>
         </div>
 
         <div class="row">
@@ -48,23 +60,22 @@
                         <div class="body">
                             <div class="form-group">
                                 <span class="far fa-envelope"></span>
-                                <label>Email</label> @*asp-for="Input.Email"*@
-                                <input class="form-control" /> @*asp-for="Input.Email"*@
-                                <span class="text-danger"></span> @*asp-validation-for="Input.Email"*@
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
                             </div>
                             <div class="form-group">
                                 <span class="fas fa-key"></span>
-                                <label>Password</label> @*asp-for="Input.Password"*@
-                                <input class="form-control" /> @*asp-for="Input.Password"*@
-                                <span class="text-danger"></span> @*asp-validation-for="Input.Password"*@
+                                <label asp-for="Password"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <div class="checkbox">
-                                    <label>
-                                        RememberMe
-                                        @*asp-for="Input.RememberMe"*@
-                                        <input type="checkbox" /> @*asp-for="Input.RememberMe"*@
-                                        @*@Html.DisplayNameFor(m => m.Input.RememberMe)*@
+                                    <label asp-for="RememberMe">
+                                        <input asp-for="RememberMe" />
+                                        @Html.DisplayNameFor(m => m.RememberMe)
                                     </label>
                                 </div>
                             </div>
@@ -75,7 +86,7 @@
                         <div class="form-group fa-pull-right login-btn">
 
                             <button type="button" class="btn btn-Integrator">Forgot your password?</button>
-                            <button type="button" class="btn btn-Integrator">Log in&nbsp;<span class=" fas fa-unlock"></span></button>
+                            <button type="submit" class="btn btn-Integrator">Log in&nbsp;<span class=" fas fa-unlock"></span></button>
                         </div>
 
                     </form>

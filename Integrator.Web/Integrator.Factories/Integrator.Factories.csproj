@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Integrator.Common\Integrator.Common.csproj" />
+    <ProjectReference Include="..\Integrator.Data\Integrator.Data.csproj" />
+    <ProjectReference Include="..\Integrator.Models\Integrator.Models.csproj" />
+  </ItemGroup>
+
 </Project>
