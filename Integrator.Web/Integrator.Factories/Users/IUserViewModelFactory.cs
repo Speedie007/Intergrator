@@ -15,5 +15,11 @@ namespace Integrator.Factories.Users
         /// </summary>
         /// <returns>Login model</returns>
         LoginViewModel PrepareLoginModel();
+
+        /// <summary>
+        /// Prepare the Registration model
+        /// </summary>
+        /// <returns>Login model</returns>
+        RegisterViewModel PrepareRegistrationLoginModel();
     }
 }

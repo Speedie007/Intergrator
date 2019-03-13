@@ -69,12 +69,11 @@
     <Folder Include="Areas\Agents\Controllers\" />
     <Folder Include="Areas\Agents\Views\Shared\" />
     <Folder Include="Areas\Companies\Controllers\" />
-    <Folder Include="Areas\Companies\Data\" />
-    <Folder Include="Areas\Companies\Models\" />
     <Folder Include="Areas\Companies\Views\Shared\" />
     <Folder Include="Areas\Individuals\Controllers\" />
     <Folder Include="Areas\Individuals\Views\Shared\" />
     <Folder Include="Data\" />
+    <Folder Include="Services\NewFolder\" />
     <Folder Include="Views\Authentication\" />
   </ItemGroup>
 

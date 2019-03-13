@@ -1,34 +1,124 @@
 ﻿@model Integrator.Models.ViewModels.Users.RegisterViewModel
 
-<h4>RegisterViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
+}
+
+
+<div class="container">
+
+    <div class="login-page">
+        <div class="text-center heading">
+            <h1>Welcome to registration!</h1>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="new-wrapper">
+                    <hr />
+                    <div class="heading">
+                        <h4><span class="fas fa-book-medical heading-icon "></span>&nbsp;How to register.</h4>
+                    </div>
+                    <hr />
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-lg-2 logo-small"><span class="fas fa-exclamation-circle"></span></div>
+                            <div class="col-lg-10 ">
+                                <p>
+                                    By registering website, you will be able to customize your own portfolio, be up to date on job oppotunities, and keep track of the companies that maybe interested in your skill set.
+                                    <br />If you already have a membership click below to return to the login page, else proceed to the registration below.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="fa-pull-right register-btn">
+
+                        <a class="btn btn-Integrator" asp-controller="User" asp-action="Login">Back to Login</a>
+
+                    </div>
+
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+
+            <div class="col-lg-6">
+                <div class="returning-wrapper">
+                    <form asp-action="Register">
+                        @*<form method="post" action="Login">*@
+                        <hr />
+                        <div class="heading">
+
+                            <h4><span class="fas fa-book-reader heading-icon "></span>&nbsp;Current Member account log in.</h4>
+                        </div>
+                        <hr />
+                        <div class="body">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <span class="far fa-address-card"></span>
+                                <label asp-for="FirstName" class="control-label"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <span class="fas fa-address-card"></span>
+
+                                <label asp-for="LastName" class="control-label"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <span class="far fa-envelope"></span>
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <span class="fas fa-filter"></span>
+
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword" class="control-label"></label>
+                                <input asp-for="ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label asp-for="RoleLabel" class="control-label"></label>
+                                <select asp-for="RoleDefault" asp-items="Model.UserRoles" class="custom-select form-control"></select>
+
+                            </div>
+                            <hr />
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                        </div>
+
+
+                        <div class="form-group fa-pull-right login-btn">
+                            <a class="btn btn-Integrator" asp-controller="User" asp-action="Login">Back to Login</a>
+                            <button type="submit" class="btn btn-Integrator">Register&nbsp;<span class=" fas fa-edit"></span></button>
+                        </div>
+
+                    </form>
+
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <hr />
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

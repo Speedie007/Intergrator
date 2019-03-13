@@ -8,7 +8,7 @@ namespace Integrator.Models.ViewModels.Users
 {
     public partial class LoginViewModel: BaseIntegratorViewModel
     {
-        public bool CheckoutAsGuest { get; set; }
+        
 
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]

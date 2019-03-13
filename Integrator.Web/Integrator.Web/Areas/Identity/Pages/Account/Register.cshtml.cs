@@ -18,7 +18,7 @@ namespace Integrator.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IntegratorUser> _signInManager;
         private readonly UserManager<IntegratorUser> _userManager;
-        private readonly RoleManager<IntegratorRole> _roleManager;
+        //private readonly RoleManager<IntegratorRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 

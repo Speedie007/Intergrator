@@ -12,18 +12,6 @@
             <h1>Welcome To Integrator!</h1>
         </div>
         <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-
-        </div>
-        <div class="form-group">
-            
-        </div>
-        <div class="form-group">
-            <div class="checkbox">
-                
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-lg-6">
                 <div class="new-wrapper">
@@ -37,23 +25,21 @@
                             <div class="col-lg-2 logo-small"><span class="fas fa-exclamation-circle"></span></div>
                             <div class="col-lg-10 "><p>By creating an account on our website, you will be able to customize your own portfolio, be up to date on job oppotunities, and keep track of the companies that maybe interested in your skill set.</p></div>
                         </div>
-
                     </div>
                     <div class="fa-pull-right register-btn">
-
-                        <input type="button" class="btn btn-Integrator" onclick="location.href=''" value="Register" />
+                        @*<form method="get" >*@
+                        @Html.ActionLink("Register", "Register", "User", null, new { @class = "btn btn-Integrator" })
+                        
+                        @*</form>*@
+                        @*<a class="btn btn-Integrator" asp-controller="User" asp-action="Register">Register</a>*@
                     </div>
-
                 </div>
-
             </div>
-
             <div class="col-lg-6">
                 <div class="returning-wrapper">
-                    <form id="account" method="post">
+                    <form method="post" action="Login">
                         <hr />
                         <div class="heading">
-
                             <h4><span class="fas fa-book-reader heading-icon "></span>&nbsp;Current Member account log in.</h4>
                         </div>
                         <hr />
@@ -63,7 +49,6 @@
                                 <label asp-for="Email"></label>
                                 <input asp-for="Email" class="form-control" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
-
                             </div>
                             <div class="form-group">
                                 <span class="fas fa-key"></span>
@@ -81,14 +66,12 @@
                             </div>
                             <div asp-validation-summary="All" class="text-danger"></div>
                         </div>
-
-
+                        
                         <div class="form-group fa-pull-right login-btn">
-
-                            <button type="button" class="btn btn-Integrator">Forgot your password?</button>
+                            @*<a class="btn btn-info" asp-controller="User" asp-action="Register">testing login redirection</a>*@
+                            <a asp-action="Register" asp-controller="User" class="btn btn-Integrator">Forgot your password?</a>
                             <button type="submit" class="btn btn-Integrator">Log in&nbsp;<span class=" fas fa-unlock"></span></button>
                         </div>
-
                     </form>
                 </div>
             </div>

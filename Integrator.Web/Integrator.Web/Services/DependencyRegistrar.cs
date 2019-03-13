@@ -6,6 +6,7 @@ using Integrator.Common.Interfaces;
 using Integrator.Data;
 using Integrator.Data.Interfaces;
 using Integrator.Factories.Users;
+using Integrator.Services.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,9 @@ namespace Integrator.Web.Services
 
 
             //services
-           // builder.RegisterType<BoatHouseService>().As<IUser>().InstancePerLifetimeScope();
-            //builder.RegisterType<CampSiteService>().As<ICampSitesService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserRegistrationService>().As<IUserRegistrationService>().InstancePerLifetimeScope();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+            
 
 
             //Factories

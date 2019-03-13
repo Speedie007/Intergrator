@@ -43,6 +43,11 @@ namespace Integrator.Data
                     //Create the Agent Role
                     await _roleManager.CreateAsync(new IntegratorRole("Agent"));
                 }
+                if (!(await _roleManager.RoleExistsAsync("Company")))
+                {
+                    //Create the Agent Role
+                    await _roleManager.CreateAsync(new IntegratorRole("Company"));
+                }
                 //Create the default Admin account and apply the Administrator role
                 var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>>();
                 string user = "Admin@Admin.com";

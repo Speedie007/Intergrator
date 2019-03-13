@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integrator.Common", "Integr
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Integrator.Database", "Integrator.Database\Integrator.Database.sqlproj", "{1ED14411-A0B4-4863-A564-B979A0549D2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAtabasetables", "DAtabasetables\DAtabasetables.csproj", "{62AEA352-0AF3-4E8E-ACA4-1B1AB30D3EEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1ED14411-A0B4-4863-A564-B979A0549D2D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{62AEA352-0AF3-4E8E-ACA4-1B1AB30D3EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62AEA352-0AF3-4E8E-ACA4-1B1AB30D3EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62AEA352-0AF3-4E8E-ACA4-1B1AB30D3EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62AEA352-0AF3-4E8E-ACA4-1B1AB30D3EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
