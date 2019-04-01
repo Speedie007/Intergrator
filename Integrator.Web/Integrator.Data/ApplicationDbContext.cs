@@ -5,12 +5,13 @@ using System.Reflection;
 using System.Text;
 using Integrator.Data.Mapping;
 using Integrator.Models;
-using Integrator.Models.Domain.Address;
+using Integrator.Models.Domain.Addresses;
 using Integrator.Models.Domain.Authentication;
 using Integrator.Models.Domain.Companies;
-using Integrator.Models.Domain.KnowledgeBase.Company;
-using Integrator.Models.Domain.KnowledgeBase.Core;
-using Integrator.Models.Domain.KnowledgeBase.IndividualUser;
+using Integrator.Models.Domain.Files;
+//using Integrator.Models.Domain.KnowledgeBase.Companies;
+//using Integrator.Models.Domain.KnowledgeBase.Core;
+//using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,26 +32,7 @@ namespace Integrator.Data
         {
         }
 
-        public DbSet<Address> addresses { get; set; }
-
-        public DbSet<Company> companies { get; set; }
-
-        #region  Knowledgebase Tables
-        public virtual DbSet<CompanyIndustry> CompanyIndustries { get; set; }
-        public virtual DbSet<CompanyIndustryCategory> CompanyIndustryCategories { get; set; }
-        public virtual DbSet<CompanyIndustryCategoryJob> CompanyIndustryCategoryJobs { get; set; }
-        public virtual DbSet<CompanyIndustryCategoryJobSkillSet> CompanyIndustryCategoryJobSkillSets { get; set; }
-        public virtual DbSet<IntegratorUserIndustry> IntegratorUserIndustries { get; set; }
-        public virtual DbSet<IntegratorUserIndustryCategory> IntegratorUserIndustryCategories { get; set; }
-        public virtual DbSet<IntegratorUserIndustryCategoryJob> IntegratorUserIndustryCategoryJobs { get; set; }
-        public virtual DbSet<IntegratorUserIndustryCategoryJobSkillSet> IntegratorUserIndustryCategoryJobSkillSets { get; set; }
-        public virtual DbSet<LookupTableIndustryCategory> LookupTableIndustryCategories { get; set; }
-        public virtual DbSet<LookupTableIndustryCategoryJob> LookupTableIndustryCategoryJobs { get; set; }
-        public virtual DbSet<LookupTableIndustryCategoryJobSkillSet> LookupTableIndustryCategoryJobSkillSets { get; set; }
-        public virtual DbSet<LookupTableIndustryType> LookupTableIndustryTypes { get; set; }
-        #endregion Knowledgebase tables
-
-
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,4 @@
-﻿using Integrator.Models.Domain.KnowledgeBase.Company;
+﻿using Integrator.Models.Domain.KnowledgeBase.Companies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -16,11 +16,9 @@ namespace Integrator.Data.Mapping.KnownledgeBase.Company
         /// <param name="builder">The builder to be used to configure the entity</param>
         public override void Configure(EntityTypeBuilder<CompanyIndustry> builder)
         {
-
-            builder.ToTable("Company")
-               .Property(x => x.Id).HasColumnName("CompanyID");
-
             builder.HasKey(x => x.Id);
+            builder.ToTable("CompanyIndustries")
+               .Property(x => x.Id).HasColumnName("CompanyIndustryID");
 
             builder.Property(e => e.Description).IsUnicode(false);
 
@@ -29,9 +27,9 @@ namespace Integrator.Data.Mapping.KnownledgeBase.Company
                 .HasForeignKey(d => d.CompanyID)
                 .HasConstraintName("FK_CompanyIndustries_Companies");
 
-            builder.HasOne(d => d.Industry)
+            builder.HasOne(d => d.CoreKBIndustry)
                 .WithMany(p => p.CompanyIndustries)
-                .HasForeignKey(d => d.IndustryID)
+                .HasForeignKey(d => d.CoreKBIndustryID)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_CompanyIndustries_Industries");
 

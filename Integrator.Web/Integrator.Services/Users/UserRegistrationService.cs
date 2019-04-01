@@ -36,13 +36,13 @@ namespace Integrator.Services.Users
             var result = new UserRegistrationResult();
 
 
-            if (!CommonHelper.IsValidEmail(request.Email))
+            if (!CommonHelper.IsValidEmail(request.UserEmail))
             {
                 result.AddError("Wrong Email Format.");
                 return result;
             }
 
-            if (string.IsNullOrWhiteSpace(request.Password))
+            if (string.IsNullOrWhiteSpace(request.UserPassword))
             {
                 result.AddError("Password not correct or not provided.");
                 return result;
@@ -61,7 +61,7 @@ namespace Integrator.Services.Users
             //}
 
             //validate unique user
-            if (_userService.GetUserByEmailAsync(request.Email) == null)
+            if (_userService.GetUserByEmailAsync(request.UserEmail) == null)
             {
                 result.AddError("Email Already Exists.");
 
@@ -72,12 +72,12 @@ namespace Integrator.Services.Users
             //at this point request is valid and can try create user
             IntegratorUser NewUser = new IntegratorUser()
             {
-                Email = request.Email,
-                UserName = request.Email,
+                Email = request.UserEmail,
+                UserName = request.UserEmail,
                 LastName = request.LastName,
                 FirstName = request.FirstName
             };
-            IdentityResult IsUserCreated = _userService.InsertUserAsync(NewUser, request.Password).Result;
+            IdentityResult IsUserCreated = _userService.InsertUserAsync(NewUser, request.UserPassword).Result;
             if (!IsUserCreated.Succeeded)
             {
                 result.AddError(IsUserCreated.Errors.ToString());
@@ -88,7 +88,7 @@ namespace Integrator.Services.Users
             {
                 result.NewlyRegistredUser = NewUser;
                 //if user is created link the role that the user has been assigned.
-                _userService.InsertUserRoleAsync(request.RoleDefault, request.Email);
+                _userService.InsertUserRoleAsync(request.UserRole, request.UserEmail);
             }
 
             return result;

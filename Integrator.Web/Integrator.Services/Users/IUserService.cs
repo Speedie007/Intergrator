@@ -1,5 +1,9 @@
 ﻿using Integrator.Common.Interfaces;
 using Integrator.Models.Domain.Authentication;
+using Integrator.Models.Domain.Common;
+using Integrator.Models.Domain.CurriculumVitaes;
+using Integrator.Models.ViewModels.Common;
+using Integrator.Models.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,6 +14,26 @@ namespace Integrator.Services.Users
 {
     public interface IUserService
     {
+
+        #region Curriculum Vitae Compomnents
+
+        #region Select Methods
+        List<IntegratorUserAwards> GetAwards();
+
+        List<IntegratorUserContactDetails> GetContactDetails();
+
+        List<UserQualifications> GetQualifications();
+
+        List<IntegratorUserLanguages> GetLanguages();
+
+        List<IntegratorUserInterest> GetInterests();
+        #endregion
+
+        #region Insert Methods
+        IEntityCRUDResponse AddUserQualification(UserQualifications entity);
+        #endregion
+
+        #endregion
 
 
         #region User
@@ -34,6 +58,11 @@ namespace Integrator.Services.Users
            string firstName = null, string lastName = null, string phone = null,
            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false);
 
+
+
+        IntegratorUser GetCurrentLoginInUser();
+
+        int GetUserID();
         /// <summary>
         /// Delete a user
         /// </summary>
@@ -54,12 +83,7 @@ namespace Integrator.Services.Users
         /// <returns>Users</returns>
         IList<IntegratorUser> GetUsersByIds(int[] userIds);
 
-        /// <summary>
-        /// Gets a user by GUID
-        /// </summary>
-        /// <param name="userGuid">User GUID</param>
-        /// <returns>A user</returns>
-        IntegratorUser GetUserByGuid(Guid userGuid);
+
 
         /// <summary>
         /// Get user by email
@@ -140,7 +164,7 @@ namespace Integrator.Services.Users
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>User roles</returns>
-        IList<IntegratorUserRole> GetAllUserRoles(bool showHidden = false);
+        Task<IList<string>> GetAllUserRolesAsync(bool showHidden = false);
 
         /// <summary>
         /// Inserts a user role

@@ -7,26 +7,26 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.KnownledgeBase.Core
 {
-    public partial class LookupTableIndustryCategoryJobSkillSetDbMapping : IntegratorEntityTypeConfiguration<LookupTableIndustryCategoryJobSkillSet>
+    public partial class LookupTableIndustryCategoryJobSkillSetDbMapping : IntegratorEntityTypeConfiguration<CoreKBIndustryCategoryJobSkillSet>
     {
 
         /// <summary>
         /// Configures the entity
         /// </summary>
         /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<LookupTableIndustryCategoryJobSkillSet> builder)
+        public override void Configure(EntityTypeBuilder<CoreKBIndustryCategoryJobSkillSet> builder)
         {
-            builder.ToTable("LookupTableIndustryCategoryJobs")
-              .Property(x => x.Id).HasColumnName("IndustryCategoryJobID");
+            builder.ToTable("CoreKBIndustryCategoryJobSkillSets")
+              .Property(x => x.Id).HasColumnName("IndustryCategorySkillSetID");
 
             builder.HasKey(x => x.Id);
 
             builder.Property(e => e.IndustryCategorySkillSet).IsUnicode(false);
 
-            builder.HasOne(d => d.IndustryCategoryJob)
-                .WithMany(p => p.LookupTableIndustryCategoryJobSkillSets)
+            builder.HasOne(d => d.CoreKBIndustryCategoryJob)
+                .WithMany(p => p.CoreKBIndustryCategoryJobSkillSets)
                 .HasForeignKey(d => d.IndustryCategoryJobID)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_IndustryCategorySkillSets_IndustryCategoryJobs");
 
             base.Configure(builder);

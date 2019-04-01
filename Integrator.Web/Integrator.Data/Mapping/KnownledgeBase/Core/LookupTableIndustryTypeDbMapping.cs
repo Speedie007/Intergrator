@@ -7,17 +7,17 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.KnownledgeBase.Core
 {
-    public partial class LookupTableIndustryTypeDbMapping : IntegratorEntityTypeConfiguration<LookupTableIndustryType>
+    public partial class LookupTableIndustryTypeDbMapping : IntegratorEntityTypeConfiguration<CoreKBIndustryType>
     {
 
         /// <summary>
         /// Configures the entity
         /// </summary>
         /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<LookupTableIndustryType> builder)
+        public override void Configure(EntityTypeBuilder<CoreKBIndustryType> builder)
         {
-            builder.ToTable("LookupTableIndustryCategoryJobs")
-              .Property(x => x.Id).HasColumnName("IndustryCategoryJobID");
+            builder.ToTable("CoreKBIndustryTypes")
+              .Property(x => x.Id).HasColumnName("IndustryID");
 
             builder.HasKey(x => x.Id);
 

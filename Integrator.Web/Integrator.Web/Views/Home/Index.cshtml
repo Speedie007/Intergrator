@@ -1,11 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_Layout_old";
 }
 
 
 <div class="jumbotron text-center">
     <h1><span class="fas fa-address-book"></span>Integrator</h1>
     <p>We specialize in blablabla</p>
+    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
     <form>
         <div class="input-group">
             <input type="email" class="form-control" size="50" placeholder="Email Address" required>

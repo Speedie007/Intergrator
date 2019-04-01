@@ -5,9 +5,15 @@
     <UserSecretsId>aspnet-Integrator.Web-0653EB03-A97F-4D9E-B46D-F20FADED671E</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <StartupObject>Integrator.Web.Program</StartupObject>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Administration\**" />
+    <Compile Remove="Controllers\Agents\**" />
+    <Compile Remove="Controllers\Companies\**" />
+    <Compile Remove="Controllers\Individuals\**" />
+    <Compile Remove="Controllers\Users\**" />
     <Compile Remove="Data\Migrations\**" />
     <Compile Remove="wwwroot\fontawesome\less\**" />
     <Compile Remove="wwwroot\fontawesome\metadata\**" />
@@ -15,6 +21,12 @@
     <Compile Remove="wwwroot\fontawesome\sprites\**" />
     <Compile Remove="wwwroot\fontawesome\svgs\**" />
     <Compile Remove="wwwroot\fontawesome\webfonts\**" />
+    <Compile Remove="wwwroot\image\**" />
+    <Content Remove="Controllers\Administration\**" />
+    <Content Remove="Controllers\Agents\**" />
+    <Content Remove="Controllers\Companies\**" />
+    <Content Remove="Controllers\Individuals\**" />
+    <Content Remove="Controllers\Users\**" />
     <Content Remove="Data\Migrations\**" />
     <Content Remove="wwwroot\fontawesome\less\**" />
     <Content Remove="wwwroot\fontawesome\metadata\**" />
@@ -22,6 +34,12 @@
     <Content Remove="wwwroot\fontawesome\sprites\**" />
     <Content Remove="wwwroot\fontawesome\svgs\**" />
     <Content Remove="wwwroot\fontawesome\webfonts\**" />
+    <Content Remove="wwwroot\image\**" />
+    <EmbeddedResource Remove="Controllers\Administration\**" />
+    <EmbeddedResource Remove="Controllers\Agents\**" />
+    <EmbeddedResource Remove="Controllers\Companies\**" />
+    <EmbeddedResource Remove="Controllers\Individuals\**" />
+    <EmbeddedResource Remove="Controllers\Users\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\less\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\metadata\**" />
@@ -29,6 +47,12 @@
     <EmbeddedResource Remove="wwwroot\fontawesome\sprites\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\svgs\**" />
     <EmbeddedResource Remove="wwwroot\fontawesome\webfonts\**" />
+    <EmbeddedResource Remove="wwwroot\image\**" />
+    <None Remove="Controllers\Administration\**" />
+    <None Remove="Controllers\Agents\**" />
+    <None Remove="Controllers\Companies\**" />
+    <None Remove="Controllers\Individuals\**" />
+    <None Remove="Controllers\Users\**" />
     <None Remove="Data\Migrations\**" />
     <None Remove="wwwroot\fontawesome\less\**" />
     <None Remove="wwwroot\fontawesome\metadata\**" />
@@ -36,13 +60,25 @@
     <None Remove="wwwroot\fontawesome\sprites\**" />
     <None Remove="wwwroot\fontawesome\svgs\**" />
     <None Remove="wwwroot\fontawesome\webfonts\**" />
+    <None Remove="wwwroot\image\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\IndividualController.cs" />
     <Compile Remove="Data\ApplicationDbContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Individuals\Views\Shared\_IndividualRegistationTopNavbar.cshtml" />
+    <Content Remove="Areas\Individuals\Views\Shared\_IndividualRegistrationLayout.cshtml" />
+    <Content Remove="Views\Shared\_AdministrationLayout.cshtml" />
+    <Content Remove="Views\Shared\_Layout.cshtml" />
+    <Content Remove="Views\Shared\_Layout_2.cshtml" />
+    <Content Remove="Views\Shared\_Layout_3.cshtml" />
+    <Content Remove="Views\Shared\_Layout_4.cshtml" />
+    <Content Remove="Views\Shared\_Layout_old.cshtml" />
+    <Content Remove="Views\Shared\_RightSidebar.cshtml" />
+    <Content Remove="Views\Shared\_TopNavbar2.cshtml" />
     <Content Remove="wwwroot\css\site.css" />
   </ItemGroup>
 
@@ -53,6 +89,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
 
@@ -66,15 +103,19 @@
 
 
   <ItemGroup>
+    <Folder Include="Areas\Administration\Views\Shared\" />
     <Folder Include="Areas\Agents\Controllers\" />
     <Folder Include="Areas\Agents\Views\Shared\" />
     <Folder Include="Areas\Companies\Controllers\" />
     <Folder Include="Areas\Companies\Views\Shared\" />
-    <Folder Include="Areas\Individuals\Controllers\" />
-    <Folder Include="Areas\Individuals\Views\Shared\" />
     <Folder Include="Data\" />
-    <Folder Include="Services\NewFolder\" />
-    <Folder Include="Views\Authentication\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="Areas\Individuals\Views\Individual\DashBoard.cshtml" />
+    <None Include="Areas\Individuals\Views\Individual\Profile.cshtml" />
+    <None Include="Areas\Individuals\Views\Individual\Register.cshtml" />
   </ItemGroup>
 
 </Project>

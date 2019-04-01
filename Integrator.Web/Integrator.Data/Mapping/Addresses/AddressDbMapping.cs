@@ -1,4 +1,5 @@
-﻿using Integrator.Models.Domain.Address;
+﻿
+using Integrator.Models.Domain.Addresses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -16,6 +17,9 @@ namespace Integrator.Data.Mapping.Addresses
         {
             builder.ToTable("Addresses")
                 .Property(x => x.Id).HasColumnName("AddressID");
+
+            builder.HasKey(x => x.Id);
+
             builder.Property(x => x.IntegratorUserID).HasColumnName("IntegratorUserID");
 
             builder.ToTable("Addresses")

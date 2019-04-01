@@ -1,7 +1,9 @@
 ﻿using System;
 using Integrator.Data;
 using Integrator.Models.Domain.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,7 @@ namespace Integrator.Web.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+               
             });
         }
     }

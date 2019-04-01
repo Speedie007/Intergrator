@@ -1,5 +1,4 @@
-﻿using Integrator.Models.Domain.Address;
-using Integrator.Models.Domain.Companies;
+﻿using Integrator.Models.Domain.Companies;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,7 +17,13 @@ namespace Integrator.Data.Mapping.Companies
         {
             builder.ToTable("Company")
                 .Property(x => x.Id).HasColumnName("CompanyID");
-            
+
+
+            builder.HasData(new Company()
+            {
+                Id = 1,
+                CompanyName = "Self Employed"
+            });
 
             base.Configure(builder);
         }

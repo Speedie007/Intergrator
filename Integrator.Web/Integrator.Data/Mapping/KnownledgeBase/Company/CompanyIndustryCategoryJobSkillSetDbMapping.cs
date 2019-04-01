@@ -1,4 +1,4 @@
-﻿using Integrator.Models.Domain.KnowledgeBase.Company;
+﻿using Integrator.Models.Domain.KnowledgeBase.Companies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -35,9 +35,9 @@ namespace Integrator.Data.Mapping.KnownledgeBase.Company
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_CompanyIndustryCategoryJobSkillSets_CompanyIndustryCategoryJobs");
 
-            builder.HasOne(d => d.IndustryCategorySkillSet)
+            builder.HasOne(d => d.CoreKBIndustryCategorySkillSet)
                 .WithMany(p => p.CompanyIndustryCategoryJobSkillSets)
-                .HasForeignKey(d => d.IndustryCategorySkillSetID)
+                .HasForeignKey(d => d.CoreKBIndustryCategorySkillSetID)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_CompanyIndustryCategoryJobSkillSets_IndustryCategorySkillSets");
 

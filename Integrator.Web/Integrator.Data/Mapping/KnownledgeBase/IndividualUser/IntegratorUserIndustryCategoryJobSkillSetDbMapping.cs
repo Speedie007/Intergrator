@@ -1,4 +1,4 @@
-﻿using Integrator.Models.Domain.KnowledgeBase.IndividualUser;
+﻿using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -21,10 +21,12 @@ namespace Integrator.Data.Mapping.KnownledgeBase.IndividualUser
             builder.HasKey(x => x.Id);
 
             builder.Property(e => e.Description).IsUnicode(false);
+            builder.Property(e => e.Description).HasMaxLength(1000);
+            builder.Property(e => e.SkillLevel).HasColumnType("numeric(18, 2)");
 
-            builder.HasOne(d => d.IndustryCategorySkillSet)
+            builder.HasOne(d => d.CoreKBIndustryCategoryJobSkillSet)
                 .WithMany(p => p.IntegratorUserIndustryCategoryJobSkillSets)
-                .HasForeignKey(d => d.IndustryCategorySkillSetID)
+                .HasForeignKey(d => d.CoreKBIndustryCategorySkillSetID)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_IntegratorUserIndustryCategoryJobSkillSets_IndustryCategorySkillSets");
 

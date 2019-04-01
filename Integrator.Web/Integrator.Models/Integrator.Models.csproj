@@ -5,6 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\KnowledgeBase\IndividualUsers\**" />
+    <EmbeddedResource Remove="Domain\KnowledgeBase\IndividualUsers\**" />
+    <None Remove="Domain\KnowledgeBase\IndividualUsers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Domain\Common\InterestLevels.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustry.cs" />
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustryCategory.cs" />
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustryCategoryJob.cs" />
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustryCategoryJobSkillSet.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Integrator.Common\Integrator.Common.csproj" />
   </ItemGroup>
 

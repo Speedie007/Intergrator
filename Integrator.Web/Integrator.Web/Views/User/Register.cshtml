@@ -56,9 +56,9 @@
                             <h4><span class="fas fa-book-reader heading-icon "></span>&nbsp;Current Member account log in.</h4>
                         </div>
                         <hr />
-                        <div class="body">
+                        <div class="">
 
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="form-group">
                                 <span class="far fa-address-card"></span>
                                 <label asp-for="FirstName" class="control-label"></label>
@@ -75,30 +75,30 @@
                             <hr />
                             <div class="form-group">
                                 <span class="far fa-envelope"></span>
-                                <label asp-for="Email" class="control-label"></label>
-                                <input asp-for="Email" class="form-control" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <label asp-for="UserEmail" class="control-label"></label>
+                                <input asp-for="UserEmail" class="form-control" />
+                                <span asp-validation-for="UserEmail" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <span class="fas fa-filter"></span>
 
-                                <label asp-for="Password" class="control-label"></label>
-                                <input asp-for="Password" class="form-control" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
+                                <label asp-for="UserPassword" class="control-label"></label>
+                                <input asp-for="UserPassword" class="form-control" />
+                                <span asp-validation-for="UserPassword" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="ConfirmPassword" class="control-label"></label>
-                                <input asp-for="ConfirmPassword" class="form-control" />
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                <label asp-for="ConfirmUserPassword" class="control-label"></label>
+                                <input asp-for="ConfirmUserPassword" class="form-control" />
+                                <span asp-validation-for="ConfirmUserPassword" class="text-danger"></span>
                             </div>
                             <hr />
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label asp-for="RoleLabel" class="control-label"></label>
                                 <select asp-for="RoleDefault" asp-items="Model.UserRoles" class="custom-select form-control"></select>
-
-                            </div>
+                                <span asp-validation-for="ConfirmUserPassword" class="text-danger"></span>
+                            </div>*@
                             <hr />
-                            <div asp-validation-summary="All" class="text-danger"></div>
+                            
                         </div>
 
 

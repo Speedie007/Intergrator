@@ -10,16 +10,11 @@ namespace Integrator.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult LandingPage()
         {
             return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+      
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

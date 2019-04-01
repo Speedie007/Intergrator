@@ -16,6 +16,7 @@ using Integrator.Data;
 using Integrator.Models.Domain.Authentication;
 using Integrator.Web.Services;
 using Integrator.Data.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Integrator.Web
 {
@@ -38,21 +39,82 @@ namespace Integrator.Web
 
 
             services.AddIdentity<IntegratorUser, IntegratorRole>()
-                                      .AddDefaultUI(UIFramework.Bootstrap4)
+                                     // .AddDefaultUI(UIFramework.Bootstrap4)
                                       .AddEntityFrameworkStores<ApplicationDbContext>();
+
+           
+
+            //services.AddAuthentication("FiverSecurityScheme")
+            //       .AddCookie("FiverSecurityScheme", options =>
+            //       {
+            //           options.AccessDeniedPath = new PathString("/Security/Access");
+            //           options.LoginPath = new PathString("/Users/Login");
+            //       });
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                //options.Password.RequiredUniqueChars = 1;
+                
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+            });
+
+           
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
+               
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.Secure = CookieSecurePolicy.SameAsRequest;
+
+
             });
 
-                       
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.ConfigureApplicationCookie(options =>
+            {
+
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+               // options.Cookie.Name = "IntrgratorCookie";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.LoginPath = "/Authentication/Login";
+                options.AccessDeniedPath = "/Authentication/Login";
+                // ReturnUrlParameter requires 
+                //using Microsoft.AspNetCore.Authentication.Cookies;
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+                //options.ForwardSignIn = "/Users/Login";
+            });
+            //services.AddAuthentication("IntrgratorCookie")
+            //       .AddCookie("IntrgratorCookie", options =>
+            //       {
+            //           options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            //           options.LoginPath = "/Users/Login";
+            //       });
 
 
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHttpContextAccessor();
 
 
             return services.ConfigureApplicationServices(Configuration);
@@ -86,12 +148,14 @@ namespace Integrator.Web
             {
                 routes.MapRoute(
                   name: "areas",
-                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                  template: "{area:exists}/{controller=Individual}/{action=Index}/{id?}"
                 );
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=LandingPage}/{id?}");
+
+                
             });
         }
     }

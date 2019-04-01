@@ -5,6 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Mapping\KnownledgeBase\IndividualUser\**" />
+    <EmbeddedResource Remove="Mapping\KnownledgeBase\IndividualUser\**" />
+    <None Remove="Mapping\KnownledgeBase\IndividualUser\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Mapping\Common\InterestLevelDbMapping.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryCategoryDbMapping.cs" />
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryCategoryJobDbMapping.cs" />
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryCategoryJobSkillSetDbMapping.cs" />
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryDbMapping.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />

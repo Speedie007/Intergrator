@@ -1,90 +1,76 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Integrator</title>
-    <environment include="Development">
+    <title>Integrator - Individual Regisration</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/fontawesome/css/all.css" />
+        <link rel="stylesheet" href="~/css/animate.css" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+        <link rel="stylesheet" href="~/css/animate.css" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     </environment>
 
-    <link href="~/fontawesome/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/Integrator1.css" />
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
 
 </head>
-<body>
-    <nav class="navbar navbar-expand-md  navbar-default">
-        <div class="container">
-            @*<div class="navbar-header">*@
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <div class="navbar-brand"> <span class="fas fa-address-book"></span>@Html.ActionLink("Integrator", "Index", "Home", null, new { @class = "navbar-brand", @style = "font-size:35px;" })</div>
-            @*<a class="navbar-brand" href="#myPage">Logo</a>*@
+<body class="top-navigation">
+    @*<partial name="_SkinConfig" />*@
 
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="@Html.PageClass()">
 
-            @*<a class="navbar-brand " href="#" style="font-size:35px;">Integrator</a>*@
-            @*</div>*@
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            <partial name="_AuthenticationTopNavbar" />
+
+            <!-- Main view  -->
+            @RenderBody()
+
+            <!-- Footer -->
+            <partial name="_Footer" />
 
         </div>
-    </nav>
+        <!-- End page wrapper-->
 
+    </div>
+    <!-- End wrapper-->
 
-    <partial name="_CookieConsentPartial" />
-
-    @RenderBody()
-
-    <partial name="_Footer" />
-
-
-
-    @*<footer class="container-fluid text-center">
-            <a href="#myPage" title="To Top">
-                <span class="fas fa-chevron-up logo-small"></span>
-            </a>
-            <p>Made By Brendan Wood</p>
-        </footer>*@
-
-
-
-    <environment include="Development">
+    <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/Popper/popper.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/metisMenu/dist/jquery.metisMenu.js"></script>
+        <script src="~/lib/slimScroll/jquery.slimscroll.js"></script>
+        <script src="~/lib/pace/pace.js"></script>
+        <script src="~/js/script.js" asp-append-version="true"></script>
+
+        <script src="~/fontawesome/js/all.js"></script>
     </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
-        </script>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/Popper/popper.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/lib/metisMenu/dist/jquery.metisMenu.js"></script>
+        <script src="~/lib/pace/pace.min.js"></script>
+        <script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="~/js/script.min.js" asp-append-version="true"></script>
+        <script src="~/fontawesome/js/all.min.js"></script>
     </environment>
 
-
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/fontawesome/js/all.js" asp-append-version="true"></script>
-
-    @RenderSection("Scripts", required: false)
+    @RenderSection("scripts", required: false)
 </body>
 </html>

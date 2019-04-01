@@ -1,4 +1,4 @@
-﻿using Integrator.Models.Domain.KnowledgeBase.IndividualUser;
+﻿using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -23,9 +23,9 @@ namespace Integrator.Data.Mapping.KnownledgeBase.IndividualUser
 
             builder.Property(e => e.Description).IsUnicode(false);
 
-            builder.HasOne(d => d.IndustryCategoryJob)
+            builder.HasOne(d => d.CoreKBIndustryCategoryJob)
                 .WithMany(p => p.IntegratorUserIndustryCategoryJobs)
-                .HasForeignKey(d => d.IndustryCategoryJobID)
+                .HasForeignKey(d => d.CoreKBIndustryCategoryJobID)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_IntegratorUserIndustryCategoryJobs_IndustryCategoryJobs");
 

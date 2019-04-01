@@ -43,6 +43,11 @@ h4 {
     padding: 95px 50px;
 }
 
+.container-ViewPortal {
+    padding: 5px;
+    margin-top: 75px;
+}
+
 .bg-grey {
     background-color: #f6f6f6;
 }

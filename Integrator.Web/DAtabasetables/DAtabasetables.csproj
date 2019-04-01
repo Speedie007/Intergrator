@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ContactDetails.cs" />
+    <Compile Remove="CurriculumViteaWorkExperiences.cs" />
     <Compile Remove="Entities\Custom\Company.cs" />
     <Compile Remove="Entities\Custom\CompanyIndustry.cs" />
     <Compile Remove="Entities\Custom\CompanyIndustryCategory.cs" />
     <Compile Remove="Entities\Custom\CompanyIndustryCategoryJob.cs" />
     <Compile Remove="Entities\Custom\CompanyIndustryCategoryJobSkillSet.cs" />
+    <Compile Remove="Entities\Custom\IntegratortabledesginContext.cs" />
     <Compile Remove="Entities\Custom\IntegratorUserIndustry.cs" />
     <Compile Remove="Entities\Custom\IntegratorUserIndustryCategory.cs" />
     <Compile Remove="Entities\Custom\IntegratorUserIndustryCategoryJob.cs" />
@@ -24,6 +27,7 @@
   <ItemGroup>
     <Folder Include="Context\Custom\" />
     <Folder Include="Context\Generated\" />
+    <Folder Include="Entities\Custom\" />
     <Folder Include="Entities\Generated\" />
     <Folder Include="Enum\Custom\" />
     <Folder Include="Enum\Generated\" />

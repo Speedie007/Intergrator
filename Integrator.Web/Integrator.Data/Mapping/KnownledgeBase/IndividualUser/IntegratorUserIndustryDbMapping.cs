@@ -1,4 +1,5 @@
-﻿using Integrator.Models.Domain.KnowledgeBase.IndividualUser;
+﻿
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -21,9 +22,9 @@ namespace Integrator.Data.Mapping.KnownledgeBase.IndividualUser
 
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(d => d.Industry)
+            builder.HasOne(d => d.CoreKBIndustry)
                     .WithMany(p => p.IntegratorUserIndustries)
-                    .HasForeignKey(d => d.IndustryID)
+                    .HasForeignKey(d => d.CoreKBIndustryID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserIndustries_Industries");
 
