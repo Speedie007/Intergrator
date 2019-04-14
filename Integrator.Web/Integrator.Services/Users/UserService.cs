@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Integrator.Models.Domain.Common;
+using Integrator.Models.Domain.Files;
 
 namespace Integrator.Services.Users
 {
@@ -26,11 +27,13 @@ namespace Integrator.Services.Users
         private readonly UserManager<IntegratorUser> _userManager;
         private readonly RoleManager<IntegratorRole> _roleManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IRepository<UserQualifications> _userQualificationsRepository;
+        private readonly IRepository<UserQualification> _userQualificationsRepository;
         private readonly IRepository<IntegratorUserLanguages> _userLanguagesRepository;
         private readonly IRepository<IntegratorUserInterest> _userInterestsRepository;
         private readonly IRepository<IntegratorUserAwards> _userAwardsRepository;
-        private readonly IRepository<IntegratorUserContactDetails> _userContactDetailsRepository;
+        private readonly IRepository<IntegratorUserContactDetail> _userContactDetailsRepository;
+        private readonly IRepository<IntegratorFile> _commonIntegratorFileRepository;
+        private readonly IRepository<UserPicture> _userProfilePictureRepository;
         private readonly IEntityCRUDResponse _entityCRUDResponse;
 
 
@@ -42,11 +45,13 @@ namespace Integrator.Services.Users
             UserManager<IntegratorUser> userManager,
             RoleManager<IntegratorRole> roleManager,
             IHttpContextAccessor httpContextAccessor,
-            IRepository<UserQualifications> userQualificationsRepository,
+            IRepository<UserQualification> userQualificationsRepository,
             IRepository<IntegratorUserLanguages> userLanguagesRepository,
             IRepository<IntegratorUserInterest> userInterestsRepository,
             IRepository<IntegratorUserAwards> userAwardsRepository,
-            IRepository<IntegratorUserContactDetails> userContactDetailsRepository,
+            IRepository<IntegratorUserContactDetail> userContactDetailsRepository,
+            IRepository<IntegratorFile> commonIntegratorFileRepository,
+            IRepository<UserPicture> userProfilePictureRepository,
             IEntityCRUDResponse entityCRUDResponse
             )
         {
@@ -60,6 +65,8 @@ namespace Integrator.Services.Users
             this._userAwardsRepository = userAwardsRepository;
             this._userContactDetailsRepository = userContactDetailsRepository;
             this._entityCRUDResponse = entityCRUDResponse;
+            this._commonIntegratorFileRepository = commonIntegratorFileRepository;
+            this._userProfilePictureRepository = userProfilePictureRepository;
         }
 
         //private async Task SetCurrentlyLoggedInUserAsync()
@@ -264,8 +271,43 @@ namespace Integrator.Services.Users
 
             return query.ToList();
         }
+        public IEntityCRUDResponse AddUserAward(IntegratorUserAwards entity)
+        {
+            try
+            {
+                _userAwardsRepository.Insert(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "Your Award was Successfully Added.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "Your Award was NOT Successfully Added, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
 
-        public List<IntegratorUserContactDetails> GetContactDetails()
+        public IEntityCRUDResponse DeleteUserAward(IntegratorUserAwards entity)
+        {
+            try
+            {
+                _userAwardsRepository.Delete(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "User Award was Successfully Deleted.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "User Award was not successfully deleted, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+
+        public List<IntegratorUserContactDetail> GetContactDetails()
         {
             var UserID = GetUserID();
             var query = from UCDR in _userContactDetailsRepository.Table
@@ -278,7 +320,7 @@ namespace Integrator.Services.Users
 
         }
 
-        public List<UserQualifications> GetQualifications()
+        public List<UserQualification> GetQualifications()
         {
             var UserID = GetUserID();
             var query = from UQR in _userQualificationsRepository.Table
@@ -290,7 +332,7 @@ namespace Integrator.Services.Users
             return query.ToList();
         }
 
-        public List<IntegratorUserLanguages> GetLanguages()
+        public List<IntegratorUserLanguages> GetUserLanguages()
         {
             var UserID = GetUserID();
             var query = from ULR in _userLanguagesRepository.Table
@@ -301,7 +343,7 @@ namespace Integrator.Services.Users
             return query.ToList();
         }
 
-        public List<IntegratorUserInterest> GetInterests()
+        public List<IntegratorUserInterest> GetUserInterests()
         {
             var UserID = GetUserID();
             var query = from ULR in _userInterestsRepository.Table
@@ -314,7 +356,119 @@ namespace Integrator.Services.Users
         }
         #region Curriculum Vitae Components
         #region Insert Methods
-        public IEntityCRUDResponse AddUserQualification(UserQualifications entity)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual IEntityCRUDResponse AddUserLanguage(IntegratorUserLanguages entity)
+        {
+            try
+            {
+
+                if (entity.IsPrimaryLanguage)
+                {
+                    /*if the language to be added is set as the primary 
+                    //language the get all othe assocciated languages and set them to false for the primary language
+                    */
+                    var ListOfAllUserLanguages = GetUserLanguages();
+                    foreach (IntegratorUserLanguages item in ListOfAllUserLanguages)
+                    {
+                        item.IsPrimaryLanguage = false;
+                    }
+                    _userLanguagesRepository.Update(ListOfAllUserLanguages);
+                }
+
+                _userLanguagesRepository.Insert(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "Your Language was Successfully Added.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "Your Interest was NOT Successfully Added, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+        public virtual IEntityCRUDResponse DeleteUserLanguage(IntegratorUserLanguages entity)
+        {
+            try
+            {
+                //Gert Interest ID before deleting
+                var UserLanguage = _userLanguagesRepository.GetById(entity.Id);
+                var RTN_ID = UserLanguage.LanguageID;
+                //Delete the Current USer Interest
+                _userLanguagesRepository.Delete(UserLanguage);
+
+                //Returns the ID if the Iterest Not the ID of The "UserInterestID"
+                _entityCRUDResponse.Returned_ID = RTN_ID;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "Your Language was Successfully Removed.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "Your Interest was NOT Successfully Removed, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual IEntityCRUDResponse AddUserInterest(IntegratorUserInterest entity)
+        {
+            try
+            {
+                _userInterestsRepository.Insert(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "Your Interest was Successfully Added.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "Your Interest was NOT Successfully Added, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+
+        public virtual IEntityCRUDResponse DeleteUserInterest(IntegratorUserInterest entity)
+        {
+            try
+            {
+                //Gert Interest ID before deleting
+                var UserInterest = _userInterestsRepository.GetById(entity.Id);
+                var RTN_ID = UserInterest.InterestID;
+                //Delete the Current USer Interest
+                _userInterestsRepository.Delete(UserInterest);
+
+                //Returns the ID if the Iterest Not the ID of The "UserInterestID"
+                _entityCRUDResponse.Returned_ID = RTN_ID;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "Your Interest was Successfully Removed.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "Your Interest was NOT Successfully Removed, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public IEntityCRUDResponse AddUserQualification(UserQualification entity)
         {
             try
             {
@@ -332,6 +486,123 @@ namespace Integrator.Services.Users
             return _entityCRUDResponse;
         }
         #endregion
+
+        #region
+        public IEntityCRUDResponse DeleteUserQualification(UserQualification entity)
+        {
+            try
+            {
+                _userQualificationsRepository.Delete(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "User Qualification was Successfully Deleted.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "User Qualification was not successfully deleted, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+
+        public IEntityCRUDResponse AddUserProfilePicture(IntegratorFile entity)
+        {
+            try
+            {
+                if (entity.UserPicture.IsCurrentProfilePicture)
+                {
+                    ResetAllUserPicturesAsNotDefault();
+                }
+
+                _commonIntegratorFileRepository.Update(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "User Profile Picture was Successfully Added.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "User Profile Picture was not successfully Added, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+        public IEntityCRUDResponse SetUserProfilePictureAsDefault(int FileID)
+        {
+            try
+            {
+
+                //get user picture to update
+                UserPicture UP = _userProfilePictureRepository.Table.Where(x => x.Id == FileID).FirstOrDefault();
+                if (UP != null)
+                {
+                    ResetAllUserPicturesAsNotDefault();
+                    UP.IsCurrentProfilePicture = true;
+
+
+                    _userProfilePictureRepository.Update(UP);
+                    _entityCRUDResponse.Returned_ID = UP.Id;
+                    _entityCRUDResponse.Success = true;
+                    _entityCRUDResponse.Message = "User Profile Picture was Successfully Updated.";
+                }
+
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "User Profile Picture was not successfully Updated, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+
+        public async Task<byte[]> GetUserProfilePictureAsync()
+        {
+            var query = from a in _commonIntegratorFileRepository.Table
+                .Include(x => x.InegratorFileBlob)
+                .Include(x => x.UserPicture)
+                        where a.UserPicture.IsCurrentProfilePicture == true && a.UserPicture.IntegratorUserID == GetUserID()
+            select a.InegratorFileBlob.FileBlob;
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public IEntityCRUDResponse DeleteUserProfilePicture(IntegratorFile entity)
+        {
+            try
+            {
+                _commonIntegratorFileRepository.Delete(entity);
+                _entityCRUDResponse.Returned_ID = entity.Id;
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "User Profile Picture was Successfully Deleted.";
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Returned_ID = 0;
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "User Profile Picture was not successfully deleted, - " + e.Message;
+            }
+            return _entityCRUDResponse;
+        }
+
+
+        #endregion
+        #endregion
+
+        #region Internal Function
+        private void ResetAllUserPicturesAsNotDefault()
+        {
+            var query = _userProfilePictureRepository.Table
+                .Where(x => x.IntegratorUserID == GetUserID());
+
+            List<UserPicture> UP = query.ToList();
+            foreach (var item in UP)
+            {
+                item.IsCurrentProfilePicture = false;
+            }
+            _userProfilePictureRepository.Update(UP);
+        }
         #endregion
 
 

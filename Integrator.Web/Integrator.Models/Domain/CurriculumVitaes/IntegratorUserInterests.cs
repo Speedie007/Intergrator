@@ -13,7 +13,7 @@ namespace Integrator.Models.Domain.CurriculumVitaes
         public double InterestLevel { get; set; }
 
         public virtual IntegratorUser IntegratorUser { get; set; }
-        public virtual Interests UserInterest { get; set; }
+        public virtual Interest UserInterest { get; set; }
 
 
     }

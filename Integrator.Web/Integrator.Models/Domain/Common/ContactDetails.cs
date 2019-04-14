@@ -6,23 +6,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Integrator.Models.Domain.Common
 {
-    public partial class ContactDetails : BaseEntity
+    public partial class ContactDetail : BaseEntity
     {
-        public ContactDetails()
+        public ContactDetail()
         {
-            IntegratorUserContactDetails = new HashSet<IntegratorUserContactDetails>();
-            WorkExperienceReferenceContactDetails = new HashSet<WorkExperienceReferenceContactDetails>();
+            IntegratorUserContactDetails = new HashSet<IntegratorUserContactDetail>();
+            WorkExperienceReferenceContactDetails = new HashSet<WorkExperienceReferenceContactDetail>();
         }
 
-        //[Key]
-        //public int ContactDetailID { get; set; }
+        
         public int ContactDetailTypeID { get; set; }
         [Required]
         [StringLength(200)]
         public string ContactItem { get; set; }
 
-        public virtual ContactDetailTypes ContactDetailType { get; set; }
-        public virtual ICollection<IntegratorUserContactDetails> IntegratorUserContactDetails { get; set; }
-        public virtual ICollection<WorkExperienceReferenceContactDetails> WorkExperienceReferenceContactDetails { get; set; }
+        public virtual ContactDetailType ContactDetailType { get; set; }
+        public virtual ICollection<IntegratorUserContactDetail> IntegratorUserContactDetails { get; set; }
+        public virtual ICollection<WorkExperienceReferenceContactDetail> WorkExperienceReferenceContactDetails { get; set; }
     }
 }

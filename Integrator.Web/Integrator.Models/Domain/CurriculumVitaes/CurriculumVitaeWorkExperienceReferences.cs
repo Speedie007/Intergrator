@@ -7,7 +7,7 @@ namespace Integrator.Models.Domain.CurriculumVitaes
     {
         public CurriculumVitaeWorkExperienceReferences()
         {
-            WorkExperienceReferenceContactDetails = new HashSet<WorkExperienceReferenceContactDetails>();
+            WorkExperienceReferenceContactDetails = new HashSet<WorkExperienceReferenceContactDetail>();
         }
 
         //public int CurriculumVitaeWorkExperienceReferenceId { get; set; }
@@ -17,6 +17,6 @@ namespace Integrator.Models.Domain.CurriculumVitaes
         public bool HasBeenVerified { get; set; }
 
         public virtual CurriculumViteaWorkExperiences CurriculumViteaWorkExperience { get; set; }
-        public virtual ICollection<WorkExperienceReferenceContactDetails> WorkExperienceReferenceContactDetails { get; set; }
+        public virtual ICollection<WorkExperienceReferenceContactDetail> WorkExperienceReferenceContactDetails { get; set; }
     }
 }

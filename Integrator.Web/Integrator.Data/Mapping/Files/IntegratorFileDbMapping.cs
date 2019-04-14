@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.Files
 {
-    public partial class IntegratorFileDbMapping : IntegratorEntityTypeConfiguration<IntegratorFiles>
+    public partial class IntegratorFileDbMapping : IntegratorEntityTypeConfiguration<IntegratorFile>
     {/// <summary>
      /// Configures the entity
      /// </summary>
      /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<IntegratorFiles> builder)
+        public override void Configure(EntityTypeBuilder<IntegratorFile> builder)
         {
             builder.ToTable("IntegratorFiles")
                 .Property(x => x.Id).HasColumnName("FileID");

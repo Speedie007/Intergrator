@@ -1624,11 +1624,14 @@
     line-height: 1.5;
     color: #212529;
     text-align: left;
-    
 }
 
 .resume-wrapper-inner {
     max-width: 1000px;
+}
+
+.my-header-picture {
+    width: 275px;
 }
 
 .resume-header {
@@ -1800,4 +1803,10 @@
             width: 120px;
             border-radius: 4px;
         }
+    .my-header-picture {
+        width: 120px;
+        border-radius: 4px;
+        align-content : center;
+       
+    }
 }

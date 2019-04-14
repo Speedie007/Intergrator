@@ -103,13 +103,7 @@ namespace Integrator.Web
                 options.SlidingExpiration = true;
                 //options.ForwardSignIn = "/Users/Login";
             });
-            //services.AddAuthentication("IntrgratorCookie")
-            //       .AddCookie("IntrgratorCookie", options =>
-            //       {
-            //           options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-            //           options.LoginPath = "/Users/Login";
-            //       });
-
+            
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

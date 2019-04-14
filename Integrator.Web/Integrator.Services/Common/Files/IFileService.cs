@@ -7,13 +7,15 @@ namespace Integrator.Services.Common.Files
 {
     public partial interface IFileService
     {
-        Boolean AddUserProfilePicture(IntegratorFiles UserPicture);
+        Boolean AddUserProfilePicture(IntegratorFile UserPicture);
 
-        Boolean AddUserDocument(IntegratorFiles Document);
+        Boolean AddUserDocument(IntegratorFile Document);
 
-        IntegratorFiles GetUserPicure(int UserID);
+        UserPicture GetUserPicure(int UserPictureID, Boolean IncludeBlob = false);
 
-        List<IntegratorFiles> ListUserFiles(int UserID);
+        List<UserPicture> ListUserProfilePictures(Boolean IncludeBlob = false);
+
+
 
     }
 }

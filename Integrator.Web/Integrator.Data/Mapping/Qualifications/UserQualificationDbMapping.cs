@@ -7,13 +7,13 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.Qualifications
 {
-    public partial class UserQualificationDbMapping : IntegratorEntityTypeConfiguration<UserQualifications>
+    public partial class UserQualificationDbMapping : IntegratorEntityTypeConfiguration<UserQualification>
     {
         /// <summary>
         /// Configures the entity
         /// </summary>
         /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<UserQualifications> builder)
+        public override void Configure(EntityTypeBuilder<UserQualification> builder)
         {
             builder.ToTable("UserQualifications")
                 .Property(x => x.Id).HasColumnName("UserQualificationID");

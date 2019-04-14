@@ -10,6 +10,18 @@ namespace Integrator.Factories.CurriculumVitae
     {
         CurriculumVitaeViewModel PerpareCurriculumVitaeViewModel(CurriculumVitaeViewModel model, Boolean DisplayFullCurriculumVitae);
 
+        EditUserCurriculumViteaWorkExperienceViewModel prepareEditCurriuclumVitaeWorkExperiences();
+
         EditUserQualificationViewModel prepareEditCurriuclumVitaeQualifications();
+
+        EditUserInterestViewModel prepareEditCurriculumVitaeInterests();
+
+        EditUserLanguageViewModel PrepareEditCurriculumVitaeLanguages();
+
+        EditUserAwardViewModel PrepareEditCurriculumVitaeAwards();
+
+        EditUserPictureViewModel PrepareEditCurriculumViteaPictures();
+       // EditUserCurriculumVitaePictureViewModel
+
     }
 }

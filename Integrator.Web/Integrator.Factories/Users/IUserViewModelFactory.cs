@@ -20,6 +20,6 @@ namespace Integrator.Factories.Users
         /// Prepare the Registration model
         /// </summary>
         /// <returns>Login model</returns>
-        RegisterViewModel PrepareRegistrationLoginModel();
+        RegisterViewModel PrepareRegistrationLoginModel(string Role);
     }
 }

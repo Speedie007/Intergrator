@@ -1,0 +1,354 @@
+﻿@model CurriculumVitaeViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Individuals/Views/Shared/_IndividualPortalLayout.cshtml";
+}
+
+
+
+
+<environment names="Development,Staging,Production">
+
+    <link href="~/css/CurriculumVitea/CurriculumVitaeStyle.css" rel="stylesheet" />
+
+</environment>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Curriculum Vitae</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "Dashboards")">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a>Profiles</a>
+            </li>
+            <li class="active breadcrumb-item">
+                <strong>Profile View</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    @{
+        String img64Url = "";
+
+        if (!(@Model.UserPicture == null))
+        {
+            String img64 = Convert.ToBase64String(@Model.UserPicture);
+            img64Url = $"data:image/jpg;base64,{img64}"; //imagetype can be e.g. gif, jpeg, png etc.
+        }
+
+    }
+
+
+
+    <article class="resume-wrapper text-center position-relative">
+        <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
+
+            <header class="resume-header pt-4 pt-md-0">
+                <div class="media flex-column flex-md-row">
+                    @{
+                        if (!(@Model.UserPicture == null))
+                        {
+
+                            <img class="mr-3 img-fluid picture mx-auto" src="@img64Url" alt="">
+                        }
+                        else
+                        {
+                            <img class="picture " src="~/img//profile.jpg" alt="">
+                        }
+
+                    }
+
+                    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
+                        <div class="primary-info">
+                            <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">@Model.FullName</h1>
+                            <div class="title mb-3">@Model.CurrentJobTitle</div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="#"><i class="fa fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>Steve.Doe@website.com</a></li>
+                                <li class="mb-2"><a href="#"><i class="fa fa-volume-control-phone fa-fw mr-2" data-fa-transform="grow-6"></i>0123 456 78900</a></li>
+                            </ul>
+                        </div><!--//primary-info-->
+                        <div class="secondary-info ml-md-auto mt-2">
+                            <ul class="resume-social list-unstyled">
+                                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-linkedin-in fa-fw"></i></span>linkedin.com/in/stevedoe</a></li>
+                                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-github-alt fa-fw"></i></span>github.com/username</a></li>
+                                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-codepen fa-fw"></i></span>codepen.io/username/</a></li>
+                                <li><a href="#"><span class="fa-container text-center mr-2"><i class="fas fa-globe"></i></span>yourwebsite.com</a></li>
+                            </ul>
+                        </div><!--//secondary-info-->
+
+                    </div><!--//media-body-->
+                </div><!--//media-->
+            </header>
+            <div class="resume-body p-5">
+                <section class="resume-section summary-section mb-5">
+                    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Career Summary</h2>
+                    <div class="resume-section-content">
+                        <p class="mb-0">
+                            @Html.Raw(Model.UserCareerSummary)
+                        </p>
+                    </div>
+                </section><!--//summary-section-->
+                <div class="row">
+                    <div class="col-lg-9">
+                        <section class="resume-section experience-section mb-5">
+                            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Work Experience</h2>
+                            <div class="resume-section-content">
+                                <div class="resume-timeline position-relative">
+                                    @{
+                                        foreach (CurriculumViteaWorkExperienceViewModel ExpItem in Model.UserWorkExperiences)
+                                        {
+                                            <article class="resume-timeline-item position-relative pb-5">
+
+                                                <div class="resume-timeline-item-header mb-2">
+                                                    <div class="d-flex flex-column flex-md-row">
+                                                        <h3 class="resume-position-title font-weight-bold mb-1">@ExpItem.JobTitle</h3>
+                                                        <div class="resume-company-name ml-auto">@ExpItem.Company</div>
+                                                    </div><!--//row-->
+                                                    <div class="resume-position-time">@ExpItem.YearStarted - @ExpItem.YearEnded</div>
+                                                </div><!--//resume-timeline-item-header-->
+                                                <div class="resume-timeline-item-desc">
+                                                    <p>
+                                                        @ExpItem.WorkExperienceDescription
+                                                    </p>
+                                                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
+                                                    @ExpItem.Achievements
+                                                    <h4 class="resume-timeline-item-desc-heading font-weight-bold">Skils Employeed:</h4>
+                                                    <ul class="list-inline">
+                                                        @foreach (var skillEmployed in ExpItem.SkillsEmployed)
+                                                        {
+                                                            <li class="list-inline-item"><span class="badge badge-primary badge-pill">@skillEmployed.JobSkill</span></li>
+                                                        }
+                                                    </ul>
+                                                </div><!--//resume-timeline-item-desc-->
+                                            </article><!--//resume-timeline-item-->
+                                        }
+                                    }
+                                    <article class="resume-timeline-item position-relative pb-5">
+
+                                        <div class="resume-timeline-item-header mb-2">
+                                            <div class="d-flex flex-column flex-md-row">
+                                                <h3 class="resume-position-title font-weight-bold mb-1">Lead Developer</h3>
+                                                <div class="resume-company-name ml-auto">Startup Hub</div>
+                                            </div><!--//row-->
+                                            <div class="resume-position-time">2018 - Present</div>
+                                        </div><!--//resume-timeline-item-header-->
+                                        <div class="resume-timeline-item-desc">
+                                            <p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Donec pede justo, fringilla vel.</p>
+                                            <h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
+                                            <p>Praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+                                            <ul>
+                                                <li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>
+                                                <li>At vero eos et accusamus et iusto odio dignissimos.</li>
+                                                <li>Blanditiis praesentium voluptatum deleniti atque corrupti.</li>
+                                                <li>Maecenas tempus tellus eget.</li>
+                                            </ul>
+                                            <h4 class="resume-timeline-item-desc-heading font-weight-bold">Technologies used:</h4>
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item"><span class="badge badge-primary badge-pill">Angular</span></li>
+                                                <li class="list-inline-item"><span class="badge badge-primary badge-pill">Python</span></li>
+                                                <li class="list-inline-item"><span class="badge badge-primary badge-pill">jQuery</span></li>
+                                                <li class="list-inline-item"><span class="badge badge-primary badge-pill">Webpack</span></li>
+                                                <li class="list-inline-item"><span class="badge badge-primary badge-pill">HTML/SASS</span></li>
+                                                <li class="list-inline-item"><span class="badge badge-primary badge-pill">PostgresSQL</span></li>
+                                            </ul>
+                                        </div><!--//resume-timeline-item-desc-->
+                                    </article><!--//resume-timeline-item-->
+                                </div><!--//resume-timeline-->
+                            </div>
+                        </section><!--//experience-section-->
+                    </div>
+                    <div class="col-lg-3">
+                        <section class="resume-section skills-section mb-5">
+                            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Skills Summary</h2>
+                            <div class="resume-section-content">
+                                @{
+                                    if (Model.UserJobSummary.Count > 0)
+                                    {
+                                        @foreach (var x in Model.UserJobSummary)
+                                        {
+                                            <div class="resume-skill-item">
+                                                <h4 class="resume-skills-cat font-weight-bold">@x.JobTitle</h4>
+                                                <ul class="list-unstyled mb-4">
+                                                    @foreach (var y in x.JobSkillSets)
+                                                    {
+                                                        <li class="mb-2">
+                                                            <div class="resume-skill-name">@y.JobSkill</div>
+                                                            <div class="progress resume-progress">
+                                                                <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width: @y.SkillLevel%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div><!--//resume-skill-item-->
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="resume-skill-item">
+                                            None Listed.
+                                        </div>
+                                    }
+                                }
+
+
+                            </div><!--resume-section-content-->
+                        </section><!--//skills-section-->
+                        <section class="resume-section education-section mb-5">
+                            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Education</h2>
+                            <div class="resume-section-content">
+                                <ul class="list-unstyled">
+                                    @{
+                                        if (Model.UserQualifications.Count > 0)
+                                        {
+                                            @foreach (var qualification in Model.UserQualifications)
+                                            {
+                                                <li class="mb-2">
+                                                    <div class="resume-degree font-weight-bold">@qualification.QualificationTitle</div>
+                                                    <div class="resume-degree-org">@qualification.EductaionalInstitution</div>
+                                                    <div class="resume-degree-time">@qualification.YearStartEndQualification</div>
+                                                    <small>Average Achived</small>
+                                                    <div class="progress resume-progress">
+
+                                                        <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width:@qualification.QualificationAverage%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <hr />
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="mb-2">
+                                                None Listed.
+                                            </li>
+                                        }
+                                    }
+
+
+                                </ul>
+                            </div>
+                        </section><!--//education-section-->
+                        <section class="resume-section reference-section mb-5">
+                            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Awards</h2>
+                            <div class="resume-section-content">
+                                <ul class="list-unstyled resume-awards-list">
+                                    @{
+                                        if (Model.UserAwards.Count > 0)
+                                        {
+                                            @foreach (var award in Model.UserAwards)
+                                            {
+                                                <li class="mb-2 pl-4 position-relative">
+                                                    <i class="resume-award-icon fa fa-trophy position-absolute" data-fa-transform="shrink-2"></i>
+                                                    <div class="resume-award-name">@award.AwardTitle</div>
+                                                    <div class="resume-award-desc">
+                                                        @award.AwardDescription
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="mb-2 pl-4 position-relative">
+                                                <div class="resume-award-desc">
+                                                    None Listed.
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+
+                                </ul>
+                            </div>
+                        </section><!--//interests-section-->
+                        <section class="resume-section language-section mb-5">
+                            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Language</h2>
+                            <div class="resume-section-content">
+                                <ul class="list-unstyled resume-lang-list">
+                                    @{
+                                        if (Model.UserLanguages.Count > 0)
+                                        {
+                                            foreach (UserLanguageViewModel item in Model.UserLanguages)
+                                            {
+                                                <li class="mb-2">
+                                                    <span class="resume-lang-name font-weight-bold">
+                                                        @item.Language
+                                                    </span>
+                                                    @{
+                                                        if (item.IsPrimaryLanguage)
+                                                        {
+                                                            <small class="text-muted font-weight-normal">(Primary Language)</small>
+                                                        }
+                                                    }
+                                                    <br />
+                                                    <small> Proficiency Level</small>
+                                                    <div class="progress resume-progress">
+
+                                                        <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width:@item.LanguageProficiencyLevel%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <hr />
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="mb-2">
+                                                <span class="resume-lang-name font-weight-bold">
+                                                    None Listed.
+                                                </span>
+                                            </li>
+                                        }
+
+                                    }
+                                    @*<li class="mb-2"><span class="resume-lang-name font-weight-bold">English</span> <small class="text-muted font-weight-normal">(Native)</small></li>
+                                        <li class="mb-2 align-middle"><span class="resume-lang-name font-weight-bold">French</span> <small class="text-muted font-weight-normal">(Professional)</small></li>
+                                        <li><span class="resume-lang-name font-weight-bold">Spanish</span> <small class="text-muted font-weight-normal">(Professional)</small></li>*@
+                                </ul>
+                            </div>
+                        </section><!--//language-section-->
+                        <section class="resume-section interests-section mb-5">
+                            <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Interests</h2>
+                            <div class="resume-section-content">
+                                <ul class="list-unstyled">
+                                    @{
+                                        if (Model.UserInterests.Count > 0)
+                                        {
+                                            foreach (UserInterestViewModel interest in Model.UserInterests)
+                                            {
+                                                <li class="mb-1">
+                                                    @interest.Interest<br />
+                                                    <small>Interest Level</small>
+                                                    <div class="progress resume-progress">
+
+                                                        <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width:@interest.InterestLevel%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </li>
+                                                <hr />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="mb-1">
+                                                None Listed.
+                                            </li>
+
+                                        }
+
+                                    }
+
+
+                                </ul>
+                            </div>
+                        </section><!--//interests-section-->
+
+                    </div>
+                </div><!--//row-->
+            </div><!--//resume-body-->
+
+        </div>
+    </article>
+</div>
+
+

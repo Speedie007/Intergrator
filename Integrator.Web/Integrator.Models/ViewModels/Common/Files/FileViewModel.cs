@@ -8,16 +8,19 @@ namespace Integrator.Models.ViewModels.Common.Files
 {
     public partial class FileViewModel : BaseIntegratorEntityModel
     {
-        [Display(Name ="Content Type")]
+        [Display(Name = "Content Type")]
         public string ContentType { get; set; }
-        [Display(Name = "Name")]
+        [Display(Name = "File Name")]
         public string FileName { get; set; }
         [Display(Name = "Extension")]
         public string FileExtension { get; set; }
         [Display(Name = "Size")]
-        public string FileSize { get; set; }
+        public Int64 FileSize { get; set; }
         [Display(Name = "Date Created")]
-        public string DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         public byte[] FileBytes { get; set; }
+
+        [Display(Name = "File Name")]
+        public string FileNameWithExtension => $"{FileName}.{FileExtension}";
     }
 }

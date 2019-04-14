@@ -2,6 +2,7 @@
 using Integrator.Models.Domain.Authentication;
 using Integrator.Models.Domain.Common;
 using Integrator.Models.Domain.CurriculumVitaes;
+using Integrator.Models.Domain.Files;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Models.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
@@ -20,19 +21,37 @@ namespace Integrator.Services.Users
         #region Select Methods
         List<IntegratorUserAwards> GetAwards();
 
-        List<IntegratorUserContactDetails> GetContactDetails();
+        List<IntegratorUserContactDetail> GetContactDetails();
 
-        List<UserQualifications> GetQualifications();
+        List<UserQualification> GetQualifications();
 
-        List<IntegratorUserLanguages> GetLanguages();
+        List<IntegratorUserLanguages> GetUserLanguages();
 
-        List<IntegratorUserInterest> GetInterests();
+        List<IntegratorUserInterest> GetUserInterests();
+
+        Task<byte[]> GetUserProfilePictureAsync();
         #endregion
 
         #region Insert Methods
-        IEntityCRUDResponse AddUserQualification(UserQualifications entity);
+        IEntityCRUDResponse AddUserLanguage(IntegratorUserLanguages entity);
+        IEntityCRUDResponse AddUserQualification(UserQualification entity);
+        IEntityCRUDResponse AddUserInterest(IntegratorUserInterest entity);
+        IEntityCRUDResponse AddUserAward(IntegratorUserAwards entity);
+        IEntityCRUDResponse AddUserProfilePicture(IntegratorFile entity);
         #endregion
 
+        #region DeleteMethods
+
+        IEntityCRUDResponse DeleteUserLanguage(IntegratorUserLanguages entity);
+        IEntityCRUDResponse DeleteUserQualification(UserQualification entity);
+        IEntityCRUDResponse DeleteUserInterest(IntegratorUserInterest entity);
+        IEntityCRUDResponse DeleteUserAward(IntegratorUserAwards entity);
+        IEntityCRUDResponse DeleteUserProfilePicture(IntegratorFile entity);
+        #endregion
+
+        #region Update Methods
+        IEntityCRUDResponse SetUserProfilePictureAsDefault(int FileID);
+        #endregion
         #endregion
 
 

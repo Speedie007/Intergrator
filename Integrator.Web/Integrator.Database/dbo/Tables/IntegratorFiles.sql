@@ -3,8 +3,10 @@
     [ContentType]   VARCHAR (100) NOT NULL,
     [FileName]      VARCHAR (200) NOT NULL,
     [FileExtension] VARCHAR (25)  NOT NULL,
-    [FileSize]      INT           NOT NULL,
+    [FileSize]      BIGINT        NOT NULL,
     [DateCreated]   DATETIME      NOT NULL,
     CONSTRAINT [PK_IntegratorFiles] PRIMARY KEY CLUSTERED ([FileID] ASC)
 );
+
+
 

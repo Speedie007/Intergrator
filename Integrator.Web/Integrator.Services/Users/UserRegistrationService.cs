@@ -30,8 +30,7 @@ namespace Integrator.Services.Users
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            //if (request.Customer == null)
-            //    throw new ArgumentException("Can't load current customer");
+           
 
             var result = new UserRegistrationResult();
 
@@ -47,18 +46,6 @@ namespace Integrator.Services.Users
                 result.AddError("Password not correct or not provided.");
                 return result;
             }
-
-            //if (_customerSettings.UsernamesEnabled && string.IsNullOrEmpty(request.))
-            //{
-            //    result.AddError(_localizationService.GetResource("Account.Register.Errors.UsernameIsNotProvided"));
-            //    return result;
-            //}
-
-            //if (_customerSettings.UsernamesEnabled && _customerService.GetCustomerByUsername(request.Username) != null)
-            //{
-            //    result.AddError(_localizationService.GetResource("Account.Register.Errors.UsernameAlreadyExists"));
-            //    return result;
-            //}
 
             //validate unique user
             if (_userService.GetUserByEmailAsync(request.UserEmail) == null)

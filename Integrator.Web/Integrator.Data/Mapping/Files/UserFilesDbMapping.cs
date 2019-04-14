@@ -7,15 +7,16 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.Files
 {
-    public partial class UserFilesDbMapping : IntegratorEntityTypeConfiguration<UserFiles>
+    public partial class UserFilesDbMapping : IntegratorEntityTypeConfiguration<UserFile>
     {
         
         /// <summary>
      /// Configures the entity
      /// </summary>
      /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<UserFiles> builder)
+        public override void Configure(EntityTypeBuilder<UserFile> builder)
         {
+            builder.ToTable("UserFiles");
             builder.HasKey(e => e.Id);
 
             builder.Property(e => e.Id)

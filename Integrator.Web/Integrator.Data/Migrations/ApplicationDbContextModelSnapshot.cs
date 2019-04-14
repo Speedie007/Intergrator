@@ -227,46 +227,7 @@ namespace Integrator.Data.Migrations
                     b.ToTable("IntegratorUserTokens");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Common.ContactDetailTypes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("ContactDetailTypeID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactDetailType")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContactDetailTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ContactDetailType = "Cell Number"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ContactDetailType = "Office Number"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ContactDetailType = "Email Address"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ContactDetailType = "WebSite"
-                        });
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.Common.ContactDetails", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Common.ContactDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,7 +248,47 @@ namespace Integrator.Data.Migrations
                     b.ToTable("ContactDetails");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Common.IntegratorUserContactDetails", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Common.ContactDetailType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ContactDetailTypeID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("aContactDetailType")
+                        .IsRequired()
+                        .HasColumnName("ContactDetailType")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactDetailTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            aContactDetailType = "Cell Number"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            aContactDetailType = "Office Number"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            aContactDetailType = "Email Address"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            aContactDetailType = "WebSite"
+                        });
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Common.IntegratorUserContactDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -312,14 +313,14 @@ namespace Integrator.Data.Migrations
                     b.ToTable("IntegratorUserContactDetails");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Common.Interests", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Common.Interest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("InterestID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Interest")
+                    b.Property<string>("AnInterest")
                         .IsRequired()
                         .HasMaxLength(250)
                         .IsUnicode(false);
@@ -332,17 +333,17 @@ namespace Integrator.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Interest = "Climbing"
+                            AnInterest = "Climbing"
                         },
                         new
                         {
                             Id = 2,
-                            Interest = "Snowboarding"
+                            AnInterest = "Snowboarding"
                         },
                         new
                         {
                             Id = 3,
-                            Interest = "Cooking"
+                            AnInterest = "Cooking"
                         });
                 });
 
@@ -562,6 +563,8 @@ namespace Integrator.Data.Migrations
 
                     b.Property<int>("LanguageID");
 
+                    b.Property<double>("LanguageProficiencyLevel");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IntegratorUserID");
@@ -658,7 +661,7 @@ namespace Integrator.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.UserQualifications", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.UserQualification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -699,7 +702,7 @@ namespace Integrator.Data.Migrations
                     b.ToTable("UserQualifications");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.WorkExperienceReferenceContactDetails", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.WorkExperienceReferenceContactDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -719,7 +722,7 @@ namespace Integrator.Data.Migrations
                     b.ToTable("WorkExperienceReferenceContactDetails");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.InegratorFileBlobs", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.InegratorFileBlob", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnName("FileID");
@@ -733,7 +736,7 @@ namespace Integrator.Data.Migrations
                     b.ToTable("InegratorFileBlobs");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.IntegratorFiles", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.IntegratorFile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -758,14 +761,14 @@ namespace Integrator.Data.Migrations
                         .HasMaxLength(200)
                         .IsUnicode(false);
 
-                    b.Property<int>("FileSize");
+                    b.Property<long>("FileSize");
 
                     b.HasKey("Id");
 
                     b.ToTable("IntegratorFiles");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.UserFiles", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.UserFile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -785,23 +788,16 @@ namespace Integrator.Data.Migrations
                     b.ToTable("UserFiles");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.UserPictures", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.UserPicture", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("PictureID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateLastUpdated")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("FilesID");
+                        .HasColumnName("FileID");
 
                     b.Property<int>("IntegratorUserID");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("IsCurrentProfilePicture");
 
-                    b.HasIndex("FilesID");
+                    b.HasKey("Id");
 
                     b.HasIndex("IntegratorUserID");
 
@@ -1208,18 +1204,18 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Common.ContactDetails", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Common.ContactDetail", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Common.ContactDetailTypes", "ContactDetailType")
+                    b.HasOne("Integrator.Models.Domain.Common.ContactDetailType", "ContactDetailType")
                         .WithMany("ContactDetails")
                         .HasForeignKey("ContactDetailTypeID")
                         .HasConstraintName("FK_ContactDetails_ContactDetailTypes")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Common.IntegratorUserContactDetails", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Common.IntegratorUserContactDetail", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Common.ContactDetails", "ContactDetail")
+                    b.HasOne("Integrator.Models.Domain.Common.ContactDetail", "ContactDetail")
                         .WithMany("IntegratorUserContactDetails")
                         .HasForeignKey("ContactDetailID")
                         .HasConstraintName("FK_IntegratorUserContactDetails_ContactDetails")
@@ -1303,7 +1299,7 @@ namespace Integrator.Data.Migrations
                         .HasConstraintName("FK_IntegratorUserInterests_IntegratorUsers")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.Common.Interests", "UserInterest")
+                    b.HasOne("Integrator.Models.Domain.Common.Interest", "UserInterest")
                         .WithMany("IntegratorUserInterests")
                         .HasForeignKey("InterestID")
                         .HasConstraintName("FK_IntegratorUserInterests_Interests")
@@ -1319,13 +1315,13 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Integrator.Models.Domain.CurriculumVitaes.LanguageList", "LanguageSpoken")
-                        .WithMany("IntegratorUserLanguages")
+                        .WithMany("UserLanguages")
                         .HasForeignKey("LanguageID")
                         .HasConstraintName("FK_IntegratorUserLanguages_Languages")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.UserQualifications", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.UserQualification", b =>
                 {
                     b.HasOne("Integrator.Models.Domain.CurriculumVitaes.EductaionalInstitutions", "EductaionalInstitution")
                         .WithMany("UserQualifications")
@@ -1346,9 +1342,9 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.WorkExperienceReferenceContactDetails", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.WorkExperienceReferenceContactDetail", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Common.ContactDetails", "ContactDetail")
+                    b.HasOne("Integrator.Models.Domain.Common.ContactDetail", "ContactDetail")
                         .WithMany("WorkExperienceReferenceContactDetails")
                         .HasForeignKey("ContactDetailID")
                         .HasConstraintName("FK_WorkExperienceReferenceContactDetails_ContactDetails")
@@ -1361,18 +1357,18 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.InegratorFileBlobs", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.InegratorFileBlob", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Files.IntegratorFiles", "IntegratorFile")
+                    b.HasOne("Integrator.Models.Domain.Files.IntegratorFile", "IntegratorFile")
                         .WithOne("InegratorFileBlob")
-                        .HasForeignKey("Integrator.Models.Domain.Files.InegratorFileBlobs", "Id")
+                        .HasForeignKey("Integrator.Models.Domain.Files.InegratorFileBlob", "Id")
                         .HasConstraintName("FK_InegratorFileBlobs_IntegratorFiles")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.UserFiles", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.UserFile", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Files.IntegratorFiles", "IntegratorFile")
+                    b.HasOne("Integrator.Models.Domain.Files.IntegratorFile", "IntegratorFile")
                         .WithMany("UserFiles")
                         .HasForeignKey("FileID")
                         .HasConstraintName("FK_UserFiles_IntegratorFiles")
@@ -1385,13 +1381,13 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Files.UserPictures", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Files.UserPicture", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Files.IntegratorFiles", "IntegratorFile")
-                        .WithMany("UserPictures")
-                        .HasForeignKey("FilesID")
-                        .HasConstraintName("FK_UserPicture_IntegratorFiles")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("Integrator.Models.Domain.Files.IntegratorFile", "IntegratorFile")
+                        .WithOne("UserPicture")
+                        .HasForeignKey("Integrator.Models.Domain.Files.UserPicture", "Id")
+                        .HasConstraintName("FK_UserPictures_IntegratorFiles")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Integrator.Models.Domain.Authentication.IntegratorUser", "IntegratorUser")
                         .WithMany("UserPicture")

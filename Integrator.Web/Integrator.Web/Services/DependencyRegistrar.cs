@@ -9,6 +9,7 @@ using Integrator.Factories.CurriculumVitae;
 using Integrator.Factories.Users;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Services.Common;
+using Integrator.Services.Common.Files;
 using Integrator.Services.CurriculumVitae;
 using Integrator.Services.KnowledgeBase.Users;
 using Integrator.Services.Users;
@@ -45,7 +46,11 @@ namespace Integrator.Web.Services
             builder.RegisterType<UserKnowledgeBaseService>().As<IUserKnowledgeBaseService>().InstancePerLifetimeScope();
             builder.RegisterType<CurriculumVitaeService>().As<ICurriculumVitaeService>().InstancePerLifetimeScope();
             builder.RegisterType<EducationInstitutionService>().As<IEducationInstitutionService>().InstancePerLifetimeScope();
-
+            builder.RegisterType<InterestService>().As<IInterestService>().InstancePerLifetimeScope();
+            builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerLifetimeScope();
+            builder.RegisterType<FileService>().As<IFileService>().InstancePerLifetimeScope();
+            builder.RegisterType<QualificationService>().As<IQualificationService>().InstancePerLifetimeScope();
+            
             
 
 

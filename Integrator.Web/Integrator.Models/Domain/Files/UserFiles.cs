@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Integrator.Models.Domain.Files
 {
-    public partial class UserFiles : BaseEntity
+    public partial class UserFile : BaseEntity
     {
         
         
@@ -14,7 +14,7 @@ namespace Integrator.Models.Domain.Files
         public int IntegratorUserID { get; set; }
 
        
-        public virtual IntegratorFiles IntegratorFile { get; set; }
+        public virtual IntegratorFile IntegratorFile { get; set; }
        
         public virtual IntegratorUser IntegratorUser { get; set; }
     }

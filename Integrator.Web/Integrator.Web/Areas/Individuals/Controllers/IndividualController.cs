@@ -20,9 +20,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         #region Fields
         private readonly IUserViewModelFactory _userViewModelFactory;
         private readonly IUserRegistrationService _userRegistrationService;
-        //private readonly UserManager<IntegratorUser> _userManager;
-        //private readonly RoleManager<IntegratorRole> _roleManager;
-        private readonly SignInManager<IntegratorUser> _signInManager;
+                private readonly SignInManager<IntegratorUser> _signInManager;
         #endregion
 
         #region Cstor

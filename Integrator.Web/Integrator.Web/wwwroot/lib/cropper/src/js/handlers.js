@@ -1,205 +1,229 @@
-    resize: function () {
-      var restore = this.options.restore;
-      var $container = this.$container;
-      var container = this.container;
-      var canvasData;
-      var cropBoxData;
-      var ratio;
+import {
+  ACTION_CROP,
+  ACTION_ZOOM,
+  CLASS_CROP,
+  CLASS_MODAL,
+  DATA_ACTION,
+  DRAG_MODE_CROP,
+  DRAG_MODE_MOVE,
+  DRAG_MODE_NONE,
+  EVENT_CROP_END,
+  EVENT_CROP_MOVE,
+  EVENT_CROP_START,
+  MIN_CONTAINER_WIDTH,
+  MIN_CONTAINER_HEIGHT,
+  REGEXP_ACTIONS,
+} from './constants';
+import {
+  addClass,
+  assign,
+  dispatchEvent,
+  forEach,
+  getData,
+  getPointer,
+  hasClass,
+  isNumber,
+  toggleClass,
+} from './utilities';
 
-      // Check `container` is necessary for IE8
-      if (this.isDisabled || !container) {
-        return;
+export default {
+  resize() {
+    const { options, container, containerData } = this;
+    const minContainerWidth = Number(options.minContainerWidth) || MIN_CONTAINER_WIDTH;
+    const minContainerHeight = Number(options.minContainerHeight) || MIN_CONTAINER_HEIGHT;
+
+    if (this.disabled || containerData.width <= minContainerWidth
+      || containerData.height <= minContainerHeight) {
+      return;
+    }
+
+    const ratio = container.offsetWidth / containerData.width;
+
+    // Resize when width changed or height changed
+    if (ratio !== 1 || container.offsetHeight !== containerData.height) {
+      let canvasData;
+      let cropBoxData;
+
+      if (options.restore) {
+        canvasData = this.getCanvasData();
+        cropBoxData = this.getCropBoxData();
       }
 
-      ratio = $container.width() / container.width;
+      this.render();
 
-      // Resize when width changed or height changed
-      if (ratio !== 1 || $container.height() !== container.height) {
-        if (restore) {
-          canvasData = this.getCanvasData();
-          cropBoxData = this.getCropBoxData();
-        }
-
-        this.render();
-
-        if (restore) {
-          this.setCanvasData($.each(canvasData, function (i, n) {
-            canvasData[i] = n * ratio;
-          }));
-          this.setCropBoxData($.each(cropBoxData, function (i, n) {
-            cropBoxData[i] = n * ratio;
-          }));
-        }
+      if (options.restore) {
+        this.setCanvasData(forEach(canvasData, (n, i) => {
+          canvasData[i] = n * ratio;
+        }));
+        this.setCropBoxData(forEach(cropBoxData, (n, i) => {
+          cropBoxData[i] = n * ratio;
+        }));
       }
-    },
+    }
+  },
 
-    dblclick: function () {
-      if (this.isDisabled) {
-        return;
-      }
+  dblclick() {
+    if (this.disabled || this.options.dragMode === DRAG_MODE_NONE) {
+      return;
+    }
 
-      if (this.$dragBox.hasClass(CLASS_CROP)) {
-        this.setDragMode(ACTION_MOVE);
-      } else {
-        this.setDragMode(ACTION_CROP);
-      }
-    },
+    this.setDragMode(hasClass(this.dragBox, CLASS_CROP) ? DRAG_MODE_MOVE : DRAG_MODE_CROP);
+  },
 
-    wheel: function (event) {
-      var e = event.originalEvent || event;
-      var ratio = num(this.options.wheelZoomRatio) || 0.1;
-      var delta = 1;
+  wheel(event) {
+    const ratio = Number(this.options.wheelZoomRatio) || 0.1;
+    let delta = 1;
 
-      if (this.isDisabled) {
-        return;
-      }
+    if (this.disabled) {
+      return;
+    }
 
-      event.preventDefault();
+    event.preventDefault();
 
-      // Limit wheel speed to prevent zoom too fast
-      if (this.wheeling) {
-        return;
-      }
+    // Limit wheel speed to prevent zoom too fast (#21)
+    if (this.wheeling) {
+      return;
+    }
 
-      this.wheeling = true;
+    this.wheeling = true;
 
-      setTimeout($.proxy(function () {
-        this.wheeling = false;
-      }, this), 50);
+    setTimeout(() => {
+      this.wheeling = false;
+    }, 50);
 
-      if (e.deltaY) {
-        delta = e.deltaY > 0 ? 1 : -1;
-      } else if (e.wheelDelta) {
-        delta = -e.wheelDelta / 120;
-      } else if (e.detail) {
-        delta = e.detail > 0 ? 1 : -1;
-      }
+    if (event.deltaY) {
+      delta = event.deltaY > 0 ? 1 : -1;
+    } else if (event.wheelDelta) {
+      delta = -event.wheelDelta / 120;
+    } else if (event.detail) {
+      delta = event.detail > 0 ? 1 : -1;
+    }
 
-      this.zoom(-delta * ratio, event);
-    },
+    this.zoom(-delta * ratio, event);
+  },
 
-    cropStart: function (event) {
-      var options = this.options;
-      var originalEvent = event.originalEvent;
-      var touches = originalEvent && originalEvent.touches;
-      var e = event;
-      var touchesLength;
-      var action;
+  cropStart(event) {
+    const { buttons, button } = event;
 
-      if (this.isDisabled) {
-        return;
-      }
+    if (
+      this.disabled
 
-      if (touches) {
-        touchesLength = touches.length;
+      // No primary button (Usually the left button)
+      // Note that touch events have no `buttons` or `button` property
+      || (isNumber(buttons) && buttons !== 1)
+      || (isNumber(button) && button !== 0)
 
-        if (touchesLength > 1) {
-          if (options.zoomable && options.zoomOnTouch && touchesLength === 2) {
-            e = touches[1];
-            this.startX2 = e.pageX;
-            this.startY2 = e.pageY;
-            action = ACTION_ZOOM;
-          } else {
-            return;
-          }
-        }
+      // Open context menu
+      || event.ctrlKey
+    ) {
+      return;
+    }
 
-        e = touches[0];
-      }
+    const { options, pointers } = this;
+    let action;
 
-      action = action || $(e.target).data(DATA_ACTION);
+    if (event.changedTouches) {
+      // Handle touch event
+      forEach(event.changedTouches, (touch) => {
+        pointers[touch.identifier] = getPointer(touch);
+      });
+    } else {
+      // Handle mouse event and pointer event
+      pointers[event.pointerId || 0] = getPointer(event);
+    }
 
-      if (REGEXP_ACTIONS.test(action)) {
-        if (this.trigger(EVENT_CROP_START, {
-          originalEvent: originalEvent,
-          action: action
-        }).isDefaultPrevented()) {
-          return;
-        }
+    if (Object.keys(pointers).length > 1 && options.zoomable && options.zoomOnTouch) {
+      action = ACTION_ZOOM;
+    } else {
+      action = getData(event.target, DATA_ACTION);
+    }
 
-        event.preventDefault();
+    if (!REGEXP_ACTIONS.test(action)) {
+      return;
+    }
 
-        this.action = action;
-        this.cropping = false;
+    if (dispatchEvent(this.element, EVENT_CROP_START, {
+      originalEvent: event,
+      action,
+    }) === false) {
+      return;
+    }
 
-        // IE8  has `event.pageX/Y`, but not `event.originalEvent.pageX/Y`
-        // IE10 has `event.originalEvent.pageX/Y`, but not `event.pageX/Y`
-        this.startX = e.pageX || originalEvent && originalEvent.pageX;
-        this.startY = e.pageY || originalEvent && originalEvent.pageY;
+    // This line is required for preventing page zooming in iOS browsers
+    event.preventDefault();
 
-        if (action === ACTION_CROP) {
-          this.cropping = true;
-          this.$dragBox.addClass(CLASS_MODAL);
-        }
-      }
-    },
+    this.action = action;
+    this.cropping = false;
 
-    cropMove: function (event) {
-      var options = this.options;
-      var originalEvent = event.originalEvent;
-      var touches = originalEvent && originalEvent.touches;
-      var e = event;
-      var action = this.action;
-      var touchesLength;
+    if (action === ACTION_CROP) {
+      this.cropping = true;
+      addClass(this.dragBox, CLASS_MODAL);
+    }
+  },
 
-      if (this.isDisabled) {
-        return;
-      }
+  cropMove(event) {
+    const { action } = this;
 
-      if (touches) {
-        touchesLength = touches.length;
+    if (this.disabled || !action) {
+      return;
+    }
 
-        if (touchesLength > 1) {
-          if (options.zoomable && options.zoomOnTouch && touchesLength === 2) {
-            e = touches[1];
-            this.endX2 = e.pageX;
-            this.endY2 = e.pageY;
-          } else {
-            return;
-          }
-        }
+    const { pointers } = this;
 
-        e = touches[0];
-      }
+    event.preventDefault();
 
-      if (action) {
-        if (this.trigger(EVENT_CROP_MOVE, {
-          originalEvent: originalEvent,
-          action: action
-        }).isDefaultPrevented()) {
-          return;
-        }
+    if (dispatchEvent(this.element, EVENT_CROP_MOVE, {
+      originalEvent: event,
+      action,
+    }) === false) {
+      return;
+    }
 
-        event.preventDefault();
+    if (event.changedTouches) {
+      forEach(event.changedTouches, (touch) => {
+        // The first parameter should not be undefined (#432)
+        assign(pointers[touch.identifier] || {}, getPointer(touch, true));
+      });
+    } else {
+      assign(pointers[event.pointerId || 0] || {}, getPointer(event, true));
+    }
 
-        this.endX = e.pageX || originalEvent && originalEvent.pageX;
-        this.endY = e.pageY || originalEvent && originalEvent.pageY;
+    this.change(event);
+  },
 
-        this.change(e.shiftKey, action === ACTION_ZOOM ? event : null);
-      }
-    },
+  cropEnd(event) {
+    if (this.disabled) {
+      return;
+    }
 
-    cropEnd: function (event) {
-      var originalEvent = event.originalEvent;
-      var action = this.action;
+    const { action, pointers } = this;
 
-      if (this.isDisabled) {
-        return;
-      }
+    if (event.changedTouches) {
+      forEach(event.changedTouches, (touch) => {
+        delete pointers[touch.identifier];
+      });
+    } else {
+      delete pointers[event.pointerId || 0];
+    }
 
-      if (action) {
-        event.preventDefault();
+    if (!action) {
+      return;
+    }
 
-        if (this.cropping) {
-          this.cropping = false;
-          this.$dragBox.toggleClass(CLASS_MODAL, this.isCropped && this.options.modal);
-        }
+    event.preventDefault();
 
-        this.action = '';
+    if (!Object.keys(pointers).length) {
+      this.action = '';
+    }
 
-        this.trigger(EVENT_CROP_END, {
-          originalEvent: originalEvent,
-          action: action
-        });
-      }
-    },
+    if (this.cropping) {
+      this.cropping = false;
+      toggleClass(this.dragBox, CLASS_MODAL, this.cropped && this.options.modal);
+    }
+
+    dispatchEvent(this.element, EVENT_CROP_END, {
+      originalEvent: event,
+      action,
+    });
+  },
+};

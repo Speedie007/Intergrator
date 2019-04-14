@@ -1,0 +1,169 @@
+﻿@model CurriculumVitaeViewModel
+@{
+    ViewData["Title"] = "Career Summary";
+    Layout = "~/Areas/Individuals/Views/Shared/_IndividualPortalLayout.cshtml";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Profile</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Dashboard", "Inidviduals")">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a>Curriculum Vitae</a>
+            </li>
+            <li class="active breadcrumb-item">
+                <strong>Career Summary</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Edit Career Summary</h5>
+                    @*<button id="edit" class="ladda-button ladda-Save-button btn btn-primary" type="button">Edit</button>*@
+
+                    <div class="ibox-tools">
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <button id="save" class="ladda-button ladda-Save-button btn btn-primary" type="button">Save Current Summary</button>
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+
+
+
+                    <div class="click2edit wrapper p-md">
+
+                    </div>
+
+                    @Html.Hidden("UserCareerSummary")
+                    @Html.Hidden("Id")
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+x
+
+
+
+
+
+@section Styles {
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/lib/summernote/summernote-bs4.css" />
+        <link rel="stylesheet" href="~/lib/ladda/dist/ladda-themeless.min.css" />
+        <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
+    </environment>
+}
+@section Scripts {
+    <environment names="Development,Staging,Production">
+        <script src="~/lib/summernote/summernote-bs4.js"></script>
+        <script src="~/lib/ladda/dist/spin.min.js"></script>
+        <script src="~/lib/ladda/dist/ladda.min.js"></script>
+        <script src="~/lib/ladda/dist/ladda.jquery.min.js"></script>
+        <script src="~/lib/toastr/toastr.min.js"></script>
+    </environment>
+
+    <script type="text/javascript">
+
+        var _ViewModel = JSON.parse('{}');
+
+        $('#ladda-Save-button').on('click', function () {
+
+            $('.ibox').children('.ibox-content').toggleClass('sk-loading');
+
+        })
+
+        function UpdateCareerSummary() {
+            _ViewModel.Id = $("#Id").val();
+            _ViewModel.UserCareerSummary = $('.click2edit').summernote('code');
+            _ViewModel.UserFirstName = "Brendan";
+             $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateCareerSummary", "CurriculumVitae")',
+                 data: JSON.stringify(_ViewModel),
+                 contentType: "application/json; charset=utf-8",
+                 beforeSend: function (xhr) {
+                     xhr.setRequestHeader("RequestVerificationToken",
+                         $('input:hidden[name="__RequestVerificationToken"]').val());
+                 },
+                dataType: "json",
+                success: function (data) {
+
+                    $('.ibox').children('.ibox-content').removeClass('sk-loading');
+                    toastr.success('Your career summary has been updated!', 'Successfull.');
+                    ////var s = obj.SuccessMessage;
+                    //$('#ShowFileRequerstNotificationConfirmationContent').html(data);
+                    ////debugger;
+                    ////$('#ShowFileRequerstNotificationConfirmationModal').modal(options);
+                    //$('#ShowFileRequerstNotificationConfirmationModal').modal('show');
+                },
+                error: function (xhr, textStatus, error) {
+                    $('.ibox').children('.ibox-content').addClass('sk-loading');
+                    //$('#ShowFileRequerstNotificationConfirmationContent').html(error);
+                    ////$('#ShowFileRequerstNotificationConfirmationModal').modal(options);
+                    //$('#ShowFileRequerstNotificationConfirmationModal').modal('show');
+                    alert('Unable to send request - error: ' + error);
+
+                 }
+             });
+         }
+
+        $(document).ready(function () {
+
+            $('.click2edit').summernote('code', $('#UserCareerSummary').val());
+
+
+            var l = $('.ladda-Save-button').ladda();
+
+            l.click(function () {
+                // Start loading
+                l.ladda('start');
+                $('.ibox').children('.ibox-content').addClass('sk-loading');
+                save();
+
+                // Timeout example
+                // Do something in backend and then stop ladda
+                setTimeout(function () {
+                    l.ladda('stop');
+                }, 1000)
+
+
+            });
+
+            var save = function () {
+
+                var aHTML = $('.click2edit').summernote('code'); //save HTML If you need(aHTML: array).
+                $('#UserCareerSummary').val(aHTML);
+                UpdateCareerSummary();
+                //$("#output").html(aHTML);
+                //alert('Save Completed!');
+                //$('.click2edit').summernote('destroy');
+            };
+        });
+
+
+    </script>
+}

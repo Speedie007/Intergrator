@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Integrator.Factories.CurriculumVitae;
+using Integrator.Models.Domain.Common;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Models.ViewModels.CurriculumVitaes;
@@ -24,6 +25,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         private readonly IUserService _userService;
         private readonly IEducationInstitutionService _educationInstitutionService;
         private IEntityCRUDResponse _entityCRUDResponse;
+        private readonly IInterestService _interestService;
 
         #endregion
 
@@ -33,7 +35,8 @@ namespace Integrator.Web.Areas.Individuals.Controllers
                 ICurriculumVitaeService curriculumVitaeService,
                 IUserService userService,
                 IEducationInstitutionService educationInstitutionService,
-                IEntityCRUDResponse entityCRUDResponse
+                IEntityCRUDResponse entityCRUDResponse,
+                IInterestService interestService
             )
         {
             this._curriculumVitaeViewModelFactory = curriculumVitaeViewModelFactory;
@@ -41,6 +44,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
             this._userService = userService;
             this._educationInstitutionService = educationInstitutionService;
             this._entityCRUDResponse = entityCRUDResponse;
+            this._interestService = interestService;
         }
         #endregion
 
@@ -277,7 +281,6 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         {
             var model = _curriculumVitaeViewModelFactory.prepareEditCurriuclumVitaeQualifications();
             return View(model);
-
         }
 
         /// <summary>
@@ -298,7 +301,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
                     YearStartedQualification = new DateTime(Convert.ToInt32(model.YearStartedQualification), 1, 1),
                     YearCompletedQualification = new DateTime(Convert.ToInt32(model.YearCompletedQualification), 1, 1),
                     EductaionalInstitutionID = model.EductaionalInstitutionID,
-                     QualificationAverage = model.QualificationAverage
+                    QualificationAverage = model.QualificationAverage
 
                 });
 
@@ -313,6 +316,17 @@ namespace Integrator.Web.Areas.Individuals.Controllers
                 //Todo: Redirect To Error Page and Log Errors
                 return RedirectToAction("CurriculumVitaeEducation");
             }
+        }
+
+        [HttpPost]
+        public IActionResult RemoveUserQualification([FromBody] UserQualificationViewModel request)
+        {
+            _entityCRUDResponse = _userService.DeleteUserQualification(new UserQualifications()
+            {
+                Id = request.Id
+            });
+
+            return new JsonResult(_entityCRUDResponse);
         }
 
         /// <summary>
@@ -344,18 +358,83 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         [HttpGet]
         public IActionResult CurriculumVitaLanguages()
         {
-
-            return View();
+            var model = _curriculumVitaeViewModelFactory.PrepareEditCurriculumVitaeLanguages();
+            return View(model);
         }
+        [HttpPost]
+        public IActionResult AddUserCurriculumVitaeLanguage([FromBody] EditUserLanguageViewModel request)
+        {
+
+            _entityCRUDResponse = _userService.AddUserLanguage(new IntegratorUserLanguages()
+            {
+                
+                LanguageID = request.LanguageID,
+                IntegratorUserID = _userService.GetUserID(),
+                IsPrimaryLanguage = request.IsPrimaryLanguage,
+                LanguageProficiencyLevel = request.LanguageProficiencyLevel,
+                CanSpeakAndWrite = request.CanSpeakAndWrite
+            });
+
+            return new JsonResult(_entityCRUDResponse);
+        }
+        [HttpPost]
+        public IActionResult RemoveUserCurriculumVitaeLanguage([FromBody] UserInterestViewModel request)
+        {
+
+            _entityCRUDResponse = _userService.DeleteUserLanguage(new IntegratorUserLanguages()
+            {
+                Id = request.Id
+            });
+
+            return new JsonResult(_entityCRUDResponse);
+        }
+        
         #endregion
         #region Edit CV Interests
         [HttpGet]
         public IActionResult CurriculumVitaeInterests()
         {
-
-            return View();
+            var model = _curriculumVitaeViewModelFactory.prepareEditCurriculumVitaeInterests();
+            return View(model);
         }
 
+        [HttpPost]
+        public IActionResult AddNewCurriculumVitaeInterests([FromBody] UserInterestViewModel request)
+        {
+
+            _entityCRUDResponse = _interestService.AddInterest(new Interest()
+            {
+                Id = request.Id,
+                AnInterest = request.Interest
+            });
+
+            return new JsonResult(_entityCRUDResponse);
+        }
+        [HttpPost]
+        public IActionResult AddUserCurriculumVitaeInterests([FromBody] EditUserInterestViewModel request)
+        {
+
+            _entityCRUDResponse = _userService.AddUserInterest(new IntegratorUserInterest()
+            {
+                Id = request.Id,
+                InterestLevel = request.InterestLevel,
+                IntegratorUserID = _userService.GetUserID(),
+                InterestID = request.InterestID
+            });
+
+            return new JsonResult(_entityCRUDResponse);
+        }
+        [HttpPost]
+        public IActionResult RemoveUserCurriculumVitaeInterests([FromBody] UserInterestViewModel request)
+        {
+
+            _entityCRUDResponse = _userService.DeleteUserInterest(new IntegratorUserInterest()
+            {
+                Id = request.Id
+            });
+
+            return new JsonResult(_entityCRUDResponse);
+        }
 
         #endregion
 

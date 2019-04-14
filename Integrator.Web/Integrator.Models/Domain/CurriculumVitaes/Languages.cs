@@ -7,12 +7,27 @@ namespace Integrator.Models.Domain.CurriculumVitaes
     {
         public LanguageList()
         {
-            IntegratorUserLanguages = new HashSet<IntegratorUserLanguages>();
+            UserLanguages = new HashSet<IntegratorUserLanguages>();
         }
 
-        //public int LanguageId { get; set; }
         public string Language { get; set; }
 
-        public virtual ICollection<IntegratorUserLanguages> IntegratorUserLanguages { get; set; }
+        public virtual ICollection<IntegratorUserLanguages> UserLanguages { get; set; }
+    }
+
+    public class LanguageComparer : IEqualityComparer<LanguageList>
+    {
+        public bool Equals(LanguageList x, LanguageList y)
+        {
+            if (x.Id == y.Id && x.Language.ToLower() == y.Language.ToLower())
+                return true;
+
+            return false;
+        }
+
+        public int GetHashCode(LanguageList obj)
+        {
+            return obj.Id.GetHashCode();
+        }
     }
 }

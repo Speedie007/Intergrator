@@ -12,22 +12,20 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        @*<link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />*@
-        <link href="~/fontawesome/css/all.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" href="~/css/animate.css" />
         <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-
-        <link href="~/css/CurriculumVitea/CurriculumVitaeStyle.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+        @*<link href="~/css/CurriculumVitea/CurriculumVitaeStyle.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">*@
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        @*<link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />*@
-        <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="~/css/animate.css" />
         <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-        <link href="~/css/CurriculumVitea/CurriculumVitaeStyle.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+        @*<link href="~/css/CurriculumVitea/CurriculumVitaeStyle.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">*@
+       
     </environment>
 
 
@@ -70,8 +68,8 @@
         <script src="~/lib/slimScroll/jquery.slimscroll.js"></script>
         <script src="~/lib/pace/pace.js"></script>
         <script src="~/js/script.js" asp-append-version="true"></script>
+        @*<script src="~/fontawesome/js/all.js"></script>*@
 
-        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
         <!-- Only for demo purpose -->
         @*<script src="~/js/skin.config.js"></script>*@
@@ -84,8 +82,7 @@
         <script src="~/lib/pace/pace.min.js"></script>
         <script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
         <script src="~/js/script.js" asp-append-version="true"></script>
-        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-       
+
     </environment>
 
     @RenderSection("scripts", required: false)

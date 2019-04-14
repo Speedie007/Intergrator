@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Integrator.Data.Interfaces;
 using Integrator.Models.Domain.CurriculumVitaes;
@@ -26,9 +27,11 @@ namespace Integrator.Services.Common
             this._entityCRUDResponse = entityCRUDResponse;
         }
         #endregion
+
+
         public IEntityCRUDResponse AddEducationInstitution(EductaionalInstitutions entity)
         {
-           
+
             try
             {
                 _eductaionalInstitutionsRepository.Insert(entity);
@@ -44,6 +47,13 @@ namespace Integrator.Services.Common
             }
 
             return _entityCRUDResponse;
+        }
+
+        public List<EductaionalInstitutions> ListEductaionalInstitutions()
+        {
+            var query = _eductaionalInstitutionsRepository.Table;
+
+            return query.ToList();
         }
 
         public IEntityCRUDResponse UpdateEducationInstitution(EductaionalInstitutions entity)

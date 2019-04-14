@@ -6,11 +6,14 @@
     [QualificationTitle]         VARCHAR (175) NOT NULL,
     [YearStartedQualification]   DATE          DEFAULT (getdate()) NOT NULL,
     [YearCompletedQualification] DATE          DEFAULT (getdate()) NOT NULL,
+    [QualificationAverage]       FLOAT (53)    NOT NULL,
     CONSTRAINT [PK_UserQualifications] PRIMARY KEY CLUSTERED ([UserQualificationID] ASC),
     CONSTRAINT [FK_UserQualifications_EductaionalInstitutions] FOREIGN KEY ([EductaionalInstitutionID]) REFERENCES [dbo].[EductaionalInstitutions] ([EductaionalInstitutionID]),
     CONSTRAINT [FK_UserQualifications_IntegratorUsers] FOREIGN KEY ([IntegratorUserID]) REFERENCES [dbo].[IntegratorUsers] ([IntegratorUserID]),
     CONSTRAINT [FK_UserQualifications_QualificationLevels] FOREIGN KEY ([QualificationLevelID]) REFERENCES [dbo].[QualificationLevels] ([QualificationLevelID])
 );
+
+
 
 
 

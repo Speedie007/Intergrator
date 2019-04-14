@@ -20,33 +20,33 @@
                     IN+
                 </div>
             </li>
-            <li class="special_link @Html.IsSelected(controller: " Individual")">
-                <a href="@Url.Action("DashBoard", "Individual")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Dashboard</span></a>
+            <li class="special_link @Html.IsSelected(controller: " DashBoard")">
+                <a href="@Url.Action("Index", "DashBoard")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Dashboard</span></a>
             </li>
 
-            <li class="@Html.IsSelected(controller: "Individual")">
-                <a href="@Url.Action("Profile", "Individual")"><i class="far fa-address-card"></i> <span class="nav-label" data-i18n="nav.profile">Profile</span><span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Individual", cssClass: "in")">
-                    <li class="@Html.IsSelected(action: "Profile")"><a href="@Url.Action("Profile", "Individual")">View Profile</a></li>
-                    <li class="@Html.IsSelected(action: "EditProfile")"><a href="@Url.Action("EditProfile", "Individual")">Edit Profile</a></li>
+            <li class="@Html.IsSelected(controller: "Profile")">
+                <a href="@Url.Action("Index", "Profile")"><i class="fa fa-users"></i> <span class="nav-label" data-i18n="nav.profile">Profile</span><span class="fa arrow"></span> </a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Profile", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Profile")">View Profile</a></li>
+                    <li class="@Html.IsSelected(action: "EditProfile")"><a href="@Url.Action("EditProfile", "Profile")">Edit Profile</a></li>
 
                 </ul>
             </li>
 
-            <li class="@Html.IsSelected(controller: "IndividualCurriculumVitae")">
-                <a asp-action="CurriculumVitae" asp-controller="IndividualCurriculumVitae" asp-area="Individuals"><i class="fas fa-medal"></i> <span class="nav-label" data-i18n="nav.curriculumvitae">Curriculum Vitae</span><span class="fa arrow"></span></a>
+            <li class="@Html.IsSelected(controller: "CurriculumVitae")">
+                <a asp-action="Index" asp-controller="CurriculumVitae"><i class="fa fa-graduation-cap"></i> <span class="nav-label" data-i18n="nav.curriculumvitae">Curriculum Vitae</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse ">
-                    <li class="@Html.IsSelected(action: "CurriculumVitae")"><a asp-area="Individuals" asp-controller="IndividualCurriculumVitae" asp-action="CurriculumVitae">Preview CV</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a asp-area="Individuals" asp-controller="CurriculumVitae" asp-action="Index">Preview CV</a></li>
                     <li>
                         <a href="#">Edit CV<span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level collapse  @Html.IsSelected(controller: "IndividualCurriculumVitae", cssClass: "in")">
-                            <li class="@Html.IsSelected(action: "CurriculumVitaePicture")"><a href="@Url.Action("CurriculumVitaePicture", "IndividualCurriculumVitae")">Profile Picture</a></li>
-                            <li class="@Html.IsSelected(action: "CurriculumVitaeWorkExperiences")"><a href="@Url.Action("CurriculumVitaeWorkExperiences", "IndividualCurriculumVitae")">Work Experiences</a></li>
-                            <li class="@Html.IsSelected(action: "CurriculumVitaeCareerSummary")"><a href="@Url.Action("CurriculumVitaeCareerSummary", "IndividualCurriculumVitae")">Career Summary</a></li>
-                            <li class="@Html.IsSelected(action: "CurriculumVitaeEducation")"><a href="@Url.Action("CurriculumVitaeEducation", "IndividualCurriculumVitae")">Education</a></li>
-                            <li class="@Html.IsSelected(action: "CurriculumVitaeAwards")"><a href="@Url.Action("CurriculumVitaeAwards", "IndividualCurriculumVitae")">Awards</a></li>
-                            <li class="@Html.IsSelected(action: "CurriculumVitaLanguages")"><a href="@Url.Action("CurriculumVitaLanguages", "IndividualCurriculumVitae")">Languages</a></li>
-                            <li class="@Html.IsSelected(action: "CurriculumVitaeInterests")"><a href="@Url.Action("CurriculumVitaeInterests", "IndividualCurriculumVitae")">Interests</a></li>
+                        <ul class="nav nav-third-level collapse  @Html.IsSelected(controller: "CurriculumVitae", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "Picture")"><a href="@Url.Action("NewPicture", "CurriculumVitae")">Profile Picture</a></li>
+                            <li class="@Html.IsSelected(action: "WorkExperiences")"><a href="@Url.Action("WorkExperiences", "CurriculumVitae")">Work Experiences</a></li>
+                            <li class="@Html.IsSelected(action: "CareerSummary")"><a href="@Url.Action("CareerSummary", "CurriculumVitae")">Career Summary</a></li>
+                            <li class="@Html.IsSelected(action: "Education")"><a href="@Url.Action("Education", "CurriculumVitae")">Education</a></li>
+                            <li class="@Html.IsSelected(action: "Awards")"><a href="@Url.Action("Awards", "CurriculumVitae")">Awards</a></li>
+                            <li class="@Html.IsSelected(action: "Languages")"><a href="@Url.Action("Languages", "CurriculumVitae")">Languages</a></li>
+                            <li class="@Html.IsSelected(action: "Interests")"><a href="@Url.Action("Interests", "CurriculumVitae")">Interests</a></li>
                         </ul>
                     </li>
                 </ul>

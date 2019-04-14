@@ -8,6 +8,7 @@ using Integrator.Models.ViewModels.Users;
 using Integrator.Services.KnowledgeBase.Users;
 using Integrator.Services.Users;
 using Integrator.Web.Areas.Identity.Pages.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,12 @@ namespace Integrator.Web.Controllers
         private readonly RoleManager<IntegratorRole> _roleManager;
         private readonly IUserKnowledgeBaseService _userIndustryService;
 
+        [TempData]
+        public string ErrorMessage { get; set; }
 
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        public string ReturnUrl { get; set; }
 
         // private Task<IntegratorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User);
 
@@ -62,23 +68,11 @@ namespace Integrator.Web.Controllers
         {
 
             var CurrentUserLoggedIn = await _userManager.GetUserAsync(User);
-
-
-            var currentUserIndustries = (from a in _userManager.GetUserAsync(User).Result.IntegratorUserIndustries
-                                         where a.IntegratorUserID == CurrentUserLoggedIn.Id
-                                         select a.CoreKBIndustry).ToList();
-
-            var x = _userIndustryService.ListAllIndustries(CurrentUserLoggedIn.Id);
-            foreach (var y in x)
-            {
-                var dd = y.Industry;
-            }
-
-
             ICollection<IntegratorRole> UserRoles = (from AllRoles in _roleManager.Roles
                                                      from b in AllRoles.UserRoles
                                                      where b.UserId == CurrentUserLoggedIn.Id
                                                      select AllRoles).ToList<IntegratorRole>();
+
 
             if (UserRoles.Count > 0)
             {
@@ -108,8 +102,22 @@ namespace Integrator.Web.Controllers
         [HttpGet]
         [AllowAnonymous]
 
-        public virtual IActionResult Login()
+        public virtual async Task<IActionResult> Login(string returnUrl = null)
         {
+            if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                ModelState.AddModelError(string.Empty, ErrorMessage);
+            }
+
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            ReturnUrl = returnUrl;
+
             var model = _userViewModelFactory.PrepareLoginModel();
             return View(model);
         }
@@ -117,8 +125,9 @@ namespace Integrator.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public virtual async Task<IActionResult> Login(LoginViewModel model)
+        public virtual async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            //returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
             {
@@ -131,6 +140,10 @@ namespace Integrator.Web.Controllers
                     _logger.LogInformation("User logged in.");
                     //get role that the user belongs to
                     var CurrentUserLoggedIn = await _userManager.FindByEmailAsync(model.Email);
+                    if (returnUrl != null)
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
 
                     ICollection<IntegratorRole> UserRoles = (from AllRoles in _roleManager.Roles
                                                              from b in AllRoles.UserRoles
@@ -219,7 +232,7 @@ namespace Integrator.Web.Controllers
                     RedirectNextPage = RedirectToAction("Home", "Agent");
                     break;
                 case "individual":
-                    RedirectNextPage = RedirectToAction("DashBoard", "Individual", new { area = "Individuals" });
+                    RedirectNextPage = RedirectToAction("Index", "DashBoard", new { area = "Individuals" });
                     break;
                 case "company":
                     RedirectNextPage = RedirectToAction("Home", "Company");

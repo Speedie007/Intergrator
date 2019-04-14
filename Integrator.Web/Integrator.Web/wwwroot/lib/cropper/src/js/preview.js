@@ -1,100 +1,145 @@
-    initPreview: function () {
-      var crossOrigin = getCrossOrigin(this.crossOrigin);
-      var url = crossOrigin ? this.crossOriginUrl : this.url;
-      var $clone2;
+import { DATA_PREVIEW } from './constants';
+import {
+  assign,
+  forEach,
+  getData,
+  getTransforms,
+  removeData,
+  setData,
+  setStyle,
+} from './utilities';
 
-      this.$preview = $(this.options.preview);
-      this.$clone2 = $clone2 = $('<img' + crossOrigin + ' src="' + url + '">');
-      this.$viewBox.html($clone2);
-      this.$preview.each(function () {
-        var $this = $(this);
+export default {
+  initPreview() {
+    const { crossOrigin } = this;
+    const { preview } = this.options;
+    const url = crossOrigin ? this.crossOriginUrl : this.url;
+    const image = document.createElement('img');
 
-        // Save the original size for recover
-        $this.data(DATA_PREVIEW, {
-          width: $this.width(),
-          height: $this.height(),
-          html: $this.html()
-        });
+    if (crossOrigin) {
+      image.crossOrigin = crossOrigin;
+    }
 
-        /**
-         * Override img element styles
-         * Add `display:block` to avoid margin top issue
-         * (Occur only when margin-top <= -height)
-         */
-        $this.html(
-          '<img' + crossOrigin + ' src="' + url + '" style="' +
-          'display:block;width:100%;height:auto;' +
-          'min-width:0!important;min-height:0!important;' +
-          'max-width:none!important;max-height:none!important;' +
-          'image-orientation:0deg!important;">'
-        );
+    image.src = url;
+    this.viewBox.appendChild(image);
+    this.viewBoxImage = image;
+
+    if (!preview) {
+      return;
+    }
+
+    let previews = preview;
+
+    if (typeof preview === 'string') {
+      previews = this.element.ownerDocument.querySelectorAll(preview);
+    } else if (preview.querySelector) {
+      previews = [preview];
+    }
+
+    this.previews = previews;
+
+    forEach(previews, (el) => {
+      const img = document.createElement('img');
+
+      // Save the original size for recover
+      setData(el, DATA_PREVIEW, {
+        width: el.offsetWidth,
+        height: el.offsetHeight,
+        html: el.innerHTML,
       });
-    },
 
-    resetPreview: function () {
-      this.$preview.each(function () {
-        var $this = $(this);
-        var data = $this.data(DATA_PREVIEW);
-
-        $this.css({
-          width: data.width,
-          height: data.height
-        }).html(data.html).removeData(DATA_PREVIEW);
-      });
-    },
-
-    preview: function () {
-      var image = this.image;
-      var canvas = this.canvas;
-      var cropBox = this.cropBox;
-      var cropBoxWidth = cropBox.width;
-      var cropBoxHeight = cropBox.height;
-      var width = image.width;
-      var height = image.height;
-      var left = cropBox.left - canvas.left - image.left;
-      var top = cropBox.top - canvas.top - image.top;
-
-      if (!this.isCropped || this.isDisabled) {
-        return;
+      if (crossOrigin) {
+        img.crossOrigin = crossOrigin;
       }
 
-      this.$clone2.css({
-        width: width,
-        height: height,
-        marginLeft: -left,
-        marginTop: -top,
-        transform: getTransform(image)
+      img.src = url;
+
+      /**
+       * Override img element styles
+       * Add `display:block` to avoid margin top issue
+       * Add `height:auto` to override `height` attribute on IE8
+       * (Occur only when margin-top <= -height)
+       */
+      img.style.cssText = (
+        'display:block;'
+        + 'width:100%;'
+        + 'height:auto;'
+        + 'min-width:0!important;'
+        + 'min-height:0!important;'
+        + 'max-width:none!important;'
+        + 'max-height:none!important;'
+        + 'image-orientation:0deg!important;"'
+      );
+
+      el.innerHTML = '';
+      el.appendChild(img);
+    });
+  },
+
+  resetPreview() {
+    forEach(this.previews, (element) => {
+      const data = getData(element, DATA_PREVIEW);
+
+      setStyle(element, {
+        width: data.width,
+        height: data.height,
       });
 
-      this.$preview.each(function () {
-        var $this = $(this);
-        var data = $this.data(DATA_PREVIEW);
-        var originalWidth = data.width;
-        var originalHeight = data.height;
-        var newWidth = originalWidth;
-        var newHeight = originalHeight;
-        var ratio = 1;
+      element.innerHTML = data.html;
+      removeData(element, DATA_PREVIEW);
+    });
+  },
 
-        if (cropBoxWidth) {
-          ratio = originalWidth / cropBoxWidth;
-          newHeight = cropBoxHeight * ratio;
-        }
+  preview() {
+    const { imageData, canvasData, cropBoxData } = this;
+    const { width: cropBoxWidth, height: cropBoxHeight } = cropBoxData;
+    const { width, height } = imageData;
+    const left = cropBoxData.left - canvasData.left - imageData.left;
+    const top = cropBoxData.top - canvasData.top - imageData.top;
 
-        if (cropBoxHeight && newHeight > originalHeight) {
-          ratio = originalHeight / cropBoxHeight;
-          newWidth = cropBoxWidth * ratio;
-          newHeight = originalHeight;
-        }
+    if (!this.cropped || this.disabled) {
+      return;
+    }
 
-        $this.css({
-          width: newWidth,
-          height: newHeight
-        }).find('img').css({
-          width: width * ratio,
-          height: height * ratio,
-          marginLeft: -left * ratio,
-          marginTop: -top * ratio,
-          transform: getTransform(image)
-        });
+    setStyle(this.viewBoxImage, assign({
+      width,
+      height,
+    }, getTransforms(assign({
+      translateX: -left,
+      translateY: -top,
+    }, imageData))));
+
+    forEach(this.previews, (element) => {
+      const data = getData(element, DATA_PREVIEW);
+      const originalWidth = data.width;
+      const originalHeight = data.height;
+      let newWidth = originalWidth;
+      let newHeight = originalHeight;
+      let ratio = 1;
+
+      if (cropBoxWidth) {
+        ratio = originalWidth / cropBoxWidth;
+        newHeight = cropBoxHeight * ratio;
+      }
+
+      if (cropBoxHeight && newHeight > originalHeight) {
+        ratio = originalHeight / cropBoxHeight;
+        newWidth = cropBoxWidth * ratio;
+        newHeight = originalHeight;
+      }
+
+      setStyle(element, {
+        width: newWidth,
+        height: newHeight,
       });
-    },
+
+      setStyle(element.getElementsByTagName('img')[0], assign({
+        width: width * ratio,
+        height: height * ratio,
+      }, getTransforms(assign({
+        translateX: -left * ratio,
+        translateY: -top * ratio,
+      }, imageData))));
+    });
+  },
+};

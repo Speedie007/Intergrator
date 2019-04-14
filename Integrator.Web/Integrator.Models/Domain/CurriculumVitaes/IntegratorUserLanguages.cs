@@ -11,6 +11,7 @@ namespace Integrator.Models.Domain.CurriculumVitaes
         public int LanguageID { get; set; }
         public bool IsPrimaryLanguage { get; set; }
         public bool CanSpeakAndWrite { get; set; }
+        public double LanguageProficiencyLevel { get; set; }
 
         public virtual IntegratorUser IntegratorUser { get; set; }
         public virtual LanguageList LanguageSpoken { get; set; }

@@ -11,5 +11,7 @@ namespace Integrator.Services.Common
         IEntityCRUDResponse AddEducationInstitution(EductaionalInstitutions entity);
 
         IEntityCRUDResponse UpdateEducationInstitution(EductaionalInstitutions entity);
+
+        List<EductaionalInstitutions> ListEductaionalInstitutions();
     }
 }

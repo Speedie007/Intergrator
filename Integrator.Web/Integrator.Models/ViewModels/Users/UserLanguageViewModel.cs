@@ -14,6 +14,10 @@ namespace Integrator.Models.ViewModels.Users
         public Boolean IsPrimaryLanguage { get; set; }
         [Display(Name = "Can speak & write")]
         public Boolean CanSpeakAndWrite { get; set; }
+        [Display(Name = "Can Only Write")]
+        public Boolean CanOnlyWrite { get; set; }
+        [Display(Name = "Proficiency Level")]
+        public double LanguageProficiencyLevel { get; set; }
 
     }
 }

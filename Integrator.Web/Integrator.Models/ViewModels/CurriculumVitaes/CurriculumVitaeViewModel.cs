@@ -24,6 +24,7 @@ namespace Integrator.Models.ViewModels.CurriculumVitaes
             UserJobSummary = new List<UserJobSummaryViewModel>();
         }
         #endregion
+        public string UserPictureImageType { get; set; }
         public byte[] UserPicture { get; set; }
 
         [Display(Name ="Date Last Update")]

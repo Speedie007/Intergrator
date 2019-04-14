@@ -32,10 +32,10 @@
  * http://fortawesome.github.io/Font-Awesome/
 */
 
-.metismenu .fas.arrow:before {
-    content: "\f104";
+.metismenu .fa.arrow:before {
+  content: "\f104";
 }
-.metismenu .active > a > .fas.arrow:before {
+.metismenu .active > a > .fa.arrow:before {
   content: "\f107";
 }
 

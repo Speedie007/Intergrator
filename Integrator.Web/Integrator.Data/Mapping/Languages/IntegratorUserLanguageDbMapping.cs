@@ -27,7 +27,7 @@ namespace Integrator.Data.Mapping.Languages
                 .HasConstraintName("FK_IntegratorUserLanguages_IntegratorUsers");
 
             builder.HasOne(d => d.LanguageSpoken)
-                .WithMany(p => p.IntegratorUserLanguages)
+                .WithMany(p => p.UserLanguages)
                 .HasForeignKey(d => d.LanguageID)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_IntegratorUserLanguages_Languages");

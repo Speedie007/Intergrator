@@ -1,12 +1,13 @@
 ﻿CREATE TABLE [dbo].[UserPictures] (
-    [PictureID]        INT      IDENTITY (1, 1) NOT NULL,
-    [IntegratorUserID] INT      NOT NULL,
-    [FilesID]          INT      NOT NULL,
-    [DateLastUpdated]  DATETIME NOT NULL,
-    CONSTRAINT [PK_UserPictures] PRIMARY KEY CLUSTERED ([PictureID] ASC),
-    CONSTRAINT [FK_UserPicture_IntegratorFiles] FOREIGN KEY ([FilesID]) REFERENCES [dbo].[IntegratorFiles] ([FileID]),
-    CONSTRAINT [FK_UserPicture_Users] FOREIGN KEY ([IntegratorUserID]) REFERENCES [dbo].[IntegratorUsers] ([IntegratorUserID])
+    [FileID]                  INT NOT NULL,
+    [IntegratorUserID]        INT NOT NULL,
+    [IsCurrentProfilePicture] BIT NOT NULL,
+    CONSTRAINT [PK_UserPictures] PRIMARY KEY CLUSTERED ([FileID] ASC),
+    CONSTRAINT [FK_UserPicture_Users] FOREIGN KEY ([IntegratorUserID]) REFERENCES [dbo].[IntegratorUsers] ([IntegratorUserID]),
+    CONSTRAINT [FK_UserPictures_IntegratorFiles] FOREIGN KEY ([FileID]) REFERENCES [dbo].[IntegratorFiles] ([FileID]) ON DELETE CASCADE
 );
+
+
 
 
 GO
@@ -15,6 +16,5 @@ CREATE NONCLUSTERED INDEX [IX_UserPictures_IntegratorUserID]
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_UserPictures_FilesID]
-    ON [dbo].[UserPictures]([FilesID] ASC);
+
 

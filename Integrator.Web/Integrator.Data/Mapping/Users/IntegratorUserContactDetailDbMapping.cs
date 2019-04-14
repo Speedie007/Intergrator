@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.Users
 {
-    public partial class IntegratorUserContactDetailDbMapping : IntegratorEntityTypeConfiguration<IntegratorUserContactDetails>
+    public partial class IntegratorUserContactDetailDbMapping : IntegratorEntityTypeConfiguration<IntegratorUserContactDetail>
     {/// <summary>
      /// Configures the entity
      /// </summary>
      /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<IntegratorUserContactDetails> builder)
+        public override void Configure(EntityTypeBuilder<IntegratorUserContactDetail> builder)
         {
             builder.ToTable("IntegratorUserContactDetails")
                 .Property(x => x.Id).HasColumnName("IntegratorUserContactDetailID");

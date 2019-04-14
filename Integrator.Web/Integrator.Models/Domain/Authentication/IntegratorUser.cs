@@ -31,15 +31,15 @@ namespace Integrator.Models.Domain.Authentication
             #endregion
 
             #region User Pictures and Files
-            UserFiles = new HashSet<UserFiles>();
-            UserPicture = new HashSet<UserPictures>();
+            UserFiles = new HashSet<UserFile>();
+            UserPicture = new HashSet<UserPicture>();
 
             #endregion
 
             #region CurriculumVitae
             IntegratorUserInterests = new HashSet<IntegratorUserInterest>();
             IntegratorUserLanguages = new HashSet<IntegratorUserLanguages>();
-            UserQualifications = new HashSet<UserQualifications>();
+            UserQualifications = new HashSet<UserQualification>();
             CurriculumViteas = new HashSet<CurriculumVitea>();
             IntegratorUserAwards = new HashSet<IntegratorUserAwards>();
             #endregion
@@ -74,8 +74,8 @@ namespace Integrator.Models.Domain.Authentication
         #endregion User Knowledgebase
 
         #region User Pictures and Files
-        public virtual ICollection<UserFiles> UserFiles { get; set; }
-        public virtual ICollection<UserPictures> UserPicture { get; set; }
+        public virtual ICollection<UserFile> UserFiles { get; set; }
+        public virtual ICollection<UserPicture> UserPicture { get; set; }
 
         #endregion
 
@@ -84,11 +84,11 @@ namespace Integrator.Models.Domain.Authentication
         public virtual ICollection<IntegratorUserAwards> IntegratorUserAwards { get; set; }
         public virtual ICollection<IntegratorUserInterest> IntegratorUserInterests { get; set; }
         public virtual ICollection<IntegratorUserLanguages> IntegratorUserLanguages { get; set; }
-        public virtual ICollection<UserQualifications> UserQualifications { get; set; }
+        public virtual ICollection<UserQualification> UserQualifications { get; set; }
         #endregion
 
         #region Contact Details
-        public virtual ICollection<IntegratorUserContactDetails> IntegratorUserContactDetails { get; set; }
+        public virtual ICollection<IntegratorUserContactDetail> IntegratorUserContactDetails { get; set; }
 
         #endregion
 

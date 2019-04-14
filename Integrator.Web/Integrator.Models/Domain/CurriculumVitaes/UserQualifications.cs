@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Integrator.Models.Domain.CurriculumVitaes
 {
-    public partial class UserQualifications : BaseEntity
+    public partial class UserQualification : BaseEntity
     {
         //public int UserQualificationID { get; set; }
         public int IntegratorUserID { get; set; }

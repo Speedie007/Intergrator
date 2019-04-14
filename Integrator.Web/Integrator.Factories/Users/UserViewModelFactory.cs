@@ -38,10 +38,11 @@ namespace Integrator.Factories.Users
             return model;
         }
 
-        public RegisterViewModel PrepareRegistrationLoginModel()
+        public RegisterViewModel PrepareRegistrationLoginModel(string Role)
         {
             //Currently No Additional Configuring is required.
             var model = new RegisterViewModel();
+            model.UserRole = Role;
             //using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             //{
             //    var _roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IntegratorRole>>();

@@ -7,7 +7,8 @@ namespace DAtabasetables
     {
         public IntegratorUsers()
         {
-            IntegratorUserInterests = new HashSet<IntegratorUserInterests>();
+            UserFiles = new HashSet<UserFiles>();
+            UserPictures = new HashSet<UserPictures>();
         }
 
         public int IntegratorUserId { get; set; }
@@ -29,6 +30,7 @@ namespace DAtabasetables
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public virtual ICollection<IntegratorUserInterests> IntegratorUserInterests { get; set; }
+        public virtual ICollection<UserFiles> UserFiles { get; set; }
+        public virtual ICollection<UserPictures> UserPictures { get; set; }
     }
 }

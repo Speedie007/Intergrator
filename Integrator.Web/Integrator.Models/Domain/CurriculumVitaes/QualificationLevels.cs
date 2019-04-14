@@ -7,12 +7,12 @@ namespace Integrator.Models.Domain.CurriculumVitaes
     {
         public QualificationLevels()
         {
-            UserQualifications = new HashSet<UserQualifications>();
+            UserQualifications = new HashSet<UserQualification>();
         }
 
         //public int QualificationLevelId { get; set; }
         public string QualificationLevel { get; set; }
 
-        public virtual ICollection<UserQualifications> UserQualifications { get; set; }
+        public virtual ICollection<UserQualification> UserQualifications { get; set; }
     }
 }

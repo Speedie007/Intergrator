@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.CurriculumViteas
 {
-    public partial  class WorkExperienceReferenceContactDetailDbMapping : IntegratorEntityTypeConfiguration<WorkExperienceReferenceContactDetails>
+    public partial  class WorkExperienceReferenceContactDetailDbMapping : IntegratorEntityTypeConfiguration<WorkExperienceReferenceContactDetail>
     {/// <summary>
      /// Configures the entity
      /// </summary>
      /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<WorkExperienceReferenceContactDetails> builder)
+        public override void Configure(EntityTypeBuilder<WorkExperienceReferenceContactDetail> builder)
         {
             builder.ToTable("WorkExperienceReferenceContactDetails")
                 .Property(x => x.Id).HasColumnName("WorkExperienceReferenceContactDetailID");

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Integrator.Models.Domain.Common
 {
-    public partial class IntegratorUserContactDetails : BaseEntity
+    public partial class IntegratorUserContactDetail : BaseEntity
     {
         //[Key]
         //public int IntegratorUserContactDetailID { get; set; }
@@ -16,7 +16,7 @@ namespace Integrator.Models.Domain.Common
         public DateTime DateLastUpdated { get; set; }
 
 
-        public virtual ContactDetails ContactDetail { get; set; }
+        public virtual ContactDetail ContactDetail { get; set; }
 
         public virtual IntegratorUser IntegratorUser { get; set; }
     }

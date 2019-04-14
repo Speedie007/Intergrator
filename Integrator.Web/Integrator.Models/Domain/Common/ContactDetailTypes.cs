@@ -5,19 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Integrator.Models.Domain.Common
 {
-    public partial class ContactDetailTypes : BaseEntity
+    public partial class ContactDetailType : BaseEntity
     {
-        public ContactDetailTypes()
+        public ContactDetailType()
         {
-            ContactDetails = new HashSet<ContactDetails>();
+            ContactDetails = new HashSet<ContactDetail>();
         }
 
         //[Key]
         //public int ContactDetailTypeID { get; set; }
         [Required]
         [StringLength(100)]
-        public string ContactDetailType { get; set; }
+        public string aContactDetailType { get; set; }
 
-        public virtual ICollection<ContactDetails> ContactDetails { get; set; }
+        public virtual ICollection<ContactDetail> ContactDetails { get; set; }
     }
 }

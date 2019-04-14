@@ -7,37 +7,38 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.ContactDetials
 {
-    public partial class ContactDetailTypeDbMapping : IntegratorEntityTypeConfiguration<ContactDetailTypes>
+    public partial class ContactDetailTypeDbMapping : IntegratorEntityTypeConfiguration<ContactDetailType>
     {/// <summary>
      /// Configures the entity
      /// </summary>
      /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<ContactDetailTypes> builder)
+        public override void Configure(EntityTypeBuilder<ContactDetailType> builder)
         {
             builder.ToTable("ContactDetailTypes")
                 .Property(x => x.Id).HasColumnName("ContactDetailTypeID");
 
-            builder.Property(e => e.ContactDetailType).IsUnicode(false);
+            builder.Property(e => e.aContactDetailType).IsUnicode(false)
+                .HasColumnName("ContactDetailType");
 
-            builder.HasData(new ContactDetailTypes()
+            builder.HasData(new ContactDetailType()
             {
                  Id = 1,
-                  ContactDetailType ="Cell Number"
+                  aContactDetailType ="Cell Number"
             },
-            new ContactDetailTypes()
+            new ContactDetailType()
             {
                 Id = 2,
-                ContactDetailType = "Office Number"
+                aContactDetailType = "Office Number"
             },
-            new ContactDetailTypes()
+            new ContactDetailType()
             {
                 Id = 3,
-                ContactDetailType = "Email Address"
+                aContactDetailType = "Email Address"
             },
-            new ContactDetailTypes()
+            new ContactDetailType()
             {
                 Id = 4,
-                ContactDetailType = "WebSite"
+               aContactDetailType = "WebSite"
             });
 
             base.Configure(builder);

@@ -1,95 +1,251 @@
 # Changelog
 
+## 1.5.1 (Mar 10, 2019)
 
-## 2.3.3 (Aug 10, 2016)
+- Revert the minimum container width from `300` to `200`.
+- Revert the minimum container height from `150` to `100`.
 
-- Allow scroll when the `dragMode` is "none" on touch screens (#727).
-- Fixed the issue of orientation transform (#740).
+## 1.5.0 (Mar 10, 2019)
 
+- Add `passive: false` and `capture: true` to wheel event for better performance.
+- Improve touch event binding.
+- Ignore the pointer events are not triggered by the primary button.
+- Fix typed array spreading error in IE or Safari 9.
+- Fix the RegExp for the Safari browser detecting to ignore Chrome (#478).
 
-## 2.3.2 (Jun 8, 2016)
+## 1.4.3 (Oct 24, 2018)
 
-- Fixed wrong property reference (#705)
-- Fixed the wrong place of the crop event triggering (#706).
-- Fixed the calling order of `scale` and `rotate` (#709).
+- Ignore range error when the image does not have correct Exif information
 
+## 1.4.2 (Oct 15, 2018)
 
-## 2.3.1 (May 28, 2016)
+- Read orientation only when it is a JPEG image.
+- Improve cropper instance storage to avoid side effect (#394).
+- Fix parameter error of `Object.assign` in iOS devices (#432).
+- Improve typed array loop for better performance (#435).
 
-- Improved the rotate and scale transform behaviour (#633, idea by afeibus).
-- Improved the `getCroppedCanvas` method to return the whole canvas if it is not cropped (#666, PR by @vinnymac).
-- Check cross origin setting when load image by XMLHTTPRequest (#669)
+## 1.4.1 (Jul 15, 2018)
 
+- Not to restrict the canvas position when it is not cropped.
+- Fix wrong crop box size in view mode 1 and 2 (#381).
 
-## 2.3.0 (Feb 22, 2016)
+## 1.4.0 (Jun 1, 2018)
+
+- Added 1 new option: `initialAspectRatio`.
+- Improve the smoothness of crop box resizing.
+
+## 1.3.6 (May 20, 2018)
+
+- Check orientation only when both the `rotatable` and `scalable` options are set to `true`.
+- In case rounding off leads to extra 1px in right or bottom border we should round the top-left corner and the dimension (#343).
+
+## 1.3.5 (Apr 15, 2018)
+
+- Ensure the cloned image loads completely before trigger the `ready` event to avoid side effect (#303).
+- Add namespace to data attribute names (from `data-*` to `data-cropper-*`) to avoid side effect (#319).
+
+## 1.3.4 (Mar 31, 2018)
+
+- Compute destination sizes with image's aspect ratio when draw image (#326).
+
+## 1.3.3 (Mar 18, 2018)
+
+- Improve event binding.
+- Add missing `pivot` definition to `zoomTo` method (#320)
+
+## 1.3.2 (Mar 3, 2018)
+
+- Fix the bug of cropping image with orientation (#313).
+
+## 1.3.1 (Feb 28, 2018)
+
+- Add missing `width` and `height` definitions (#302).
+- Fix incorrect behavior of `viewMode: 2` (#304).
+- Fix the bug of multiple starts (#306).
+- Remove `browser` field from the `package.json` file (#307).
+
+## 1.3.0 (Feb 25, 2018)
+
+- Add type definition files for TypeScript.
+- Enhance the `preview` option to support `Array` and `NodeList`.
+- Fix incorrect cropped canvas sizes when max/min sizes provided.
+
+## 1.2.2 (Jan 3, 2018)
+
+- Fix incorrect image natural sizes in iOS Safari (#279).
+
+## 1.2.1 (Dec 17, 2017)
+
+- Add `style` field to `package.json`.
+- Fix size error when load SVG image (#256).
+
+## 1.2.0 (Dec 17, 2017)
+
+- Allow to set the pivot of zoom (#144).
+- Fixed a bug of rotation (#260).
+
+## 1.1.3 (Oct 21, 2017)
+
+- Fixed a bug of render when disable one of `rotatable` and `scalable` options (#241).
+
+## 1.1.2 (Oct 18, 2017)
+
+- Normalize related decimal numbers when crop an image with canvas.
+
+## 1.1.1 (Oct 11, 2017)
+
+- Supports to load in node environment (#237).
+- Fixed a bug of event binding (#238).
+
+## 1.1.0 (Oct 8, 2017)
+
+- Added 4 new options to `getCroppedCanvas` method:  `minWidth`, `minHeight`, `maxWidth` and `maxHeight`.
+- Enhanced image scaling: the `scaleX` and `scaleY` values should only be `1` or `-1` before, but now they can be any numbers.
+- Improved crop box resizing behavior in the northeast, northwest, southeast and southwest directions. (#222).
+
+## 1.0.0 (Sep 3, 2017)
+
+- Fixed a bug of zoom out after cleared the crop box in view mode 1, 2 and 3 (#209).
+- Improve crop box resizing behavior in the east, west, south and north directions (#222).
+
+## 1.0.0-rc.3 (Jul 7, 2017)
+
+- Added two new options (`imageSmoothingEnabled` and `imageSmoothingQuality`) to `getCroppedCanvas` method.
+- Fixed a bug of RegExp using (#195 by @arusakov).
+
+## 1.0.0-rc.2 (May 30, 2017)
+
+- Fixed the issue of canvas box initialization (#179).
+
+## 1.0.0-rc.1 (Apr 30, 2017)
+
+- Change the `main` field value from `dist/cropper.js` (UMD) to `dist/cropper.common.js` (CommonJS).
+- Added `module` and `browser` fields to `package.json`.
+
+## 1.0.0-rc (Mar 25, 2017)
+
+- Fixed the bug of touch zoom (#161).
+- Fixed the bug of window resize (#162).
+- Improve the `toggleDragModeOnDblclick` option (only available when the `dragMode` option is set to `crop` or `move`)
+
+## 1.0.0-beta.2 (Feb 25, 2017)
+
+- Fixed the bug of rotate square image lead image shrink (#155).
+- Improved RegExps for DataURL processing (#156).
+
+## 1.0.0-beta.1 (Jan 21, 2017)
+
+- Use CSS3 2D Transforms instead of `left` and `top` for better performance (#138).
+- Set `withCredentials` attribute when read the image data by XMLHttpRequest (#141).
+
+## 1.0.0-beta (Jan 1, 2017)
+
+- Supports to set an element for preview (#113).
+- Improved event handler for Pointer Events (#127).
+
+## 1.0.0-alpha (Dec 4, 2016)
+
+- Built JavaScript with Rollup.
+- Build CSS with PostCSS.
+- Fixed a bug of auto crop when replace the image (#83).
+
+## 0.8.1 (Sep 3, 2016)
+
+- Fixed the bug of cropping (#80).
+- Fixed the bug of calling `ready` event twice when call `replace` method (#81).
+- Fixed the bug of `getCroppedCanvas` when set `scalable` or `rotatable` to `false` (#82).
+
+## 0.8.0 (Aug 18, 2016)
+
+- Removed `build` event.
+- Renamed `built` event to `ready`.
+- Fixed the error of orientation transform.
+- Ported code to ECMAScript 6.
+
+## 0.7.2 (Jun 8, 2016)
+
+- Fixed a bug of `data-*` attributes setting and getting.
+- Fixed the calling order of `scale` and `rotate`.
+
+## 0.7.1 (May 28, 2016)
+
+- Improved the rotate and scale transform behavior.
+- Improved the `getCroppedCanvas` method (returns the whole canvas if it is not cropped).
+- Check cross origin setting when load image by XMLHTTPRequest.
+
+## 0.7.0 (Mar 20, 2016)
+
+- Supports 7 custom events: `build`, `built`, `cropstart`, `cropmove`, `cropend`, `crop` and `zoom`.
+- The original callback options become shortcuts of these events now.
+- IE8 is no longer supported after added these custom events.
+
+## 0.6.0 (Feb 22, 2016)
 
 - Added a new parameter to the `replace` method for applying filters.
-- Improved the image initializing for Safari (#120, #509).
-- Fixed incorrect size limitation of the crop box.
-- Fixed incorrect cropped canvas when scaleX or scaleY great than 1 (#598).
+- Improved the image initializing for Safari.
+- Fixed incorrect size limitation of the crop box (#30).
+- Fixed incorrect cropped canvas when scaleX or scaleY great than 1.
 
-
-## 2.2.5 (Jan 18, 2016)
+## 0.5.6 (Jan 18, 2016)
 
 - Fixed crossOriginUrl undefined error when exists the `crossOrigin` property.
+- Fixed the issue in the "destroy" method (#24).
+- Optimized tests.
 
-
-## 2.2.4 (Jan 1, 2016)
+## 0.5.5 (Jan 1, 2016)
 
 - Fixed a dimension bug in the "getCroppedCanvas" method.
 - Added an example for cropping round image.
 
-
-## 2.2.3 (Dec 28, 2015)
+## 0.5.4 (Dec 28, 2015)
 
 - Supports to zoom from event triggering point.
 
+## 0.5.3 (Dec 24, 2015)
 
-## 2.2.2 (Dec 24, 2015)
+- Limit wheel speed to prevent zoom too fast (#21)
+- Improve the `setCropBoxData` method (#22)
 
-- Limit wheel speed to prevent zoom too fast
-- Improve the `setCropBoxData` method
+## 0.5.2 (Dec 15, 2015)
 
+- Fix event handlers
 
-## 2.2.1 (Dec 12, 2015)
+## 0.5.1 (Dec 12, 2015)
 
-- Handle Data URL (Fixed #540: avoid to use XMLHttpRequest to open a Data URL)
+- Handle Data URL (avoid to use XMLHttpRequest to open a Data URL)
 - Handle ajax error when load ArrayBuffer
 - Not to transform the image to base64 when Orientation equals to `1`
+- Fix some typos
 
+## 0.5.0 (Dec 5, 2015)
 
-## 2.2.0 (Dec 6, 2015)
+- Added a new option: `checkOrientation`
+- Added a timestamp to the url of preview image
 
-- Added a new option: `checkOrientation` (#120, #509)
-- Added a timestamp to the url of preview image (#531)
+## 0.4.0 (Dec 2, 2015)
 
+- Added a new option: `restore`
+- Fixed #12: Added vendor prefixes to CSS `transform`
 
-## 2.1.0 (Dec 2, 2015)
+## 0.3.3 (Nov 30, 2015)
 
-- Added new `restore` option
+- Floor the numerical parameters for `CanvasRenderingContext2D.drawImage`
 
+## 0.3.2 (Nov 18, 2015)
 
-## 2.0.2 (Nov 30, 2015)
+- Fixed #10: improve new crop box creating
 
-- Fixed #476: Floor the numerical parameters for `CanvasRenderingContext2D.drawImage`
+## 0.3.1 (Nov 11, 2015)
 
+- Fixed #7: reset the `crossOrigin` when call the `replace` method
 
-## 2.0.1 (Nov 18, 2015)
+## 0.3.0 (Oct 28, 2015)
 
-- Improved new crop box creating
-
-
-## 2.0.0 (Nov 11, 2015)
-
-### Common
-
-- Supports four modes
+- Supports four view modes
 - Supports three drag modes
-- Improved the experience of cropping
 - Makes the crop box's borders and handlers visible when overflow
-- Fixed an issue of canvas limitation
-- Fixed an issue of cropping
-
+- Added some examples
+- Fixed some issues
 
 ### Options
 
@@ -102,367 +258,31 @@
 - Removed `strict` (supported by `viewMode: 1`)
 - Removed `dragCrop` (supported by `dragMode: 'crop'`)
 
+## 0.2.1 (Oct 28, 2015)
 
-### Methods
+- Fix the error jQuery reference on the `setCanvasData` method
+- Fix typo on the `destroy` method
 
-- Added `moveTo`
-- Added `zoomTo`
-- Added `rotateTo`
-- Added `scaleX`
-- Added `scaleY`
-- Improved `getCanvasData` (added `naturalWidth` and `naturalHeight`)
+## 0.2.0 (Oct 25, 2015)
 
+- Added 5 new methods: `moveTo`, `zoomTo`, `rotateTo`, `scaleX` and `scaleY`
+- Improved 4 methods:  `move`, `zoom`, `rotate` and `getCanvasData`
+- Improved cropping
 
-### Events
-
-- Improved `zoom` (changed `event.ratio` and added `event.oldRatio`)
-
-
-## 1.0.0 (Oct 10, 2015)
+## 0.1.1 (Oct 10, 2015)
 
 - Improved canvas limitation
-- Improved preview
-- Improved test
-- Fixed an error in the `clear` method (missed parameters)
-- Fixed the issue of crop box limitation (#430)
-
-
-## 1.0.0-rc.1 (Sep 5, 2015)
-
-- Moved from Less to Sass
-- Fixed the issue of `destroy` method (#434)
-- Fixed the issue on IE8 (#319)
-- Added an example for customizing preview
-- Added download button to documentation
-- Added FAQ
-
-
-## 0.11.1 (Aug 22, 2015)
-
-- Optimize "built" and "crop" events
-- Improve the starting speed (#422)
-- Improve the building process (#428)
-- Fix event issue on IE8 (#319)
-
-
-## 0.11.0 (Aug 10, 2015)
-
-- Improve `setCropBoxData` method (#385)
-- Fix event issue on IE10 (#394)
-- Optimize code (use `var` for per variable)
-
-
-### Options
-
-- Add "scalable" option
-- Add "wheelZoomRatio" option
-- Convert "crop" option to "crop" event
-
-
-### Methods
-
-- Add "scale" method
-- Improve "move" method (the `offsetY` parameter is optional now)
-
-
-### Events
-
-- Rename "dragstart" to "cropstart"
-- Rename "dragmove" to "cropmove"
-- Rename "dragend" to "cropend"
-- Merge "zoomin" and "zoomout" to "zoom"
-- Merge "crop" option and "change" event to "crop" event
-
-
-## 0.10.1 (Jul 5, 2015)
-
-- Add Pointer Events support (#328)
-- Add RTL support (#342)
-- Add one new option: "center" (#367)
-- Allow cropper to grow vertically (#350)
-
-
-## 0.10.0 (Jun 8, 2015)
-
-- Add three new options: "change", "cropBoxMovable", "doubleClickToggle"
-- Change "movable" option (only for image)
-- Rename "resizable" to "cropBoxResizable"
-- Add one new event: "change.cropper"
-- Locking aspect ratio in "free mode" by holding shift key (#259)
-- Sync drag mode to crop box when it is not movable (#300)
-
-
-## 0.9.3 (May 10, 2015)
-
-- Add one new option: "data"
-- Add two new methods: "setData" (#290, #296), "crop" (#275)
-- Fix incorrect minWidth/Height size of canvas (#295)
-- Fix the strict mode bug (#280)
-- Fix the crop box resizing bug (#277)
-
-
-## 0.9.2 (Apr 18, 2015)
-
-- Improve strict mode to show full image
-- Add two new options: "minCanvasWidth" and "minCanvasHeight"
-- Reverse mouse wheeling zoom
-- Fix incorrect cursor in disabled state
-
-
-## 0.9.1 (Mar 21, 2015)
-
-- Fix the touch zoom issue (#206)
-- Fix the reset issue (#246)
-
-
-## 0.9.0 (Mar 15, 2015)
-
-- Wraps image with a virtual canvas (for zooming and rotating).
-- Limits image position and size in strict mode.
-- Supports multiple global croppers by default.
-- Outputs cropped canvas for display or get Data URL or get Blob
-- Identifies drag events with "event.dragType" property
-- Added zoom events for controlling the canvas (image) size.
-- Improved responsiveness for window resizing.
-
-
-### Options:
-
-- Change "minContainerWidth" (default value: 300 -> 200)
-- Change "minContainerHeight" (default value: 150 -> 100)
-- Add "strict"
-- Add "zoomin"
-- Add "zoomout"
-- remove "global"
-
-
-### Methods:
-
-- Change "replace" (not to change the original image any more)
-- Change "getImageData" (move rotation-related properties to canvas data)
-- Add "getContainerData"
-- Add "getCanvasData"
-- Add "setCanvasData"
-- Add "getCroppedCanvas"
-- Remove "setImageData" (replace with "getCanvasData")
-- Remove "getDataURL" (replace with "getCroppedCanvas")
-
-
-### Events:
-
-- Add "event.dragType" property to drag events
-- Add "zoomin.cropper"
-- Add "zoomout.cropper"
-
-
-## 0.8.0 (Feb 19, 2015)
-
-- Refactored source code.
-- Compiles CSS with [Less](http://lesscss.org) CSS preprocessors.
-- Supports fixed container.
-- Supports rotation with CSS3 2D Transforms.
-
-
-### Options:
-
-- Change the default value of "aspectRatio"
-- Rename "done" to "crop"
-- Rename "dashed" to "guides"
-- Rename "multiple" to "global"
-- Add "background"
-- Add "highlight"
-- Add "responsive"
-- Add "mouseWheelZoom"
-- Add "touchDragZoom"
-- Add "minCropBoxWidth"
-- Add "minCropBoxHeight"
-- Add "minContainerWidth"
-- Add "minContainerHeight"
-- Remove "data"
-- Remove "minWidth"
-- Remove "minHeight"
-- Remove "maxWidth"
-- Remove "maxHeight"
-
-
-### Methods:
-
-- Change "reset"
-- Add "setImageData"
-- Add "getCropBoxData"
-- Add "setCropBoxData"
-- Add "move"
-- Remove "setData"
-
-
-## 0.7.9 (Feb 19, 2015)
-
-- Improve preview.
-- Improve rotation.
-- Improve responsiveness (#157).
-- Enable to move the image when the size of the crop box is the same as the container's (#186).
-
-
-## 0.7.8 (Feb 8, 2015)
-
-- Add two new options: "minContainerWidth" and "minContainerHeight".
-- Improve three methods: "setAspectRatio", "destroy" and "disable".
-- Improve mouse wheel zoom.
-- Improve drag resizing.
-
-
-## 0.7.7 (Jan 10, 2015)
-
-- Fix a bug of "dragCrop" option.
-- Add a timestamp to the url to bust cache when it's a cross-origin image (#148).
-- Fix the issue of "autoCropArea" option (#144).
-
-
-## 0.7.6 (Dec 20, 2014)
-
-- Fix events binding bugs.
-- Change the "done" option and the "getData" method (returns floating-point number) (#130).
-- Fix the rotation issue after replace the image (#139).
-
-
-## 0.7.5 (Nov 27, 2014)
-
-- Reset the ratio when replace the image.
-- Add a new option: "checkImageOrigin" (#119).
-- Prevent to call the "done" option when it's disabled (#107).
-- Improve the preview (#95).
-
-
-## 0.7.4 (Nov 24, 2014)
-
-- Improve "getDataURL" method, enable to customize the image sizes (#105).
-- Fix the issue of destory (#101).
-- Fix the issue of canvas (#106).
-
-
-## 0.7.3 (Nov 15, 2014)
-
-- Supports cross-origin image (#96, #97).
-- Add a new option: "autoCropArea".
-- Improve "movable" option.
-- Output rotation degree by "getImageData" method (#94).
-
-
-## 0.7.2 (Nov 11, 2014)
-
-- Fix the image rotation error in Firefox (#92).
-
-
-## 0.7.1 (Nov 8, 2014)
-
-- Rebuild "rotate" method (#88).
-- Fix the issue of free ratio (#87).
-- Improve "getDataURL" method (#86).
-- Optimize event listeners.
-
-
-## 0.7.0 (Oct 12, 2014)
-
-- Supports zoom (#36, #79).
-- Supports rotation (#1, #81).
-- Add two new options: "zoomable" and "rotatable".
-- Add six new methods: "enable", "disable", "zoom", "rotate", "getDataURL" (#80) and "setDragMode".
-- Rename "release" method to "clear".
-- Rename "setImgSrc" method to "replace".
-- Rename "getImgInfo" method to "getImageData".
-- Some other improvements.
-
-
-## 0.6.2 (Oct 11, 2014)
-
-- Hide the modal when release the crop box.
-- Improve touch events.
-
-
-## 0.6.1 (Oct 3, 2014)
-
-- Fix an event error.
-
-
-## 0.6.0 (Sep 20, 2014)
-
-- Add six new options: "dashed", "build", "built", "dragstart", "dragmove" and "dragend".
-- Add three new events: "dragstart.cropper", "dragmove.cropper" and "dragend.cropper".
-- Remove an old event: "render.cropper".
-- Supports to toggle the dashed lines by "dashed" option (#68).
-- Fix the issue of events (#71).
-- Optimize the source code.
-
-
-## 0.5.5 (Sep 8, 2014)
-
-- Improve the render when the mouse out of the cropper container (#54).
-
-
-## 0.5.4 (Aug 30, 2014)
-
-- Fix typos: replace "resizeable" with "resizable" and "moveable" with "movable".
-
-
-## 0.5.3 (Aug 23, 2014)
-
-- Fix the issue (#64) that the crop box could not move after multiple touches.
-
-
-## 0.5.2 (Aug 16, 2014)
-
-- Fix a bug of type checking in the options.
-- Compress the cropper template string.
-
-
-## 0.5.1 (Aug 12, 2014)
-
-- Supports canvas (#55).
-
-
-## 0.5.0 (Aug 10, 2014)
-
-- Add a new option: "multiple".
-
-
-...
-
-
-## 0.4.0 (Jul 26, 2014)
-
-- Add eight new options: "autoCrop", "dragCrop", "moveable", "resizeable", "maxWidth", "maxHeight", "minWidth" and "minHeight".
-- Add three new methods: "reset", "release" and "destroy".
-- Add three new events: "build.cropper", "built.cropper" and "render.cropper".
-- Remove two old methods: "enable" and "disable".
-- Remove three old events: "dragstart", "dragmove" and "dragend".
-- Supports no conflict with the "$.fn.cropper.noConflict" method.
-
-
-...
-
-
-## 0.3.0 (May 18, 2014)
-
-- Supports touch.
-- Supports events.
-- Add three events: "dargstart", "dargmove" and "dargend".
-- Add a new method: "setImgSrc".
-
-
-...
-
-
-## 0.2.0 (Apr 23, 2014)
-
-- Supports free ratio.
-- Add a new option: "data".
-- Add four new methods: "getData", "setData", "getImgInfo" and "setAspectRatio".
-
-
-...
-
-
-## 0.1.0 (Feb 19, 2014)
-
-- Supports four options: "aspectRatio", "done", "modal" and "preview".
-- Supports two methods: "enable" and "disable".
+- Improved crop box limitation
+- Improved preview for cross origin image
+
+## 0.1.0 (Sep 25, 2015)
+
+- Supports touch (mobile)
+- Supports zoom
+- Supports rotation
+- Supports scale (flip)
+- Supports canvas
+- Supports multiple croppers
+- Cross-browser support
+- Supports 37 options: `aspectRatio`, `data`, `preview`, `strict`, `responsive`, `checkImageOrigin`, `modal`, `guides`, `center`, `highlight`, `background`, `autoCrop`, `autoCropArea`, `dragCrop`, `movable`, `rotatable`, `scalable`, `zoomable`, `mouseWheelZoom`, `wheelZoomRatio`, `touchDragZoom`, `cropBoxMovable`, `cropBoxResizable`, `doubleClickToggle`, `minCanvasWidth`, `minCanvasHeight`, `minCropBoxWidth`, `minCropBoxHeight`, `minContainerWidth`, `minContainerHeight`, `build`, `built`, `cropstart`, `cropmove`, `cropend`, `crop`, `zoom`.
+- Support 22 methods: `crop`, `reset`, `clear`, `replace`, `enable`, `disable`, `destroy`, `move`, `zoom`, `rotate`, `scale`, `getData`, `setData`, `getContainerData`, `getImageData`, `getCanvasData`, `setCanvasData`, `getCropBoxData`, `setCropBoxData`, `getCroppedCanvas`, `setAspectRatio`, `setDragMode`.

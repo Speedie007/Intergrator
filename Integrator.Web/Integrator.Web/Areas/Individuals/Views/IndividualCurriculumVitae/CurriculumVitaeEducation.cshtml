@@ -41,18 +41,20 @@
                     <div class="row">
                         <div class="col-sm-12 ">
 
-                            <form role="form" method="post" asp-action="" asp-controller="" asp-area="">
+                            <form role="form" method="post" asp-action="CurriculumVitaeEducation" asp-controller="IndividualCurriculumVitae" asp-area="Individuals">
 
                                 <div class="form-group">
                                     @*<label asp-for="QualificationLevels"></label>*@
-                                    <select asp-for="QualificationLevelID" asp-items="Model.QualificationLevels" class="qualification-select"></select>
+                                    Select Qualification
+                                    <select asp-for="QualificationLevelID" asp-items="Model.QualificationLevels" class="qualification-select form-control"></select>
                                 </div>
                                 <hr />
                                 <div class="form-group">
                                     @*<label asp-for="EductaionalInstitutions"></label>*@
-                                    <select asp-for="EductaionalInstitutionID" asp-items="Model.EductaionalInstitutions" data-placeholder="Choose a Institution..." class="institution-select"></select><br />
+                                    Select Institution
+                                    <select asp-for="EductaionalInstitutionID" asp-items="Model.EductaionalInstitutions" data-placeholder="Choose a Institution..." class="institution-selects form-control"></select><br />
                                     <small>If does not exists click add</small>
-                                    <button type="button" class="btn btn-primary block full-width m-b " data-toggle="modal" data-target="#myModal">Add Institution</button>
+                                    <button type="button" class="btn btn-info block full-width m-b " data-toggle="modal" data-target="#myModal">Add Institution</button>
 
                                 </div>
                                 <hr />
@@ -67,14 +69,14 @@
                                 <small>Indicate average achieved.</small>
                                 <hr />
                                 <div class="form-group" id="YearStarted">
-                                    <label asp-for="YearStartedQualification" class="control-label"></label>
+                                    Select&nbsp;<label asp-for="YearStartedQualification" class="control-label"></label>
                                     <div class="input-group date">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         <input type="text" asp-for="YearStartedQualification" class="form-control" value="2019">
                                     </div>
                                 </div>
                                 <div class="form-group" id="YearCompleted">
-                                    <label asp-for="YearCompletedQualification" class="control-label"></label>
+                                    Select&nbsp; <label asp-for="YearCompletedQualification" class="control-label"></label>
                                     <div class="input-group date">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         <input type="text" asp-for="YearCompletedQualification" class="form-control" value="2019">
@@ -104,7 +106,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
-                        <table class="table table-responsive  table-hover">
+                        <table class="table table-striped table-bordered table-hover dataTables-Qualifications">
                             <thead>
                                 <tr>
                                     <th>Options</th>
@@ -112,7 +114,6 @@
                                     <th>Institution</th>
                                     <th>Average</th>
                                     <th>Level</th>
-
                                     <th>Started</th>
                                     <th>Completed</th>
                                 </tr>
@@ -121,19 +122,28 @@
                                 @{
                                     foreach (UserQualificationViewModel item in Model.UserQualifications)
                                     {
-                                <tr>
-                                    <td>
+                                        <tr id="">
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-1">
+                                                        <button type="button" id="btnRemoveQualification_@item.Id" class="btn btn-primary block m-b" onclick="removeQualification(@item.Id);"><i class=" fa fa-remove"></i></button>
+                                                    </div>
+                                                    &nbsp; &nbsp; 
+                                                    <div class="col-1">
+                                                        <button type="button" id="btnRemoveQualification_@item.Id" class="btn btn-primary block m-b" onclick="editQualification(@item.Id);"><i class=" fa fa-edit"></i></button>
+                                                    </div>
+                                                </div>
 
-                                        <button type="button" class="btn btn-danger"><i class=" fa fa-remove"></i></button>
-                                    </td>
-                                    <td>@item.QualificationTitle</td>
-                                    <td>@item.EductaionalInstitution</td>
-                                    <td>@item.QualificationAverage%</td>
-                                    <td>@item.QualificationLevel</td>
 
-                                    <td>@item.YearStartedQualification</td>
-                                    <td>@item.YearCompletedQualification</td>
-                                </tr>
+                                            </td>
+                                            <td nowrap>@item.QualificationTitle</td>
+                                            <td nowrap>@item.EductaionalInstitution</td>
+                                            <td nowrap>@item.QualificationAverage%</td>
+                                            <td nowrap>@item.QualificationLevel</td>
+
+                                            <td nowrap>@item.YearStartedQualification</td>
+                                            <td nowrap>@item.YearCompletedQualification</td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
@@ -175,7 +185,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
     <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
     <link rel="stylesheet" href="~/lib/ionRangeSlider/ion.rangeSlider.css" />
-
+    <link rel="stylesheet" href="~/lib/sweetalert/dist/sweetalert.css" />
+    <link rel="stylesheet" href="~/lib/dataTables/datatables.min.css" />
+    <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 </environment>
 @section Scripts {
 
@@ -186,7 +198,10 @@
         <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
         <script src="~/lib/toastr/toastr.min.js"></script>
         <script src="~/lib/ionRangeSlider/ion.rangeSlider.min.js"></script>
-
+        <script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="~/lib/dataTables/datatables.min.js"></script>
+        <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/select2/dist/js/select2.min.js"></script>
     </environment>
     <script type="text/javascript">
 
@@ -194,6 +209,7 @@
 
         function AddNewInsitution() {
             if ($("#txtNewInstitution").val().length > 0) {
+                _ViewModel = JSON.parse('{}');
                 _ViewModel.Id = 0;
                 _ViewModel.EductaionalInstitution = $("#txtNewInstitution").val();
                 $.ajax({
@@ -228,20 +244,66 @@
                     $('#myModal').modal('hide');
                 },
                 error: function (xhr, textStatus, error) {
-                    // $('.ibox').children('.ibox-content').addClass('sk-loading');
-                    //$('#ShowFileRequerstNotificationConfirmationContent').html(error);
-                    ////$('#ShowFileRequerstNotificationConfirmationModal').modal(options);
-                    //$('#ShowFileRequerstNotificationConfirmationModal').modal('show');
+
                     $('#myModal').modal('hide');
                     toastr.error(data.message, 'Error');
-                    //alert('Unable to send request - error: ' + error);
+
 
                     }
                 });
             }
 
         }
+
+        function removeQualification(ID) {
+            swal({
+                title: "Delete Qualification",
+                text: "Are You Sure you wish to remove this Qualification?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Remove Qualification!",
+                cancelButtonText: "No, Cancel",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        ////////////
+                        _ViewModel = JSON.parse('{}');
+                        _ViewModel.Id = ID;
+                        _ViewModel.EductaionalInstitution = $("#txtNewInstitution").val();
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("RemoveUserQualification", "IndividualCurriculumVitae")',
+                            data: JSON.stringify(_ViewModel),
+                            contentType: "application/json; charset=utf-8",
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("RequestVerificationToken",
+                                    $('input:hidden[name="__RequestVerificationToken"]').val());
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                               // $("#trQualificationItem_" + ID).html("");
+                                var tbRowButtonClicked = $("table tbody").find('#btnRemoveQualification_' + ID);
+                                $(tbRowButtonClicked).parents("tr").remove();
+                                toastr.success(data.message, 'Successfull');
+                               // swal("Deleted!", data.message, "success");
+                            },
+                            error: function (xhr, textStatus, error) {
+                                swal("Error", error, "error");
+                            }
+                        });
+                        /////////
+
+                    }
+                });
+        }
+
         $(document).ready(function () {
+            $('.dataTables-Qualifications').DataTable({
+                pageLength: 10
+            });
 
             $('#YearStarted .input-group.date').datepicker({
                 format: "yyyy",
@@ -286,8 +348,9 @@
             });
 
         });
-        $('.qualification-select').chosen({ width: "100%" });
-        $('.institution-select').chosen({ width: "100%" });
+        $(".qualification-select").select2();
+        $(".institution-selects").select2();
+       
 
 
         function my_prettify(n) {
@@ -301,5 +364,3 @@
     </script>
 
 }
-
-
