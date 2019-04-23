@@ -3,6 +3,7 @@ using Integrator.Models.ViewModels.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Integrator.Factories.CurriculumVitae
 {
@@ -21,7 +22,7 @@ namespace Integrator.Factories.CurriculumVitae
         EditUserAwardViewModel PrepareEditCurriculumVitaeAwards();
 
         EditUserPictureViewModel PrepareEditCurriculumViteaPictures();
-       // EditUserCurriculumVitaePictureViewModel
+        // EditUserCurriculumVitaePictureViewModel
 
     }
 }

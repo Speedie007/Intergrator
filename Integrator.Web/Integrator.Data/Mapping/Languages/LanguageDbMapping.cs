@@ -7,40 +7,40 @@ using System.Text;
 
 namespace Integrator.Data.Mapping.Languages
 {
-    public partial class LanguageDbMapping : IntegratorEntityTypeConfiguration<LanguageList>
+    public partial class LanguageDbMapping : IntegratorEntityTypeConfiguration<Language>
     {
         /// <summary>
         /// Configures the entity
         /// </summary>
         /// <param name="builder">The builder to be used to configure the entity</param>
-        public override void Configure(EntityTypeBuilder<LanguageList> builder)
+        public override void Configure(EntityTypeBuilder<Language> builder)
         {
             builder.ToTable("Languages")
                 .Property(x => x.Id).HasColumnName("LanguageID");
 
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Language)
+            builder.Property(e => e.LanguageSpoken)
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-            builder.HasData(new LanguageList
+            builder.HasData(new Language
             {
                 Id = 1,
-                 Language = "English"
-            }, new LanguageList
+                 LanguageSpoken = "English"
+            }, new Language
             {
                 Id = 2,
-                Language = "Afrikaans"
-            }, new LanguageList
+                LanguageSpoken = "Afrikaans"
+            }, new Language
             {
                 Id = 3,
-                Language = "Xhosa"
-            }, new LanguageList
+                LanguageSpoken = "Xhosa"
+            }, new Language
             {
                 Id = 4,
-                Language = "Zulu"
+                LanguageSpoken = "Zulu"
             });
 
             base.Configure(builder);

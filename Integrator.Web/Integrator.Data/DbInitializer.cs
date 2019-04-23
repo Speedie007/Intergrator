@@ -57,6 +57,34 @@ namespace Integrator.Data
                 {
                     await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user), "Administrator");
                 }
+                user = "a@a.com";
+                password = "Speedie@007";
+                success = await _userManager.CreateAsync(new IntegratorUser
+                {
+                    UserName = user,
+                    Email = user,
+                    EmailConfirmed = true,
+                    FirstName = "Agent",
+                    LastName = "Wood,"
+                }, password);
+                if (success.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user), "Agent");
+                }
+                user = "Brendanw@mweb.co.za";
+                password = "Speedie@007";
+                success = await _userManager.CreateAsync(new IntegratorUser
+                {
+                    UserName = user,
+                    Email = user,
+                    EmailConfirmed = true,
+                    FirstName = "Brendan",
+                    LastName = "Wood,"
+                }, password);
+                if (success.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user), "Individual");
+                }
             }
         }
     }

@@ -226,10 +226,10 @@ namespace Integrator.Web.Controllers
             switch (role.ToLower())
             {
                 case "administrator":
-                    RedirectNextPage = RedirectToAction("Home", "Administration", new { area = "Adminitration" });
+                    RedirectNextPage = RedirectToAction("Index", "DashBoard", new { area = "Administration" });
                     break;
                 case "agent":
-                    RedirectNextPage = RedirectToAction("Home", "Agent");
+                    RedirectNextPage = RedirectToAction("Index", "DashBoard", new { area = "Agents" });
                     break;
                 case "individual":
                     RedirectNextPage = RedirectToAction("Index", "DashBoard", new { area = "Individuals" });

@@ -56,194 +56,190 @@ namespace Integrator.Services.Users
 
 
         #region User
-        /// <summary>
+        /// <summary
         /// Get All Users
-        /// </summary>
-        /// <param name="createdFromUtc"></param>
-        /// <param name="createdToUtc"></param>
-        /// <param name="UserRoleIds"></param>
-        /// <param name="email"></param>
-        /// <param name="username"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="phone"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="getOnlyTotalCount"></param>
-        /// <returns></returns>
-        IPagedList<IntegratorUser> GetAllUsers(DateTime? createdFromUtc = null,
-           DateTime? createdToUtc = null,
-           int[] UserRoleIds = null, string email = null, string username = null,
-           string firstName = null, string lastName = null, string phone = null,
-           int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false);
+        /// </summary
+        /// <param name="createdFromUtc"</param
+        /// <param name="createdToUtc"</param
+        /// <param name="UserRoleIds"</param
+        /// <param name="email"</param
+        /// <param name="username"</param
+        /// <param name="firstName"</param
+        /// <param name="lastName"</param
+        /// <param name="phone"</param
+        /// <param name="pageIndex"</param
+        /// <param name="pageSize"</param
+        /// <param name="getOnlyTotalCount"</param
+        /// <returns</returns
+        Task<IList<IntegratorUser>> GetAllUsersByRole(string roleName);
 
 
 
         IntegratorUser GetCurrentLoginInUser();
 
         int GetUserID();
-        /// <summary>
+        /// <summary
         /// Delete a user
-        /// </summary>
-        /// <param name="user">IntegratorUser</param>
+        /// </summary
+        /// <param name="user"IntegratorUser</param
         void DeleteUser(IntegratorUser user);
 
-        /// <summary>
+        /// <summary
         /// Gets a user
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <returns>A user</returns>
+        /// </summary
+        /// <param name="userId"User identifier</param
+        /// <returnsA user</returns
         IntegratorUser GetUserById(int userId);
 
-        /// <summary>
+        /// <summary
         /// Get users by identifiers
-        /// </summary>
-        /// <param name="userIds">User identifiers</param>
-        /// <returns>Users</returns>
+        /// </summary
+        /// <param name="userIds"User identifiers</param
+        /// <returnsUsers</returns
         IList<IntegratorUser> GetUsersByIds(int[] userIds);
 
 
 
-        /// <summary>
+        /// <summary
         /// Get user by email
-        /// </summary>
-        /// <param name="email">Email</param>
-        /// <returns>User</returns>
+        /// </summary
+        /// <param name="email"Email</param
+        /// <returnsUser</returns
         Task<IntegratorUser> GetUserByEmailAsync(string email);
 
-        /// <summary>
+        /// <summary
         /// Get user by system role
-        /// </summary>
-        /// <param name="systemName">System name</param>
-        /// <returns>User</returns>
+        /// </summary
+        /// <param name="systemName"System name</param
+        /// <returnsUser</returns
         IntegratorUser GetUserBySystemName(string systemName);
 
-        /// <summary>
+        /// <summary
         /// Get user by username
-        /// </summary>
-        /// <param name="username">Username</param>
-        /// <returns>User</returns>
+        /// </summary
+        /// <param name="username"Username</param
+        /// <returnsUser</returns
         IntegratorUser GetUserByUsername(string username);
 
 
 
-        /// <summary>
+        /// <summary
         /// Insert a user
-        /// </summary>
-        /// <param name="user">User</param>
+        /// </summary
+        /// <param name="user"User</param
         Task<IdentityResult> InsertUserAsync(IntegratorUser NewUser, string password);
 
-        /// <summary>
+        /// <summary
         /// Updates the user
-        /// </summary>
-        /// <param name="user">IntegratorUser</param>
+        /// </summary
+        /// <param name="user"IntegratorUser</param
         void UpdateUser(IntegratorUser user);
 
-        /// <summary>
+        /// <summary
         /// Get full name
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>User full name</returns>
+        /// </summary
+        /// <param name="user"User</param
+        /// <returnsUser full name</returns
         string GetUserFullName(IntegratorUser user);
 
-        /// <summary>
+        /// <summary
         /// Formats the user name
-        /// </summary>
-        /// <param name="user">Source</param>
-        /// <param name="stripTooLong">Strip too long user name</param>
-        /// <param name="maxLength">Maximum user name length</param>
-        /// <returns>Formatted text</returns>
+        /// </summary
+        /// <param name="user"Source</param
+        /// <param name="stripTooLong"Strip too long user name</param
+        /// <param name="maxLength"Maximum user name length</param
+        /// <returnsFormatted text</returns
         string FormatUserName(IntegratorUser user, bool stripTooLong = false, int maxLength = 0);
         #endregion
 
         #region User roles
 
-        /// <summary>
+        /// <summary
         /// Delete a user role
-        /// </summary>
-        /// <param name="userRole">User role</param>
+        /// </summary
+        /// <param name="userRole"User role</param
         void DeleteUserRole(IntegratorUserRole userRole);
 
-        /// <summary>
+        /// <summary
         /// Gets a user role
-        /// </summary>
-        /// <param name="userRoleId">User role identifier</param>
-        /// <returns>User role</returns>
+        /// </summary
+        /// <param name="userRoleId"User role identifier</param
+        /// <returnsUser role</returns
         IntegratorUserRole GetUserRoleById(int userRoleId);
 
-        /// <summary>
+        /// <summary
         /// Gets a user role
-        /// </summary>
-        /// <param name="systemName">User role system name</param>
-        /// <returns>User role</returns>
+        /// </summary
+        /// <param name="systemName"User role system name</param
+        /// <returnsUser role</returns
         IntegratorUserRole GetUserRoleBySystemName(string systemName);
 
-        /// <summary>
+        /// <summary
         /// Gets all user roles
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>User roles</returns>
+        /// </summary
+        /// <param name="showHidden"A value indicating whether to show hidden records</param
+        /// <returnsUser roles</returns
         Task<IList<string>> GetAllUserRolesAsync(bool showHidden = false);
 
-        /// <summary>
+        /// <summary
         /// Inserts a user role
-        /// </summary>
-        /// <param name="userRole">User role</param>
+        /// </summary
+        /// <param name="userRole"User role</param
         Task InsertUserRoleAsync(string role, string userNameAsEmailAddress);
 
-        /// <summary>
+        /// <summary
         /// Updates the user role
-        /// </summary>
-        /// <param name="userRole">User role</param>
+        /// </summary
+        /// <param name="userRole"User role</param
         void UpdateUserRole(IntegratorUserRole userRole);
 
         #endregion
 
         #region User passwords
 
-        /// <summary>
+        /// <summary
         /// Gets user passwords
-        /// </summary>
-        /// <param name="userId">User identifier; pass null to load all records</param>
-        /// <param name="passwordFormat">Password format; pass null to load all records</param>
-        /// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
-        /// <returns>List of user passwords</returns>
+        /// </summary
+        /// <param name="userId"User identifier; pass null to load all records</param
+        /// <param name="passwordFormat"Password format; pass null to load all records</param
+        /// <param name="passwordsToReturn"Number of returning passwords; pass null to load all records</param
+        /// <returnsList of user passwords</returns
         IList<string> GetUserPasswords(int? userId = null, int? passwordsToReturn = null);
 
-        /// <summary>
+        /// <summary
         /// Get current user password
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <returns>User password</returns>
+        /// </summary
+        /// <param name="userId"User identifier</param
+        /// <returnsUser password</returns
         string GetCurrentPassword(int userId);
 
-        /// <summary>
+        /// <summary
         /// Insert a user password
-        /// </summary>
-        /// <param name="userPassword">User password</param>
+        /// </summary
+        /// <param name="userPassword"User password</param
         void InsertUserPassword(string userPassword);
 
-        /// <summary>
+        /// <summary
         /// Update a user password
-        /// </summary>
-        /// <param name="userPassword">User password</param>
+        /// </summary
+        /// <param name="userPassword"User password</param
         void UpdateUserPassword(string userPassword);
 
-        /// <summary>
+        /// <summary
         /// Check whether password recovery token is valid
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="token">Token to validate</param>
-        /// <returns>Result</returns>
+        /// </summary
+        /// <param name="user"User</param
+        /// <param name="token"Token to validate</param
+        /// <returnsResult</returns
         bool IsPasswordRecoveryTokenValid(IntegratorUser user, string token);
 
 
 
-        /// <summary>
+        /// <summary
         /// Check whether user password is expired 
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>True if password is expired; otherwise false</returns>
+        /// </summary
+        /// <param name="user"User</param
+        /// <returnsTrue if password is expired; otherwise false</returns
         bool PasswordIsExpired(IntegratorUser user);
 
         #endregion

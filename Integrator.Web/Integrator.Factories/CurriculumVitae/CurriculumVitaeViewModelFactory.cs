@@ -16,6 +16,12 @@ using Integrator.Models.Domain.Common;
 using Integrator.Services.Common;
 using Integrator.Services.Common.Files;
 using Integrator.Models.ViewModels.Common.Files;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
+using Integrator.Services.KnowledgeBase.Users;
+using System.Threading.Tasks;
+using Integrator.Services.KnowledgeBase.Core;
+using Integrator.Services.Companies;
+using Integrator.Models.Domain.EnumClasses;
 
 namespace Integrator.Factories.CurriculumVitae
 {
@@ -29,6 +35,9 @@ namespace Integrator.Factories.CurriculumVitae
         private readonly IInterestService _interestService;
         private readonly ILanguageService _languageService;
         private readonly IFileService _fileService;
+        private readonly IUserKnowledgeBaseService _userKnowledgeBaseService;
+        private readonly ICoreKnowledgeBaseService _coreKnowledgeBaseService;
+        private readonly ICompanyService _companyService;
 
         #endregion
 
@@ -41,7 +50,10 @@ namespace Integrator.Factories.CurriculumVitae
             IEducationInstitutionService educationInstitutionService,
             IInterestService interestService,
             ILanguageService languageService,
-            IFileService fileService
+            IFileService fileService,
+            IUserKnowledgeBaseService userKnowledgeBaseService,
+            ICoreKnowledgeBaseService coreKnowledgeBaseService,
+            ICompanyService companyService
             )
         {
             this._curriculumVitaeService = curriculumVitaeService;
@@ -51,6 +63,9 @@ namespace Integrator.Factories.CurriculumVitae
             this._interestService = interestService;
             this._languageService = languageService;
             this._fileService = fileService;
+            this._userKnowledgeBaseService = userKnowledgeBaseService;
+            this._coreKnowledgeBaseService = coreKnowledgeBaseService;
+            this._companyService = companyService;
         }
 
 
@@ -70,7 +85,7 @@ namespace Integrator.Factories.CurriculumVitae
             {
                 CurriculumVitea NewCV = new CurriculumVitea()
                 {
-                    CareerSummary = "<h1>{Default Text REPLACE}</h1><br/><h1>Welcome</h1><br/><p> Your career summary is awaiting your creative and insightful completion.</p><br/>{ REMOVE THIS TEXT AND REPLACE WITH YOUR CAREER SUMMARY }",
+                    CareerSummary = "<h1>{Default Text REPLACE}</h1><br/><h1>Welcome</h1><br/><p> Your career summary is ing your creative and insightful completion.</p><br/>{ REMOVE THIS TEXT AND REPLACE WITH YOUR CAREER SUMMARY }",
                     DateLastUpdated = DateTime.Now,
                     IntegratorUserID = _userService.GetUserID()
                 };
@@ -84,8 +99,6 @@ namespace Integrator.Factories.CurriculumVitae
                 model.UserCareerSummary = UserCurriculumVitae.CareerSummary;
                 model.DateLastUpdated = UserCurriculumVitae.DateLastUpdated;
 
-                // CurriculumVitaeViewModel model = new CurriculumVitaeViewModel();
-
                 IntegratorUser CurrentUser = _userService.GetCurrentLoginInUser();
 
                 model.UserFirstName = CurrentUser.FirstName;
@@ -93,7 +106,7 @@ namespace Integrator.Factories.CurriculumVitae
                 model.UserPicture = _userService.GetUserProfilePictureAsync().Result;
 
 
-                //adds any awrards the the user may have.
+                //adds any awrards the the user may have.//.
                 foreach (IntegratorUserAwards item in _userService.GetAwards())
                 {
                     model.UserAwards.Add(new UserAwardViewModel()
@@ -112,7 +125,7 @@ namespace Integrator.Factories.CurriculumVitae
                         Id = item.Id,
                         IsPrimaryLanguage = item.IsPrimaryLanguage,
                         CanSpeakAndWrite = item.CanSpeakAndWrite,
-                        Language = item.LanguageSpoken.Language,
+                        Language = item.SpokenLanguage.LanguageSpoken,
                         LanguageProficiencyLevel = item.LanguageProficiencyLevel
                     });
                 }
@@ -143,32 +156,29 @@ namespace Integrator.Factories.CurriculumVitae
                     });
                 }
 
-                foreach (CurriculumViteaWorkExperiences item in _curriculumVitaeService.ListWorkExperiences(model.Id))
+                //Adds all user jobs Listed -[Curriculum Vitae Experience Deatils]
+                foreach (UserJob item in _userKnowledgeBaseService.ListUserJobByCurriculumVitae(model.Id))
                 {
                     var CVWEVM = new CurriculumViteaWorkExperienceViewModel()
                     {
                         Id = item.Id,
                         Company = item.Company.CompanyName,
-                        JobTitle = item.Job.Description,
+                        JobTitle = item.CoreKbJob.CoreKbJobTitle,
                         WorkExperienceDescription = item.WorkExperienceDescription,
                         Achievements = item.Achievments,
                         YearStarted = item.DateStarted.Year.ToString(),
                         YearEnded = item.DateEnded.Year.ToString()
                     };
-
-                    IList<UserSkillViewModel> listOfUserSkills = new List<UserSkillViewModel>();
-                    foreach (var InnerItem in item.CurriculumViteaWorkExperienceSkillSets.Select(a => a.IntegratorUserIndustryCategoryJobSkillSet))
+                    foreach (UserJobSkill InnerItem in item.UserJobSkills)
                     {
-                        listOfUserSkills.Add(new UserSkillViewModel()
+                        CVWEVM.SkillsEmployed.Add(new UserSkillViewModel()
                         {
                             Id = InnerItem.Id,
-                            JobSkill = InnerItem.Description,
-                            SkillLevel = Convert.ToDouble(InnerItem.SkillLevel)
-
+                            JobSkill = InnerItem.CoreKbSkill.CoreSkill,
+                            SkillLevel = InnerItem.UserJobSkillLevel
                         });
-
-
                     }
+
                 }
             }
             else
@@ -231,19 +241,20 @@ namespace Integrator.Factories.CurriculumVitae
             model.CanSpeakAndWrite = false;
             model.IsPrimaryLanguage = false;
 
+            var ListOfAllLanguages = _languageService.ListLanguages();
             //populate List of all languages
-            foreach (LanguageList item in _languageService.ListLanguages().Except((from a in _userService.GetUserLanguages()
-                                                                                   select new LanguageList()
-                                                                                   {
-                                                                                       Id = a.LanguageID,
-                                                                                       Language = a.LanguageSpoken.Language
-                                                                                   }).ToList(), new LanguageComparer()).ToList())
+            foreach (Language item in ListOfAllLanguages.Except((from a in _userService.GetUserLanguages()
+                                                                 select new Language()
+                                                                 {
+                                                                     Id = a.LanguageID,
+                                                                     LanguageSpoken = a.SpokenLanguage.LanguageSpoken
+                                                                 }).ToList(), new LanguageComparer()).ToList())
             {
 
                 model.ListOfLanguages.Add(new SelectListItem()
                 {
                     Value = item.Id.ToString(),
-                    Text = item.Language
+                    Text = item.LanguageSpoken
                 });
             }
 
@@ -259,7 +270,7 @@ namespace Integrator.Factories.CurriculumVitae
                     CanSpeakAndWrite = item.CanSpeakAndWrite,
                     IsPrimaryLanguage = item.IsPrimaryLanguage,
                     LanguageProficiencyLevel = item.LanguageProficiencyLevel,
-                    Language = item.LanguageSpoken.Language
+                    Language = item.SpokenLanguage.LanguageSpoken
                 });
             }
 
@@ -326,6 +337,58 @@ namespace Integrator.Factories.CurriculumVitae
         public EditUserCurriculumViteaWorkExperienceViewModel prepareEditCurriuclumVitaeWorkExperiences()
         {
             EditUserCurriculumViteaWorkExperienceViewModel model = new EditUserCurriculumViteaWorkExperienceViewModel();
+
+
+            //populates all known Industry Categories
+            foreach (var item in _coreKnowledgeBaseService.ListIndustryCategories())
+            {
+                model.ListOfIndustryCategories.Add(new SelectListItem()
+                {
+                    Text = item.CoreKbIndustryCategoryName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            //populates all Hard Skill Categories
+            foreach (var item in _coreKnowledgeBaseService.ListSkillCategoriesBySkillType((int)EnumKbSkillType.HardSkill))
+            {
+                model.ListOfHardSkillCategories.Add(new SelectListItem()
+                {
+                    Text = item.CoreSkillCategoryName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            //populates all Soft skill Categories
+            foreach (var item in _coreKnowledgeBaseService.ListSkillCategoriesBySkillType((int)EnumKbSkillType.SoftSkill))
+            {
+                model.ListOfSoftSkillCategories.Add(new SelectListItem()
+                {
+                    Text = item.CoreSkillCategoryName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            //populates all known Industry Categories
+            foreach (var item in _companyService.ListCompanies())
+            {
+                model.ListOfCompanies.Add(new SelectListItem()
+                {
+                    Text = item.CompanyName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            //populates all known Job Title 
+            foreach (var item in _coreKnowledgeBaseService.ListJobs())
+            {
+                model.ListOfJobTitles.Add(new SelectListItem()
+                {
+                    Text = item.CoreKbJobTitle,
+                    Value = item.Id.ToString()
+                });
+            }
+
 
             return model;
         }

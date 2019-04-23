@@ -16,7 +16,7 @@ namespace Integrator.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -355,11 +355,11 @@ namespace Integrator.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CompanyName")
-                        .HasMaxLength(100);
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company");
+                    b.ToTable("Companies");
 
                     b.HasData(
                         new
@@ -367,6 +367,54 @@ namespace Integrator.Data.Migrations
                             Id = 1,
                             CompanyName = "Self Employed"
                         });
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobListing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyJobListingID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyJobID");
+
+                    b.Property<DateTime>("DateEnded")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<DateTime>("DateStarted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<int>("LevelOfUrgentcy");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyJobID");
+
+                    b.ToTable("CompanyJobListings");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyRelatedIndustryID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyID");
+
+                    b.Property<int>("CoreKbIndustryID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyID");
+
+                    b.HasIndex("CoreKbIndustryID");
+
+                    b.ToTable("CompanyRelatedIndustries");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumVitaeWorkExperienceReferences", b =>
@@ -392,8 +440,6 @@ namespace Integrator.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculumViteaWorkExperienceID");
-
                     b.ToTable("CurriculumVitaeWorkExperienceReferences");
                 });
 
@@ -418,69 +464,6 @@ namespace Integrator.Data.Migrations
                     b.HasIndex("IntegratorUserID");
 
                     b.ToTable("CurriculumViteas");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumViteaWorkExperienceSkillSets", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CurriculumViteaWorkExperienceSkillSetID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CurriculumViteaWorkExperienceID");
-
-                    b.Property<int>("IntegratorUserIndustryCategoryJobSkillSetID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CurriculumViteaWorkExperienceID");
-
-                    b.HasIndex("IntegratorUserIndustryCategoryJobSkillSetID");
-
-                    b.ToTable("CurriculumViteaWorkExperienceSkillSets");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumViteaWorkExperiences", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CurriculumViteaWorkExperienceID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Achievments")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("('')")
-                        .IsUnicode(false);
-
-                    b.Property<int>("CompanyID");
-
-                    b.Property<int>("CurriculumViteaID");
-
-                    b.Property<DateTime>("DateEnded")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<DateTime>("DateStarted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<int>("IntegratorUserIndustryCategoryJobID");
-
-                    b.Property<string>("WorkExperienceDescription");
-
-                    b.HasKey("Id")
-                        .HasName("PK_CurriculumViteaWorkExperiences");
-
-                    b.HasIndex("CompanyID");
-
-                    b.HasIndex("CurriculumViteaID");
-
-                    b.HasIndex("IntegratorUserIndustryCategoryJobID");
-
-                    b.ToTable("CurriculumViteaWorkExperiences");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.EductaionalInstitutions", b =>
@@ -574,14 +557,14 @@ namespace Integrator.Data.Migrations
                     b.ToTable("IntegratorUserLanguages");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.LanguageList", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.Language", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("LanguageID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Language")
+                    b.Property<string>("LanguageSpoken")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false);
@@ -594,22 +577,22 @@ namespace Integrator.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Language = "English"
+                            LanguageSpoken = "English"
                         },
                         new
                         {
                             Id = 2,
-                            Language = "Afrikaans"
+                            LanguageSpoken = "Afrikaans"
                         },
                         new
                         {
                             Id = 3,
-                            Language = "Xhosa"
+                            LanguageSpoken = "Xhosa"
                         },
                         new
                         {
                             Id = 4,
-                            Language = "Zulu"
+                            LanguageSpoken = "Zulu"
                         });
                 });
 
@@ -804,320 +787,441 @@ namespace Integrator.Data.Migrations
                     b.ToTable("UserPictures");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustry", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyIndustryID")
+                        .HasColumnName("CompanyJobID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyID");
 
-                    b.Property<int>("CoreKBIndustryID");
+                    b.Property<int>("CoreKbJobID");
 
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
+                    b.Property<string>("JobDescription")
+                        .IsRequired()
+                        .IsUnicode(false);
 
-                    b.Property<string>("Description")
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyID");
+
+                    b.HasIndex("CoreKbJobID");
+
+                    b.ToTable("CompanyJobs");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJobRelatedIndustry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyJobRelatedIndustryID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyJobID");
+
+                    b.Property<int>("CoreKbIndustryID");
+
+                    b.Property<bool>("LevelOfCompanyInvolvement");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyJobID");
+
+                    b.HasIndex("CoreKbIndustryID");
+
+                    b.ToTable("CompanyJobRelatedIndustries");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJobSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyJobSkillID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyJobID");
+
+                    b.Property<int>("CoreKbSkillID");
+
+                    b.Property<int>("LevelOfImportantce");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyJobID");
+
+                    b.HasIndex("CoreKbSkillID");
+
+                    b.ToTable("CompanyJobSkills");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CoreKbIndustryID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoreKbIndustryCategoryID");
+
+                    b.Property<string>("CoreKbIndustryName")
+                        .IsRequired()
+                        .HasColumnName("CoreKBIndustryName")
                         .HasMaxLength(150)
                         .IsUnicode(false);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyID");
+                    b.HasIndex("CoreKbIndustryCategoryID");
 
-                    b.HasIndex("CoreKBIndustryID");
+                    b.ToTable("CoreKbIndustries");
 
-                    b.ToTable("CompanyIndustries");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CoreKbIndustryCategoryID = 1,
+                            CoreKbIndustryName = "Farming and Ranching"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CoreKbIndustryCategoryID = 1,
+                            CoreKbIndustryName = "Fishing"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CoreKbIndustryCategoryID = 1,
+                            CoreKbIndustryName = "Hunting "
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CoreKbIndustryCategoryID = 1,
+                            CoreKbIndustryName = "Forestry"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CoreKbIndustryCategoryID = 1,
+                            CoreKbIndustryName = "Mining and Quarrying"
+                        });
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategory", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustryCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyIndustryCategoryID")
+                        .HasColumnName("CoreKbIndustryCategoryID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyID");
-
-                    b.Property<int>("CompanyIndustryID");
-
-                    b.Property<int>("CoreKBIndustryCategoryID");
-
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyID");
-
-                    b.HasIndex("CompanyIndustryID");
-
-                    b.HasIndex("CoreKBIndustryCategoryID");
-
-                    b.ToTable("CompanyIndustryCategories");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategoryJob", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyIndustryCategoryJobID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyID");
-
-                    b.Property<int>("CompanyIndustryCategoryID");
-
-                    b.Property<int>("CoreKBIndustryCategoryJobID");
-
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(100)
-                        .IsUnicode(false);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyID");
-
-                    b.HasIndex("CompanyIndustryCategoryID");
-
-                    b.HasIndex("CoreKBIndustryCategoryJobID");
-
-                    b.ToTable("CompanyIndustryCategoryJobs");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategoryJobSkillSet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyIndustryCategoryJobSkillSetID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyID");
-
-                    b.Property<int>("CompanyIndustryCategoryJobID");
-
-                    b.Property<int>("CoreKBIndustryCategorySkillSetID");
-
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyID");
-
-                    b.HasIndex("CompanyIndustryCategoryJobID");
-
-                    b.HasIndex("CoreKBIndustryCategorySkillSetID");
-
-                    b.ToTable("CompanyIndustryCategoryJobSkillSets");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("IndustryCategoryID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Category")
+                    b.Property<string>("CoreKbIndustryCategoryName")
+                        .HasColumnName("CoreKBIndustryCategory")
                         .HasMaxLength(100);
 
-                    b.Property<int>("IndustryID");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("IndustryID");
+                    b.ToTable("CoreKbIndustryCategories");
 
-                    b.ToTable("CoreKBIndustryCategories");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CoreKbIndustryCategoryName = "Agriculture and Mining"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CoreKbIndustryCategoryName = "Business Services"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CoreKbIndustryCategoryName = "Education"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CoreKbIndustryCategoryName = "Consumer Services"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CoreKbIndustryCategoryName = "Education"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CoreKbIndustryCategoryName = "Energy and Utilities"
+                        });
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJob", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustryJob", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IndustryCategoryJobID")
+                        .HasColumnName("CoreKbIndustryJobID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IndustryCategoryID");
+                    b.Property<int>("CoreKbIndustryID");
 
-                    b.Property<string>("JobTitle")
-                        .HasMaxLength(50)
+                    b.Property<int>("CoreKbJobID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoreKbIndustryID");
+
+                    b.HasIndex("CoreKbJobID");
+
+                    b.ToTable("CoreKbIndustryJobs");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CoreKbJobID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CoreKbJobTitle")
+                        .IsRequired()
+                        .HasColumnName("CoreKBJob")
+                        .HasMaxLength(150)
                         .IsUnicode(false);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IndustryCategoryID");
-
-                    b.ToTable("CoreKBIndustryCategoryJobs");
+                    b.ToTable("CoreKbJobs");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJobSkillSet", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJobSkill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IndustryCategorySkillSetID")
+                        .HasColumnName("CoreKbJobSkillID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IndustryCategoryJobID");
+                    b.Property<int>("CoreKbJobID");
 
-                    b.Property<string>("IndustryCategorySkillSet")
+                    b.Property<int>("CoreKbSkillID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoreKbJobID");
+
+                    b.HasIndex("CoreKbSkillID");
+
+                    b.ToTable("CoreKbJobSkills");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CoreKbSkillID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CoreSkill")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .IsUnicode(false);
+
+                    b.Property<int>("CoreSkillCategoryID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoreSkillCategoryID");
+
+                    b.ToTable("CoreKbSkills");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkillType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CoreKbSkillTypeID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CoreKbSkillTypeName")
+                        .IsRequired()
+                        .HasColumnName("CoreKBSkillType")
                         .HasMaxLength(100)
                         .IsUnicode(false);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IndustryCategoryJobID");
+                    b.ToTable("CoreKbSkillTypes");
 
-                    b.ToTable("CoreKBIndustryCategoryJobSkillSets");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CoreKbSkillTypeName = "HardSkill"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CoreKbSkillTypeName = "SoftSkill"
+                        });
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryType", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreSkillCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IndustryID")
+                        .HasColumnName("CoreSkillCategoryID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Industry")
+                    b.Property<int>("CoreKbSkillTypeID");
+
+                    b.Property<string>("CoreSkillCategoryName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false);
 
                     b.HasKey("Id");
 
-                    b.ToTable("CoreKBIndustryTypes");
+                    b.HasIndex("CoreKbSkillTypeID");
+
+                    b.ToTable("CoreSkillCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Communication"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Leadership"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Influencing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Creativity"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Professional"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Interpersonal"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CoreKbSkillTypeID = 2,
+                            CoreSkillCategoryName = "Personal"
+                        });
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustry", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJob", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IntegratorUserIndustryID")
+                        .HasColumnName("UserJobID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoreKBIndustryID");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(150);
-
-                    b.Property<int>("IntegratorUserID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CoreKBIndustryID");
-
-                    b.HasIndex("IntegratorUserID");
-
-                    b.ToTable("IntegratorUserIndustries");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategory", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<string>("Achievments")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IntegratorUserIndustryCategoryID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CoreKBIndustryCategoryID");
-
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(150)
+                        .HasDefaultValueSql("('')")
                         .IsUnicode(false);
 
+                    b.Property<int>("CompanyID");
+
+                    b.Property<int>("CoreKbJobID");
+
+                    b.Property<int>("CurriculumViteaID");
+
+                    b.Property<DateTime>("DateEnded")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<DateTime>("DateStarted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("(getdate())");
+
                     b.Property<int>("IntegratorUserID");
 
-                    b.Property<int>("IntegratorUserIndustryID");
+                    b.Property<bool>("IsCurrentJob");
+
+                    b.Property<string>("WorkExperienceDescription")
+                        .IsRequired()
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoreKBIndustryCategoryID");
+                    b.HasIndex("CompanyID");
+
+                    b.HasIndex("CoreKbJobID");
+
+                    b.HasIndex("CurriculumViteaID");
 
                     b.HasIndex("IntegratorUserID");
 
-                    b.HasIndex("IntegratorUserIndustryID");
-
-                    b.ToTable("IntegratorUserIndustryCategories");
+                    b.ToTable("UserJobs");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJob", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJobRelatedIndustry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IntegratorUserIndustryCategoryJobID")
+                        .HasColumnName("UserJobRelatedIndustryID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoreKBIndustryCategoryJobID");
+                    b.Property<int>("CoreKbIndustryID");
 
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
+                    b.Property<int>("LevelOfIndustInvolvement");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(150)
-                        .IsUnicode(false);
-
-                    b.Property<int>("IntegratorUserID");
-
-                    b.Property<int>("IntegratorUserIndustryCategoryID");
-
-                    b.Property<bool>("IsPrimaryJobFunction");
+                    b.Property<int>("UserJobID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoreKBIndustryCategoryJobID");
+                    b.HasIndex("CoreKbIndustryID");
 
-                    b.HasIndex("IntegratorUserID");
+                    b.HasIndex("UserJobID");
 
-                    b.HasIndex("IntegratorUserIndustryCategoryID");
-
-                    b.ToTable("IntegratorUserIndustryCategoryJobs");
+                    b.ToTable("UserJobRelatedIndustries");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJobSkillSet", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJobSkill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("IntegratorUserIndustryCategoryJobSkillSetID")
+                        .HasColumnName("UserJobSkillID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoreKBIndustryCategorySkillSetID");
+                    b.Property<int>("CoreKbSkillID");
 
-                    b.Property<DateTime?>("DateLastUpdated")
-                        .HasColumnType("datetime");
+                    b.Property<int>("UserJobID");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .IsUnicode(false);
-
-                    b.Property<int>("IntegratorUserID");
-
-                    b.Property<int>("IntegratorUserIndustryCategoryJobID");
-
-                    b.Property<decimal>("SkillLevel")
-                        .HasColumnType("numeric(18, 2)");
+                    b.Property<int>("UserJobSkillLevel");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoreKBIndustryCategorySkillSetID");
+                    b.HasIndex("CoreKbSkillID");
 
-                    b.HasIndex("IntegratorUserID");
+                    b.HasIndex("UserJobID");
 
-                    b.HasIndex("IntegratorUserIndustryCategoryJobID");
-
-                    b.ToTable("IntegratorUserIndustryCategoryJobSkillSets");
+                    b.ToTable("UserJobSkills");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Addresses.ComplexAddress", b =>
@@ -1228,12 +1332,27 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumVitaeWorkExperienceReferences", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobListing", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.CurriculumVitaes.CurriculumViteaWorkExperiences", "CurriculumViteaWorkExperience")
-                        .WithMany("CurriculumVitaeWorkExperienceReferences")
-                        .HasForeignKey("CurriculumViteaWorkExperienceID")
-                        .HasConstraintName("FK_CurriculumVitaeWorkExperienceReferences_CurriculumViteaWorkExperiences")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
+                        .WithMany("CompanyJobListings")
+                        .HasForeignKey("CompanyJobID")
+                        .HasConstraintName("FK_CompanyJobListings_CompanyJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
+                        .WithMany("CompanyRelatedIndustries")
+                        .HasForeignKey("CompanyID")
+                        .HasConstraintName("FK_CompanyRelatedIndustries_Company")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
+                        .WithMany("CompanyRelatedIndustries")
+                        .HasForeignKey("CoreKbIndustryID")
+                        .HasConstraintName("FK_CompanyRelatedIndustries_CoreKbIndustries")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -1243,42 +1362,6 @@ namespace Integrator.Data.Migrations
                         .WithMany("CurriculumViteas")
                         .HasForeignKey("IntegratorUserID")
                         .HasConstraintName("FK_CurriculumViteas_IntegratorUsers")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumViteaWorkExperienceSkillSets", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.CurriculumVitaes.CurriculumViteaWorkExperiences", "CurriculumViteaWorkExperience")
-                        .WithMany("CurriculumViteaWorkExperienceSkillSets")
-                        .HasForeignKey("CurriculumViteaWorkExperienceID")
-                        .HasConstraintName("FK_CurriculumViteaWorkExperienceSkillSets_CurriculumViteaWorkExperiences")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJobSkillSet", "IntegratorUserIndustryCategoryJobSkillSet")
-                        .WithMany("CurriculumViteaWorkExperienceSkillSets")
-                        .HasForeignKey("IntegratorUserIndustryCategoryJobSkillSetID")
-                        .HasConstraintName("FK_CurriculumViteaWorkExperienceSkillSets_IntegratorUserIndustryCategoryJobSkillSets")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumViteaWorkExperiences", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
-                        .WithMany("CurriculumViteaWorkExperiences")
-                        .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CurriculumViteaWorkExperiences_Company")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.CurriculumVitaes.CurriculumVitea", "CurriculumVitea")
-                        .WithMany("CurriculumViteaWorkExperiences")
-                        .HasForeignKey("CurriculumViteaID")
-                        .HasConstraintName("FK_UserWorkExperienceHistory_CurriculumViteas")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJob", "Job")
-                        .WithMany("CurriculumViteaWorkExperiences")
-                        .HasForeignKey("IntegratorUserIndustryCategoryJobID")
-                        .HasConstraintName("FK_UseEmploymentHistory_IntegratorUserIndustryCategoryJobs")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -1314,7 +1397,7 @@ namespace Integrator.Data.Migrations
                         .HasConstraintName("FK_IntegratorUserLanguages_IntegratorUsers")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.CurriculumVitaes.LanguageList", "LanguageSpoken")
+                    b.HasOne("Integrator.Models.Domain.CurriculumVitaes.Language", "SpokenLanguage")
                         .WithMany("UserLanguages")
                         .HasForeignKey("LanguageID")
                         .HasConstraintName("FK_IntegratorUserLanguages_Languages")
@@ -1396,184 +1479,162 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustry", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", b =>
                 {
                     b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
-                        .WithMany("CompanyIndustries")
+                        .WithMany("CompanyJobs")
                         .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyIndustries_Companies")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK_CompanyJobs_Company")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryType", "CoreKBIndustry")
-                        .WithMany("CompanyIndustries")
-                        .HasForeignKey("CoreKBIndustryID")
-                        .HasConstraintName("FK_CompanyIndustries_Industries")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", "CoreKbJob")
+                        .WithMany("CompanyJobs")
+                        .HasForeignKey("CoreKbJobID")
+                        .HasConstraintName("FK_CompanyJobs_CoreKBJobs")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategory", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJobRelatedIndustry", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
+                        .WithMany("CompanyJobRelatedIndustries")
+                        .HasForeignKey("CompanyJobID")
+                        .HasConstraintName("FK_ComanyJobRelatedIndustries_CompanyJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
+                        .WithMany("ComanyJobRelatedIndustries")
+                        .HasForeignKey("CoreKbIndustryID")
+                        .HasConstraintName("FK_ComanyJobRelatedIndustries_CoreKbIndustries")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJobSkill", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
+                        .WithMany("CompanyJobSkills")
+                        .HasForeignKey("CompanyJobID")
+                        .HasConstraintName("FK_CompanyJobSkills_CompanyJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkill", "CoreKbSkill")
+                        .WithMany("CompanyJobSkills")
+                        .HasForeignKey("CoreKbSkillID")
+                        .HasConstraintName("FK_CompanyJobSkills_CoreKBSkills")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustryCategory", "CoreKbIndustryCategory")
+                        .WithMany("CoreKbIndustries")
+                        .HasForeignKey("CoreKbIndustryCategoryID")
+                        .HasConstraintName("FK_CoreKbIndustrySectors_CoreKBIdustryCategories")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustryJob", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
+                        .WithMany("CoreKbIndustryJobs")
+                        .HasForeignKey("CoreKbIndustryID")
+                        .HasConstraintName("FK_CoreKBIndustrySectorJobs_CoreKbIndustrySectors")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", "CoreKbJob")
+                        .WithMany("CoreKbIndustryJobs")
+                        .HasForeignKey("CoreKbJobID")
+                        .HasConstraintName("FK_CoreKBIndustrySectorJobs_CoreKBJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJobSkill", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", "CoreJob")
+                        .WithMany("CoreKbJobSkills")
+                        .HasForeignKey("CoreKbJobID")
+                        .HasConstraintName("FK_CoreKBJobSkills_CoreKBJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkill", "CoreSkill")
+                        .WithMany("CoreKbJobSkills")
+                        .HasForeignKey("CoreKbSkillID")
+                        .HasConstraintName("FK_CoreKBJobSoftSkills_CoreSoftSkills")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkill", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreSkillCategory", "CoreSkillCategory")
+                        .WithMany("CoreKbSkills")
+                        .HasForeignKey("CoreSkillCategoryID")
+                        .HasConstraintName("FK_CoreKBSkills_CoreSkillCategories")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreSkillCategory", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkillType", "CoreKbSkillType")
+                        .WithMany("CoreSkillCategories")
+                        .HasForeignKey("CoreKbSkillTypeID")
+                        .HasConstraintName("FK_CoreSkillCategories_CoreKBSkillTypes")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJob", b =>
                 {
                     b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
-                        .WithMany("CompanyIndustryCategories")
+                        .WithMany("UserJobs")
                         .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyIndustryCategories_Companies")
+                        .HasConstraintName("FK_UserJobs_Company")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustry", "CompanyIndustry")
-                        .WithMany("CompanyIndustryCategories")
-                        .HasForeignKey("CompanyIndustryID")
-                        .HasConstraintName("FK_CompanyIndustryCategories_CompanyIndustries")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", "CoreKbJob")
+                        .WithMany("UserJobs")
+                        .HasForeignKey("CoreKbJobID")
+                        .HasConstraintName("FK_UserJobs_CoreKBJobs")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategory", "CoreKBIndustryCategory")
-                        .WithMany("CompanyIndustryCategories")
-                        .HasForeignKey("CoreKBIndustryCategoryID")
-                        .HasConstraintName("FK_CompanyIndustryCategories_IndustryCategories")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategoryJob", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
-                        .WithMany("CompanyIndustryCategoryJobs")
-                        .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyIndustryCategoryJobs_Companies")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategory", "CompanyIndustryCategory")
-                        .WithMany("CompanyIndustryCategoryJobs")
-                        .HasForeignKey("CompanyIndustryCategoryID")
-                        .HasConstraintName("FK_CompanyIndustryCategoryJobs_CompanyIndustryCategories")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJob", "CoreKBIndustryCategoryJob")
-                        .WithMany("CompanyIndustryCategoryJobs")
-                        .HasForeignKey("CoreKBIndustryCategoryJobID")
-                        .HasConstraintName("FK_CompanyIndustryCategoryJobs_IndustryCategoryJobs")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategoryJobSkillSet", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
-                        .WithMany("CompanyIndustryCategoryJobSkillSets")
-                        .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyIndustryCategoryJobSkillSets_Companies")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyIndustryCategoryJob", "CompanyIndustryCategoryJob")
-                        .WithMany("CompanyIndustryCategoryJobSkillSets")
-                        .HasForeignKey("CompanyIndustryCategoryJobID")
-                        .HasConstraintName("FK_CompanyIndustryCategoryJobSkillSets_CompanyIndustryCategoryJobs")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJobSkillSet", "CoreKBIndustryCategorySkillSet")
-                        .WithMany("CompanyIndustryCategoryJobSkillSets")
-                        .HasForeignKey("CoreKBIndustryCategorySkillSetID")
-                        .HasConstraintName("FK_CompanyIndustryCategoryJobSkillSets_IndustryCategorySkillSets")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategory", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryType", "Industry")
-                        .WithMany("CoreKBIndustryCategories")
-                        .HasForeignKey("IndustryID")
-                        .HasConstraintName("FK_IndustryCategories_Industries")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJob", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategory", "IndustryCategory")
-                        .WithMany("CoreKBIndustryCategoryJobs")
-                        .HasForeignKey("IndustryCategoryID")
-                        .HasConstraintName("FK_IndustryCategoryJobs_IndustryCategories")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJobSkillSet", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJob", "CoreKBIndustryCategoryJob")
-                        .WithMany("CoreKBIndustryCategoryJobSkillSets")
-                        .HasForeignKey("IndustryCategoryJobID")
-                        .HasConstraintName("FK_IndustryCategorySkillSets_IndustryCategoryJobs")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustry", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryType", "CoreKBIndustry")
-                        .WithMany("IntegratorUserIndustries")
-                        .HasForeignKey("CoreKBIndustryID")
-                        .HasConstraintName("FK_UserIndustries_Industries");
-
-                    b.HasOne("Integrator.Models.Domain.Authentication.IntegratorUser", "IntegratorUser")
-                        .WithMany("IntegratorUserIndustries")
-                        .HasForeignKey("IntegratorUserID")
-                        .HasConstraintName("FK_UserIndustries_Users");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategory", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategory", "CoreKBIndustryCategory")
-                        .WithMany("IntegratorUserIndustryCategories")
-                        .HasForeignKey("CoreKBIndustryCategoryID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategories_IndustryCategories")
+                    b.HasOne("Integrator.Models.Domain.CurriculumVitaes.CurriculumVitea", "CurriculumVitea")
+                        .WithMany("UserJobs")
+                        .HasForeignKey("CurriculumViteaID")
+                        .HasConstraintName("FK_UserJobs_CurriculumViteas")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Integrator.Models.Domain.Authentication.IntegratorUser", "IntegratorUser")
-                        .WithMany("IntegratorUserIndustryCategories")
+                        .WithMany("UserJobs")
                         .HasForeignKey("IntegratorUserID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategories_Users")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustry", "IntegratorUserIndustry")
-                        .WithMany("IntegratorUserIndustryCategories")
-                        .HasForeignKey("IntegratorUserIndustryID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategories_UserIndustries")
+                        .HasConstraintName("FK_UserJobs_IntegratorUsers")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJob", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJobRelatedIndustry", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJob", "CoreKBIndustryCategoryJob")
-                        .WithMany("IntegratorUserIndustryCategoryJobs")
-                        .HasForeignKey("CoreKBIndustryCategoryJobID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategoryJobs_IndustryCategoryJobs")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
+                        .WithMany("UserJobRelatedIndustries")
+                        .HasForeignKey("CoreKbIndustryID")
+                        .HasConstraintName("FK_UserJobRelatedIndustries_CoreKbIndustries")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.Authentication.IntegratorUser", "IntegratorUser")
-                        .WithMany("IntegratorUserIndustryCategoryJobs")
-                        .HasForeignKey("IntegratorUserID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategoryJobs_Users")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategory", "IntegratorUserIndustryCategory")
-                        .WithMany("IntegratorUserIndustryCategoryJobs")
-                        .HasForeignKey("IntegratorUserIndustryCategoryID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategoryJobs_IntegratorUserIndustryCategories")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJob", "UserJob")
+                        .WithMany("UserJobRelatedIndustries")
+                        .HasForeignKey("UserJobID")
+                        .HasConstraintName("FK_UserJobRelatedIndustries_UserJobs")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJobSkillSet", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJobSkill", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKBIndustryCategoryJobSkillSet", "CoreKBIndustryCategoryJobSkillSet")
-                        .WithMany("IntegratorUserIndustryCategoryJobSkillSets")
-                        .HasForeignKey("CoreKBIndustryCategorySkillSetID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategoryJobSkillSets_IndustryCategorySkillSets")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkill", "CoreKbSkill")
+                        .WithMany("UserJobSkills")
+                        .HasForeignKey("CoreKbSkillID")
+                        .HasConstraintName("FK_UserJobSkills_CoreKBSkills")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.Authentication.IntegratorUser", "IntegratorUser")
-                        .WithMany("IntegratorUserIndustryCategoryJobSkillSets")
-                        .HasForeignKey("IntegratorUserID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategoryJobSkillSets_Users")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.IntegratorUserIndustryCategoryJob", "IntegratorUserIndustryCategoryJob")
-                        .WithMany("IntegratorUserIndustryCategoryJobSkillSets")
-                        .HasForeignKey("IntegratorUserIndustryCategoryJobID")
-                        .HasConstraintName("FK_IntegratorUserIndustryCategoryJobSkillSets_IntegratorUserIndustryCategoryJobs")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.IndividualUsers.UserJob", "UserJob")
+                        .WithMany("UserJobSkills")
+                        .HasForeignKey("UserJobID")
+                        .HasConstraintName("FK_UserJobSkills_UserJobs")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

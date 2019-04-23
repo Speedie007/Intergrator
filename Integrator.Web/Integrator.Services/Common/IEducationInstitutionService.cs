@@ -3,6 +3,7 @@ using Integrator.Models.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Integrator.Services.Common
 {
@@ -13,5 +14,6 @@ namespace Integrator.Services.Common
         IEntityCRUDResponse UpdateEducationInstitution(EductaionalInstitutions entity);
 
         List<EductaionalInstitutions> ListEductaionalInstitutions();
+        
     }
 }

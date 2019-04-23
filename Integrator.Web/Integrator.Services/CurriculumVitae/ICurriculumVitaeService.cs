@@ -1,4 +1,5 @@
 ﻿using Integrator.Models.Domain.CurriculumVitaes;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Models.ViewModels.CurriculumVitaes;
 using Integrator.Models.ViewModels.Users;
@@ -14,9 +15,10 @@ namespace Integrator.Services.CurriculumVitae
 
         CurriculumVitea GetCurriculumVitea(int UserID);
 
-        CurriculumViteaWorkExperiences GetWorkExperience(int WorkExperienceID);
+        UserJob GetUserJob(int WorkExperienceID);
 
-        IList<CurriculumViteaWorkExperiences> ListWorkExperiences(int CurriculumViteaID);
+        IList<UserJob> ListUserJobs(int CurriculumViteaID);
+        
 
 
 

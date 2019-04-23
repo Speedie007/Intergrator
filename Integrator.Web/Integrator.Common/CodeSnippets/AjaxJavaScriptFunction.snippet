@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title></Title>
+    </Header>
+    <Snippet>
+      <Code Language="">
+        <![CDATA[
+        
+        var _ViewModel = null;
+        function ${FunctionName}$() {
+          
+                _ViewModel = JSON.parse('{}');
+                _ViewModel.Id = 0;
+               
+                $.ajax({
+                type: "POST",
+                url: '@Url.Action("$ActionName$", "$ControlerName$")',
+                        data: JSON.stringify(_ViewModel),
+                        contentType: "application/json; charset=utf-8",
+                        beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                dataType: "json",
+                success: function (data) {
+
+                       //Display for the used indicating that the add was successfull.
+                        //toastr.success(data.message, 'Successfull.');
+
+                       
+                    $('#$$ModalControl$').modal('hide');
+                },
+                error: function (data, textStatus, error) {
+
+
+                    $('#$ModalControl$').modal('hide');
+                    toastr.error("Unable to Add Your Interest, PLease Try aAgain.",'Error');
+
+
+                    }
+                });
+            
+        }
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

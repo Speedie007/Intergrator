@@ -3,29 +3,29 @@ using System.Collections.Generic;
 
 namespace Integrator.Models.Domain.CurriculumVitaes
 {
-    public partial class LanguageList : BaseEntity
+    public partial class Language : BaseEntity
     {
-        public LanguageList()
+        public Language()
         {
             UserLanguages = new HashSet<IntegratorUserLanguages>();
         }
 
-        public string Language { get; set; }
+        public string LanguageSpoken { get; set; }
 
         public virtual ICollection<IntegratorUserLanguages> UserLanguages { get; set; }
     }
 
-    public class LanguageComparer : IEqualityComparer<LanguageList>
+    public class LanguageComparer : IEqualityComparer<Language>
     {
-        public bool Equals(LanguageList x, LanguageList y)
+        public bool Equals(Language x, Language y)
         {
-            if (x.Id == y.Id && x.Language.ToLower() == y.Language.ToLower())
+            if (x.Id == y.Id && x.LanguageSpoken.ToLower() == y.LanguageSpoken.ToLower())
                 return true;
 
             return false;
         }
 
-        public int GetHashCode(LanguageList obj)
+        public int GetHashCode(Language obj)
         {
             return obj.Id.GetHashCode();
         }

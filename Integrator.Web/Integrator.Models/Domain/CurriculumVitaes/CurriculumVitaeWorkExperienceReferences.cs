@@ -16,7 +16,7 @@ namespace Integrator.Models.Domain.CurriculumVitaes
         public string ContactLastName { get; set; }
         public bool HasBeenVerified { get; set; }
 
-        public virtual CurriculumViteaWorkExperiences CurriculumViteaWorkExperience { get; set; }
+        //public virtual CurriculumViteaWorkExperiences CurriculumViteaWorkExperience { get; set; }
         public virtual ICollection<WorkExperienceReferenceContactDetail> WorkExperienceReferenceContactDetails { get; set; }
     }
 }

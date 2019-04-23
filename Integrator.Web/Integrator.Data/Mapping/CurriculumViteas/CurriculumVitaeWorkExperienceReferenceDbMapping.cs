@@ -30,11 +30,7 @@ namespace Integrator.Data.Mapping.CurriculumViteas
                 .IsUnicode(false);
                         
 
-            builder.HasOne(d => d.CurriculumViteaWorkExperience)
-                .WithMany(p => p.CurriculumVitaeWorkExperienceReferences)
-                .HasForeignKey(d => d.CurriculumViteaWorkExperienceID)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_CurriculumVitaeWorkExperienceReferences_CurriculumViteaWorkExperiences");
+          
 
             base.Configure(builder);
         }

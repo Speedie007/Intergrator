@@ -9,6 +9,7 @@ using Integrator.Services.CurriculumVitae;
 using Integrator.Services.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 
 namespace Integrator.Services.CurriculumVitae
 {
@@ -18,7 +19,7 @@ namespace Integrator.Services.CurriculumVitae
         #region Fields
         private readonly IUserService _userService;
         private readonly IRepository<CurriculumVitea> _curriculumViteaRepository;
-        private readonly IRepository<CurriculumViteaWorkExperiences> _curriculumViteaWorkExperienceRepository;
+        private readonly IRepository<UserJob> _userJobRepository;
 
         #endregion
 
@@ -26,12 +27,12 @@ namespace Integrator.Services.CurriculumVitae
         public CurriculumVitaeService(
                    IUserService userService,
                    IRepository<CurriculumVitea> curriculumViteaRepository,
-                   IRepository<CurriculumViteaWorkExperiences> curriculumViteaWorkExperienceRepository
+                   IRepository<UserJob> userJobRepository
                    )
         {
             this._userService = userService;
             this._curriculumViteaRepository = curriculumViteaRepository;
-            this._curriculumViteaWorkExperienceRepository = curriculumViteaWorkExperienceRepository;
+            this._userJobRepository = userJobRepository;
         }
         #endregion
 
@@ -41,40 +42,26 @@ namespace Integrator.Services.CurriculumVitae
 
             var query = from CVR in _curriculumViteaRepository.Table
                         where CVR.IntegratorUserID == UserID
-                        //.Include(a => a.CurriculumViteaWorkExperiences)
-                        //.Include(a => a.CurriculumViteaWorkExperiences.Select(b => b.Company))
-                        //.Include(a => a.CurriculumViteaWorkExperiences.Select(b => b.CurriculumViteaWorkExperienceSkillSets))
-                        //.Include(a => a.CurriculumViteaWorkExperiences.Select(b => b.CurriculumVitaeWorkExperienceReferences))
-                        //.Include(a => a.CurriculumViteaWorkExperiences.Select(b => b.CurriculumVitaeWorkExperienceReferences.Select(c=>c.))
+                       
                         select CVR;
 
             return query.FirstOrDefault();
 
         }
 
-        public IList<CurriculumViteaWorkExperiences> ListWorkExperiences(int CurriculumViteaID)
+        public IList<UserJob> ListUserJobs(int CurriculumViteaID)
         {
-            var query = from CVWER in _curriculumViteaWorkExperienceRepository.Table
+            var query = from UJR in _userJobRepository.Table
                         .Include(a => a.Company)
-                        .Include(a => a.Job)
-                            //from b in CVWER.CurriculumViteaWorkExperienceSkillSets
-
-                            .Include(a => a.CurriculumViteaWorkExperienceSkillSets)
-                        where CVWER.CurriculumViteaID == CurriculumViteaID
-                        select CVWER;
+                      
+                        where UJR.CurriculumViteaID == CurriculumViteaID
+                        select UJR;
 
             return query.ToList();
         }
 
 
-        public CurriculumViteaWorkExperiences GetWorkExperience(int WorkExperienceID)
-        {
-            var query = from CVWER in _curriculumViteaWorkExperienceRepository.Table
-                        where CVWER.Id == WorkExperienceID
-                        select CVWER;
-
-            return query.FirstOrDefault();
-        }
+       
 
 
 
@@ -109,6 +96,13 @@ namespace Integrator.Services.CurriculumVitae
             }
 
         }
+
+        public UserJob GetUserJob(int WorkExperienceID)
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
     }
 }

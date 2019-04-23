@@ -12,7 +12,7 @@ namespace Integrator.Models.ViewModels.Users
         public string JobSkill { get; set; }
 
         [Display(Name = "Skill Level")]
-        public double SkillLevel { get; set; }
+        public int SkillLevel { get; set; }
 
         [Display(Name = "Last Updated")]
         DateTime DateLastUpdated { get; set; }

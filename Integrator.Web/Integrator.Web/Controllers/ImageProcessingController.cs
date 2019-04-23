@@ -41,7 +41,7 @@ namespace Integrator.Web.Controllers
         public IActionResult UploadUserProfileImage([FromBody] UserProifileImageUploadRequest request)
         {
             byte[] NewImage = Convert.FromBase64String(request.ImageData);
-            _entityCRUDResponse = _userService.AddUserProfilePicture(new IntegratorFile()
+            _entityCRUDResponse =  _userService.AddUserProfilePicture(new IntegratorFile()
             {
                 ContentType = request.FileType,
                 DateCreated = DateTime.Now,

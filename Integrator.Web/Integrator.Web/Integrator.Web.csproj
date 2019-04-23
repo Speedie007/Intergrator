@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Agents\Controllers\CoreKownledgeBase\**" />
+    <Compile Remove="Areas\Agents\Views\KnowledgeBase\**" />
     <Compile Remove="Areas\Individuals\Views\IndividualCurriculumVitae\**" />
     <Compile Remove="Areas\Individuals\Views\Individual\**" />
     <Compile Remove="Controllers\Administration\**" />
@@ -27,6 +29,8 @@
     <Compile Remove="wwwroot\image\**" />
     <Compile Remove="wwwroot\lib\cropper\**" />
     <Compile Remove="wwwroot\lib\jquery-ui\**" />
+    <Content Remove="Areas\Agents\Controllers\CoreKownledgeBase\**" />
+    <Content Remove="Areas\Agents\Views\KnowledgeBase\**" />
     <Content Remove="Areas\Individuals\Views\IndividualCurriculumVitae\**" />
     <Content Remove="Areas\Individuals\Views\Individual\**" />
     <Content Remove="Controllers\Administration\**" />
@@ -45,6 +49,8 @@
     <Content Remove="wwwroot\image\**" />
     <Content Remove="wwwroot\lib\cropper\**" />
     <Content Remove="wwwroot\lib\jquery-ui\**" />
+    <EmbeddedResource Remove="Areas\Agents\Controllers\CoreKownledgeBase\**" />
+    <EmbeddedResource Remove="Areas\Agents\Views\KnowledgeBase\**" />
     <EmbeddedResource Remove="Areas\Individuals\Views\IndividualCurriculumVitae\**" />
     <EmbeddedResource Remove="Areas\Individuals\Views\Individual\**" />
     <EmbeddedResource Remove="Controllers\Administration\**" />
@@ -63,6 +69,8 @@
     <EmbeddedResource Remove="wwwroot\image\**" />
     <EmbeddedResource Remove="wwwroot\lib\cropper\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-ui\**" />
+    <None Remove="Areas\Agents\Controllers\CoreKownledgeBase\**" />
+    <None Remove="Areas\Agents\Views\KnowledgeBase\**" />
     <None Remove="Areas\Individuals\Views\IndividualCurriculumVitae\**" />
     <None Remove="Areas\Individuals\Views\Individual\**" />
     <None Remove="Controllers\Administration\**" />
@@ -134,11 +142,11 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Views\Shared\" />
-    <Folder Include="Areas\Agents\Controllers\" />
-    <Folder Include="Areas\Agents\Views\Shared\" />
-    <Folder Include="Areas\Companies\Controllers\" />
-    <Folder Include="Areas\Companies\Views\Shared\" />
+    <Folder Include="Areas\Company\Controllers\" />
+    <Folder Include="Areas\Company\Data\" />
+    <Folder Include="Areas\Company\Models\" />
+    <Folder Include="Areas\Company\Views\" />
+    <Folder Include="Areas\Individuals\Views\Default\" />
     <Folder Include="Data\" />
     <Folder Include="wwwroot\images\flags\" />
   </ItemGroup>

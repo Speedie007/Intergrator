@@ -8,144 +8,94 @@ namespace Integrator.Services.KnowledgeBase.Core
     public partial interface ICoreKnowledgeBaseService
     {
 
+
+        #region Select Section 
+
+        CoreKbIndustry GetIndustry(int ID);
+        List<CoreKbIndustry> ListIndustries();
+
+        CoreKbIndustryCategory GetIndustryCategory(int ID);
+        List<CoreKbIndustry> ListIndustriesByCategory(int CategoryID);
+        List<CoreKbIndustryCategory> ListIndustryCategories();
+
+        CoreKbJob GetJob(int ID);
+        List<CoreKbJob> ListJobs();
+
+        CoreKbIndustryJob GetIndustryJob(int ID);
+        List<CoreKbIndustryJob> ListIndustryJobs();
+
+        CoreKbJobSkill GetJobSkill(int ID);
+        List<CoreKbJobSkill> ListJobSkills(int JobID);
+        List<CoreKbJobSkill> ListSkillJobs(int SkillID);
+
+        CoreKbSkill GetSkill(int SkillID);
+        List<CoreKbSkill> ListSkills();
+        List<CoreKbSkill> ListSkillsByCategory(int CategoryID);
+        List<CoreKbSkill> ListHardSkills();
+        List<CoreKbSkill> ListSoftSkills();
+
+        CoreSkillCategory GetSkillCategory(int ID);
+        List<CoreSkillCategory> ListSkillCategories();
+        List<CoreSkillCategory> ListSkillCategoriesBySkillType(int SkillTypeID);
+
+        CoreKbSkillType GetSkillType(int ID);
+        List<CoreKbSkillType> ListSkillTypes();
+        #endregion
+
         #region Delete Section
 
-        Boolean DeleteIndustry(CoreKBIndustryType Industry);
-        Boolean DeleteIndustries(List<CoreKBIndustryType> Industrires);
+        Boolean DeleteIndustry(CoreKbIndustry Entity);
+        Boolean DeleteIndustries(List<CoreKbIndustryCategory> EntityList);
 
-        Boolean DeleteCategory(CoreKBIndustryCategory Category);
-        Boolean DeleteCategories(List<CoreKBIndustryCategory> Categoies);
+        Boolean DeleteCategory(CoreKbIndustryCategory Entity);
+        Boolean DeleteCategories(List<CoreKbIndustryCategory> EntityList);
 
-        Boolean DeleteJob(CoreKBIndustryCategoryJob Job);
-        Boolean DeleteJobs(List<CoreKBIndustryCategoryJob> Job);
+        Boolean DeleteJob(CoreKbJob Entity);
+        Boolean DeleteJobs(List<CoreKbJob> Entity);
 
-        Boolean DeleteSkillSet(CoreKBIndustryCategoryJobSkillSet SkillSet);
-        Boolean DeleteSkillSets(List<CoreKBIndustryCategoryJobSkillSet> SkillSets);
+        Boolean DeleteIndustryJob(CoreKbJob Entity);
+        Boolean DeleteIndustryJobs(List<CoreKbJob> Entity);
+
+        Boolean DeleteJobSkill(CoreKbJobSkill Entity);
+        Boolean DeleteJobSkills(List<CoreKbJobSkill> Entity);
+
+        Boolean DeleteSkill(CoreKbSkill Entity);
+        Boolean DeleteSkills(List<CoreKbSkill> Entity);
+
+        Boolean DeleteSkillCategory(CoreSkillCategory Entity);
+        Boolean DeleteSkillsCategory(List<CoreSkillCategory> Entity);
+
+        Boolean DeleteSkillType(CoreKbSkillType Entity);
+        Boolean DeleteSkillTypes(List<CoreKbSkillType> Entity);
 
         #endregion
 
-        #region Insert Section 
 
-        /// <summary>
-        /// Links single industry to the user 
-        /// </summary>
-        /// <param name="Industry">Is an CoreKBIndustryType Entity</param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertIndustry(CoreKBIndustryType Industry);
+        #region Insert Section
 
-        /// <summary>
-        /// Links multiple industries to the user
-        /// </summary>
-        /// <param name="Industry">Is a list of CoreKBIndustryType Entity</param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertIndustries(List<CoreKBIndustryType> Industries);
+        void AddIndustry(CoreKbIndustry Entity);
+        void AddIndustries(List<CoreKbIndustryCategory> EntityList);
 
-        /// <summary>
-        /// Links single Category to the user assocciated with a specific Industry
-        /// </summary>
-        /// <param name="Category">Is an CoreKBIndustryType Entity</param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertCategory(CoreKBIndustryCategory Category);
+        void AddIndusrtyCategory(CoreKbIndustryCategory Entity);
+        void AddCategories(List<CoreKbIndustryCategory> EntityList);
 
-        /// <summary>
-        /// Links multiple Categories to the user with its assocciated Industry
-        /// </summary>
-        /// <param name="Category">Is a list of CoreKBIndustryCategory Entity</param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertCategories(List<CoreKBIndustryCategory> Categories);
+        void AddJob(CoreKbJob Entity);
+        void AddJobs(List<CoreKbJob> Entity);
 
+        void AddIndustryJob(CoreKbJob Entity);
+        void AddIndustryJobs(List<CoreKbJob> Entity);
 
-        /// <summary>
-        /// Links single CategoryJob to the user assocciated with a specific Category
-        /// </summary>
-        /// <param name="Job">Is an CoreKBIndustryType Entity</param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertJob(CoreKBIndustryCategoryJob Job);
+        void AddJobSkill(CoreKbJobSkill Entity);
+        void AddJobSkills(List<CoreKbJobSkill> Entity);
 
-        /// <summary>
-        /// Links multiple CategoryJobs to the user with its assocciated Category
-        /// </summary>
-        /// <param name="Job"></param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertJobs(List<CoreKBIndustryCategoryJob> Jobs);
+        void AddSkill(CoreKbSkill Entity);
+        void AddSkills(List<CoreKbSkill> Entity);
 
+        void AddSkillCategory(CoreSkillCategory Entity);
+        void AddSkillCategories(List<CoreSkillCategory> Entity);
 
-        /// <summary>
-        /// Links single JobSkillSet to the user assocciated with a specific CategoryJob
-        /// </summary>
-        /// <param name="SkillSet"></param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertSkillSet(CoreKBIndustryCategoryJobSkillSet SkillSet);
-
-
-        /// <summary>
-        ///  Links multiple JobSkillSets to the user with its assocciated CategoryJob
-        /// </summary>
-        /// <param name="SkillSet"></param>
-        /// <returns>True if succssefull else returns false</returns>
-        Boolean InsertSkillSets(List<CoreKBIndustryCategoryJobSkillSet> SkillSets);
-        #endregion
-
-        #region Select Section
-        /// <summary>
-        /// Get All Associated Industries for the the User
-        /// </summary>
-        /// <param name="UserID">UserID</param>
-        /// <returns>List of all industies the user is associated with</returns>
-        List<CoreKBIndustryType> ListAllIndustries();
-
-        /// <summary>
-        /// Returns Single Industry by CoreKBIndustryTypeID
-        /// </summary>
-        /// <param name="CoreKBIndustryTypeID"></param>
-        /// <returns></returns>
-        CoreKBIndustryType GetIndustry(int IndustryID);
-
-
-        /// <summary>
-        /// List All associated Categories for a selected industry that user is associated with.
-        /// </summary>
-        /// <param name="UserID"></param>
-        /// <param name="CoreKBIndustryTypeID"></param>
-        /// <returns></returns>
-        List<CoreKBIndustryCategory> ListCategoriesPerIndustry(int IndustryID);
-
-        /// <summary>
-        /// Return Single Category by CoreKBIndustryCategoryID
-        /// </summary>
-        /// <param name="CoreKBIndustryCategoryID"></param>
-        /// <returns></returns>
-        CoreKBIndustryCategory GetCategory(int IndustryCategoryID);
-
-        /// <summary>
-        /// List All associated Jobs for a selected category that user is associated with.
-        /// </summary>
-        /// <param name="UserID"></param>
-        /// <param name="CoreKBIndustryCategoryID"></param>
-        /// <returns></returns>
-        List<CoreKBIndustryCategoryJob> ListJobsPerCategory(int IndustryCategoryID);
-
-        /// <summary>
-        /// Retrun single Job By CoreKBIndustryCategoryJobID
-        /// </summary>
-        /// <param name="CoreKBIndustryCategoryJobID"></param>
-        /// <returns></returns>
-        CoreKBIndustryCategoryJob GetJob(int CoreKBIndustryCategoryJobID);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="UserID"></param>
-        /// <param name="CoreKBIndustryCategoryJobID"></param>
-        /// <returns>List of CoreKBIndustryCategoryJobSkillSet</returns>
-        List<CoreKBIndustryCategoryJobSkillSet> ListSkillSetsPreJob(int IndustryCategoryJobID);
-
-        /// <summary>
-        /// Retrun single SkillSet By CoreKBIndustryCategoryJobSkillSetID
-        /// </summary>
-        /// <param name="CoreKBIndustryCategoryJobSkillSetID"></param>
-        /// <returns>Single selected skillset [CoreKBIndustryCategoryJobSkillSet]</returns>
-        CoreKBIndustryCategoryJobSkillSet GetSkillSet(int IndustryCategorySkillSetID);
+        void AddSkillType(CoreKbSkillType Entity);
+        void AddSkillTypes(List<CoreKbSkillType> Entity);
 
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿//using Integrator.Models.Domain.KnowledgeBase.Companies;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.Domain.KnowledgeBase.Companies;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,31 +12,25 @@ namespace Integrator.Models.Domain.Companies
 {
     public partial class Company : BaseEntity
     {
+
         public Company()
         {
-            CompanyIndustries = new HashSet<CompanyIndustry>();
-            CompanyIndustryCategories = new HashSet<CompanyIndustryCategory>();
-            CompanyIndustryCategoryJobSkillSets = new HashSet<CompanyIndustryCategoryJobSkillSet>();
-            CompanyIndustryCategoryJobs = new HashSet<CompanyIndustryCategoryJob>();
+            CompanyJobs = new HashSet<CompanyJob>();
+            CompanyRelatedIndustries = new HashSet<CompanyRelatedIndustry>();
             #region CV
-            CurriculumViteaWorkExperiences = new HashSet<CurriculumViteaWorkExperiences>();
+            UserJobs = new HashSet<UserJob>();
+            
             #endregion
         }
 
-        [StringLength(100)]
-        public string CompanyName { get; set; }
         
-        #region Company Kownledge Base
+        public string CompanyName { get; set; }
 
-        public virtual ICollection<CompanyIndustry> CompanyIndustries { get; set; }
-        public virtual ICollection<CompanyIndustryCategory> CompanyIndustryCategories { get; set; }
-        public virtual ICollection<CompanyIndustryCategoryJobSkillSet> CompanyIndustryCategoryJobSkillSets { get; set; }
-        public virtual ICollection<CompanyIndustryCategoryJob> CompanyIndustryCategoryJobs { get; set; }
-        #endregion
+        public virtual ICollection<CompanyJob> CompanyJobs { get; set; }
+        public virtual ICollection<CompanyRelatedIndustry> CompanyRelatedIndustries { get; set; }
 
-        #region CV
+        public virtual ICollection<UserJob> UserJobs { get; set; }
+        //public virtual ICollection<CurriculumViteaWorkExperiences> CurriculumViteaWorkExperiences { get; set; }
 
-        public virtual ICollection<CurriculumViteaWorkExperiences> CurriculumViteaWorkExperiences { get; set; }
-        #endregion
     }
 }

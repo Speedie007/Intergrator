@@ -15,10 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryCategoryDbMapping.cs" />
-    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryCategoryJobDbMapping.cs" />
-    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryCategoryJobSkillSetDbMapping.cs" />
-    <Compile Include="Mapping\KnownledgeBase\IndividualUser\IntegratorUserIndustryDbMapping.cs" />
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\UserJobDbMapping.cs" />
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\UserJobRelatedIndustryDbMapping.cs" />
+    <Compile Include="Mapping\KnownledgeBase\IndividualUser\UserJobSkillDbMapping.cs" />
   </ItemGroup>
 
   <ItemGroup>

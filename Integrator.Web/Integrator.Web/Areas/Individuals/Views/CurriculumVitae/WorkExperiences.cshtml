@@ -25,11 +25,12 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-4">
+    <div class="row" style="display:none;" id="AddNewWorkExperienceWizard">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Add Work Expereince</h5>
+                    <h5>Add Work Expereince Wizard</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -39,109 +40,312 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-12 ">
+                            <button type="button" class="btn btn-secondary" onclick="showNewWorkExperienceSummary();"><i class="fa fa-plus"></i>&nbsp;Add Work-Experience Entry to your CV</button>
+                            <hr />
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseIndustrySelection" class="text-white">
+                                            <h4 class="panel-title">
 
-                            <form role="form" method="post" asp-action="Awards" asp-controller="CurriculumVitae" asp-area="Individuals">
-                                <div class="form-group">
-                                    Job Function/Title <input type="text" class="form-control" /><br />
-                                    <button type="button" class="btn btn-primary full-width"><i class="fa fa-plus"></i>&nbsp;Select Job Function/Title</button>
-                                    <button type="button" class="btn btn-info block full-width m-b" onclick="showSearch();">Add Institution</button>
+                                                Job Related Industries<br />
+                                                Status - <span class="text-warning " id="Job-Related-Industry-GlobalStatus">None Listed</span>
 
-                                    <span class="text-danger"></span>
-                                </div>
-                                <hr />
-                                <div class="form-group">
-                                    Select Company
-                                    <select asp-for="CompamyID" asp-items="@Model.ListOfCompanies" class="form-control company-select"></select>
-                                    <span class="text-danger"></span>
-                                </div>
-                                <hr />
-                                <div class="form-group">
-                                    Select Employment Period
-                                    <div class="form-group" id="YearStarted">
-                                        Select&nbsp;<label asp-for="YearStarted" class="control-label"></label>
-                                        <div class="input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" asp-for="YearStarted" class="form-control" value="2019">
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div id="collapseIndustrySelection" class="panel-collapse collapse in show" data-parent="#accordion">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p>To help match your profile with prosective employers, select the industry that your job/function relates to in relation to your job title/job function.</p>
+                                                    <hr />
+                                                    <h2>Selected Indusrties</h2>
+                                                    <hr />
+                                                    <div class="panel panel-primary " style="padding-bottom:5px;" id="SelectedIndustrySummaryContainer">
+
+                                                        <div class="Selected-Industry-Container">
+                                                            <div class="Industry-Item">
+                                                                <div class="Slected-Industry-Category full-width text-center  ">
+                                                                    <h4>No Industry Currently Selected.</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" style="margin-top:5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectIndustryModal" onclick="intialiseSelectIndustryForm();"><i class="fa fa-plus">&nbsp;Add/Edit Industry Selection</i></button>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group" id="YearCompleted">
-                                        Select&nbsp; <label asp-for="YearEnded" class="control-label"></label>
-                                        <div class="input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" asp-for="YearEnded" class="form-control" value="2019">
+                                </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseOne" class="text-white">
+                                            <h5 class="panel-title">
+                                                Set Job Function/Title
+
+                                                <br />
+                                                Status - <span class="text-warning" id="Job-TitleFunction-GlobalStatus">Not Set</span>
+                                            </h5>
+                                        </a>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse " data-parent="#accordion">
+                                        <div class="panel-body">
+
+                                            <div class="row">
+                                                <div class="col-lg-12" id="JobIndustryContainer">
+                                                    <p>
+                                                        To Accurately match your entry with prosective employers, select the industry that you work in and provide your job title/job function.
+                                                    </p>
+                                                    <hr />
+                                                    <div class="form-group" id="JobTitleSelectionContainer">
+                                                        <h2>Select Job Title/Function</h2>
+
+                                                        <select asp-for="CoreKbJobID" style="width: 200px;" asp-items="@Model.ListOfJobTitles"
+                                                                class="JobTitle-select full-width form-control"></select>
+                                                        <span class="text-danger"></span>
+                                                        <input type="text" id="txtselectedJobTitle" class="form-control" readonly="readonly" />
+                                                    </div>
+                                                    <hr />
+                                                    <h2> Add Job Title/Function.</h2>
+                                                    <input type="text" class="form-control" placeholder="Add Job Title." />
+
+                                                    <button style="margin-top:5px;" type="button" class="btn btn-info full-width "><i class="fa fa-plus">&nbsp;Add Job Title</i></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <hr />
-                                <div class="form-group">
-                                    Work Experience
-                                    <div class="click2edit_WorkExperience wrapper p-md"></div>
-                                    @Html.HiddenFor(x => x.WorkExperienceDescription)
-                                    <span class="text-danger"></span>
-                                </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseTwo" class="text-white">
+                                            <h4 class="panel-title">
+                                                Employing Company<br />
+                                                Status - <span class="text-warning " id="Company-GlobalStatus">None Listed</span>
+                                                <br />
+                                                Period Start:<span id="EmploymentPeriod-Start-GlobalStatus"></span>
+                                                Period End:<span id="EmploymentPeriod-Ended-GlobalStatus"></span>
+                                                <br />
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse" data-parent="#accordion">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <p>
+                                                    Search for your company from the drop down below. If you do not find your company listed within the system,
+                                                    simply add the the company Name in the Section under the Company search drop down.
+                                                </p>
+                                                <p>*Indicate the period you where employed below.</p>
+                                                <hr />
+                                            </div>
+                                            <div class="form-group" id="CompanySelectionContainer">
+                                                <h2>Select Company</h2>
 
-                                <hr />
-                                <div class="form-group">
-                                    Achievemnts <small>(Optional)</small>
-                                    <div class="click2edit_Achievements wrapper p-md"></div>
-                                    @Html.HiddenFor(x => x.Achievements)
+                                                <select asp-for="CompanyID" style="width: 200px;" asp-items="@Model.ListOfCompanies"
+                                                        class="company-select full-width form-control"></select>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                            <hr />
+                                            <input type="text" class="form-control" id="txtAddCompany" placeholder="Add Companay Here" />
+                                            <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="AddCompany();">
+                                                <i class="fa fa-plus">&nbsp;Add Company Name</i>
+                                            </button>
+                                            <hr />
+                                            <div class="form-group">
+                                                <h2>Select Employment Period</h2>
+                                                <div class="form-group" id="YearStarted">
+                                                    Select&nbsp;<label asp-for="YearStarted" class="control-label"></label>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input type="text" asp-for="YearStarted" class="form-control" value="2019">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" id="YearCompleted">
+                                                    Select&nbsp; <label asp-for="YearEnded" class="control-label"></label>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        <input type="text" asp-for="YearEnded" class="form-control" value="2019">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <hr />
-                                <div class="form-group">
-                                    <a class="btn btn-primary">Add Skill</a>
-                                    <select class="form-control dual_select" multiple>
-                                        <option value="United States">United States</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="Australia">Australia</option>
-                                        <option selected value="Austria">Austria</option>
-                                        <option value="Bahamas">Bahamas</option>
-                                        <option value="Barbados">Barbados</option>
-                                        <option value="Belgium">Belgium</option>
-                                        <option value="Bermuda">Bermuda</option>
-                                        <option value="Brazil">Brazil</option>
-                                        <option value="Bulgaria">Bulgaria</option>
-                                        <option value="Cameroon">Cameroon</option>
-                                        <option value="Canada">Canada</option>
-                                    </select>
-                                    <span class="text-danger"></span>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseThree" class="text-white">
+                                            <h4 class="panel-title">
+                                                Add Work Experience<br />
+                                                Status -
+                                                <span class="text-warning " id="EditorForWorkExperience-GlobalStatus">Not Completed</span>
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse" data-parent="#accordion">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <h2>Work Experience</h2>
+                                                <hr />
+                                                <p>Add a description of your work experience in terms of your responsiblities and primary and secondary work functions performed over your working career.</p>
+                                                <p>*Not that you can toggle(switch) to the full screen mode which could make make the porcess of editing easier.</p>
+                                                <hr />
+                                                <div class="click2edit_WorkExperience"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <br />
-                                <button type="submit" class="btn btn-primary block full-width m-b">Add Award</button>
-                            </form>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseFour" class="text-white">
+                                            <h4 class="panel-title">
+                                                Add Achievements<br />
+                                                Status -
+                                                <span class="text-warning " id="EditorForAchievments-GlobalStatus">Not Completed</span>
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse" data-parent="#accordion">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+
+                                                <h2>Achievements</h2>
+                                                <hr />
+                                                <p>This is an optional item to complete, however if you have any notible acheivements that relate to this job that you are currently adding, and you would like to share with prospective employers you can add it here.</p>
+                                                <p>*Not that you can toggle(switch) to the full screen mode which could make make the porcess of editing easier.</p>
+                                                <hr />
+                                                <div class="click2edit_Achievements"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseFive" class="text-white">
+                                            <h4 class="panel-title">
+
+                                                Select Applicable Soft Skills<br />
+                                                Status - <span class="text-warning " id="SoftSkill-GlobalStatus">None Listed</span>
+
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div id="collapseFive" class="panel-collapse collapse" data-parent="#accordion">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p>Soft skills are interpersonal skills which are used to describe your approach to life, work, and relationships with other people. Unlike hard skills, these are <strong class="text-uppercase">not</strong> professional job-specific skills like accountancy, graphics designing, etc. Soft skills are your unique selling point which gives you a competitive edge over others in the workplace and in life.</p>
+                                                    <p>
+                                                        Some examples of soft skills are:
+                                                        <ul>
+                                                            <li>Communication Skills</li>
+                                                            <li>Leadership</li>
+                                                            <li>Work Ethic</li>
+                                                            <li>Creative Problem Solving</li>
+                                                            <li>Time management</li>
+                                                            <li>Conflict Resolution</li>
+                                                            <li>Team player</li>
+                                                        </ul>
+                                                    </p>
+                                                    <hr />
+                                                    <h2>Selected Soft Skill Set</h2>
+                                                    <hr />
+                                                    <div class="panel panel-primary " style="padding-bottom:5px;" id="SelectedSoftSkillSummaryContainer">
+
+                                                        <div class="Selected-Industry-Container">
+                                                            <div class="Industry-Item">
+                                                                <div class="Slected-Industry-Category full-width text-center  ">
+                                                                    <h4>None Currently Selected.</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" style="margin-top:5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectSoftSkillModal" onclick="intialiseSelectSoftSkillForm();"><i class="fa fa-plus">&nbsp;Add/Edit Hard Skill Selection</i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#collapseSix" class="text-white">
+                                            <h4 class="panel-title">
+                                                Select Applicable Hard Skills<br />
+                                                Status - <span class="text-warning " id="HardSkill-GlobalStatus">None Listed</span>
+                                            </h4>
+                                        </a>
+                                    </div>
+                                    <div id="collapseSix" class="panel-collapse collapse" data-parent="#accordion">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <p>Hard skills are job-specific skills and knowledge you need to perform a job.</p>
+                                                    <p>Hard skills are skills you can gain through education, training programs, certifications, and on-the-job training. </p><p>These are typically quantifiable skills that can be easily defined and evaluated. For example, a hard skill for an IT professional might be computer programming such as JAVA, while a hard skill for a carpenter might be a knowledge of wood framing.</p>
+                                                    <hr />
+                                                    <h2>Selected Hard Skill Set</h2>
+                                                    <hr />
+                                                    <div class="panel panel-primary " style="padding-bottom:5px;" id="SelectedHardSkillSummaryContainer">
+
+                                                        <div class="Selected-Industry-Container">
+                                                            <div class="Industry-Item">
+                                                                <div class="Slected-Industry-Category full-width text-center  ">
+                                                                    <h4>None Currently Selected.</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" style="margin-top:5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectHardSkillModal" onclick="intialiseSelectHardSkillForm();"><i class="fa fa-plus">&nbsp;Add/Edit Hard Skill Selection</i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-8">
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row" id="WorkExperienceSummary">
+        <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Awards Summary </h5>
+                    <h5>Work Experience Summary </h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-Awards">
+                        <button type="button" class="btn btn-primary" onclick="showNewWorkExperienceWizard();"><i class="fa fa-plus"></i>&nbsp;Add New Work-Experience To Your CV</button>
+                        <hr />
+                        <table class="table table-striped table-bordered table-hover dataTables-WorkExperience">
                             <thead>
                                 <tr>
                                     <th>Options</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
+                                    <th>Job Title</th>
+                                    <th>Company</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                             <tfoot>
                                 <tr>
-                                    <td>Options</td>
-                                    <td>Title</td>
-                                    <td>Description</td>
+                                    <th>Options</th>
+                                    <th>Job Title</th>
+                                    <th>Company</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -153,74 +357,377 @@
     </div>
 </div>
 
-<div class="modal inmodal" id="myModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-
+<!--Add Industry Category  Modal-->
+<div class="modal inmodal fade" id="SelectIndustryModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
-                <h4 class="modal-title">Job Title/Function Wizard</h4>
-
+                <h4 class="modal-title"><i class="fa fa-industry">&nbsp;Select Industry</i></h4>
             </div>
-            <div class="modal-body" id="here">
+            <div class="modal-body">
 
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h5 class="panel-title">
-                                <a data-toggle="collapse" href="#collapseOne">Search For Job Function/Title</a>
-                            </h5>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in show" data-parent="#accordion">
-                            <div class="panel-body">
-                                <p> Select from possible Job Titles/Functions.</p>
-                                <select class="full-width jobs-select">
-                                    <option></option>
-                                    <option>dsfadsf</option>
-                                    <option>gagdsfsdaf</option>
-                                    <option>dsfasrgafbvasdadsf</option>
-                                    <option>dsfaasdfasdfdsf</option>
-                                    <option>dsfaasdfasddsf</option>
-                                </select>
-                            </div>
-                        </div>
+
+
+                <div class="row">
+                    <div class="col-lg-12" id="divSelectIndustryCategoryContainer">
+                        <h2> Select Industry Category.</h2>
+                        <small>*If not found add category.</small><br />
+
+                        <select asp-for="IndustryCategoryID" asp-items="@Model.ListOfIndustryCategories" class="full-width Industry-Category-Select"></select>
+
+
+                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddIndustryCategory();">
+                            <i class="fa fa-plus">&nbsp;Add Category</i>
+                        </button>
+
                     </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapseTwo">Collapsible Group Item #2</a>
-                            </h4>
+                    <div class="col-lg-12 " style="display: none;" id="divAddIndustryCategoryContainer">
+                        <h2>Add Industry Category.</h2>
+                        <small>*To revert back to the selection option select cancel or add new category.</small>
+                        <input type="text" id="txtAddNewIndustryCategory" class="form-control" placeholder="Add New Category Here" />
+                        <div class="pull-right">
+                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectIndustryCategory();">
+                                <i class="fa fa-plus">&nbsp;Cancel</i>
+                            </button>
+                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddNewIndustryCategory();">
+                                <i class="fa fa-plus">&nbsp;Add Industry Category</i>
+                            </button>
                         </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" data-parent="#accordion">
-                            <div class="panel-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </div>
-                        </div>
+
                     </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapseThree">Collapsible Group Item #3</a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse" data-parent="#accordion">
-                            <div class="panel-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12" id="divSelectIndustryContainer">
+
+                        <h2> Select Industry.</h2>
+                        <small>*First Select Category - if not found add Industry.</small>
+
+                        <select class="full-width Industry-Select"></select>
+
+                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddIndustry();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
+                    </div>
+                    <div class="col-lg-12" style="display:none;" id="divAddIndustryContainer">
+
+                        <h2>Add Industry.</h2>
+                        <small>*To revert back to the selection option select cancel or add new category.</small>
+
+                        <input type="text" class="form-control" id="txtAddNewIndustry" placeholder="Add New Industry Here" />
+
+                        <div class="pull-right">
+                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectIndustry();">
+                                <i class="fa fa-plus">&nbsp;Cancel</i>
+                            </button>
+                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddIndustry();">
+                                <i class="fa fa-plus">&nbsp;Add Industry</i>
+                            </button>
                         </div>
                     </div>
                 </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <input type="text" class="js-range-slider-Industry-Involvement-Level" name="IndustryInvolvmentLevelSlider" value="" />
+                        <input type="hidden" id="hidCurrentValueOfIndustryInvolvement" value="0" />
+                        Indicate Level of Involvment in selcted industry.
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Selection Summary</h2>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Category Selected</th>
+                                    <th> Industry Selected</th>
+                                    <th> Involvement Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td id="AddIndustrySummary-Category"></td>
+                                    <td id="AddIndustrySummary-Industry"> </td>
+                                    <td id="AddIndustrySummary-InvolvementLevel">
+                                        <div class="progress" style="background-color:#ffffff;">
+                                            <div id="SelectedIndustryInvolvementLevelSummary" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
 
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-                <button type="button" onclick="AddNewInsitution();" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addSelectedIndustryDataItemToLocalDataStore();"><i class="fa fa-plus">&nbsp;Add Selected Industry</i></button>
+            </div>
+        </div>
+    </div>
+</div><!--Add Skill Category Skill Modal-->
+<!--Add Hard Skills  Modal-->
+<div class="modal inmodal fade" id="SelectHardSkillModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><i class="fa fa-industry">&nbsp;Select Hard Skill Set</i></h4>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div class="row">
+                    <div class="col-lg-12" id="divSelectHardSkillCategoryContainer">
+                        <h2> Select Hard Skill Category.</h2>
+                        <small>*If not found add category.</small><br />
+
+                        <select asp-for="HardSKillCategoryID" asp-items="@Model.ListOfHardSkillCategories" class="full-width HardSkill-Category-Select"></select>
+
+
+                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddHardSkillCategory();">
+                            <i class="fa fa-plus">&nbsp;Add Category</i>
+                        </button>
+
+                    </div>
+                    <div class="col-lg-12 " style="display: none;" id="divAddHardSkillCategoryContainer">
+                        <h2>Add Skill Category</h2>
+                        <small>*To revert back to the selection option select cancel or add new category.</small>
+                        <input type="text" id="txtAddNewHardSkillCategory" class="form-control" placeholder="Add New Category Here" />
+                        <div class="pull-right">
+                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectHardSkillCategory();">
+                                Cancel
+                            </button>
+                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddNewHardSkillCategory();">
+                                <i class="fa fa-plus">&nbsp;Add Hard kill Category</i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12" id="divSelectHardSkillContainer">
+
+                        <h2> Select Hard Skill.</h2>
+                        <small>*First Select Category - if not found add Hard SKill.</small>
+
+                        <select class="full-width HardSkill-Select"></select>
+
+
+                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddHardSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
+                    </div>
+                    <div class="col-lg-12" style="display:none;" id="divAddHardSkillContainer">
+
+                        <h2>Add Hard Skill.</h2>
+                        <small>*To revert back to the selection option select cancel or add new Skill.</small>
+
+                        <input type="text" class="form-control" id="txtAddNewHardSkill" placeholder="Add New Skill Here" />
+
+                        <div class="pull-right">
+                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectHardSkill();">
+                                Cancel
+                            </button>
+                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddHardSkill();">
+                                <i class="fa fa-plus">&nbsp;Add Skill</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <input type="text" class="js-range-slider-HardSkill-Competency-Level" name="HardSkillCompentencyLevelSlider" value="" />
+
+                        <input type="hidden" id="hidCurrentValueOfHardSkillLevel" value="0" />
+                        Indicate Level of Skill Competency/Experince.
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Selection Summary</h2>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Category Selected</th>
+                                    <th> Skill Selected</th>
+                                    <th> Competency/Experince Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td id="AddHardSkillSummary-Category"></td>
+                                    <td id="AddHardSkillSummary-Industry"> </td>
+                                    <td id="AddHardSkillSummary-CompetencyLevel">
+                                        <div class="progress" style="background-color:#ffffff;">
+                                            <div id="HardSkillCompetencyLevelSummary" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addSelectedHardSkillDataItemToLocalDataStore();"><i class="fa fa-plus">&nbsp;Add Selected Skill</i></button>
+            </div>
+        </div>
+    </div>
+</div><!--Add Hard Skill Modal-->
+<!--Add Soft Skills  Modal-->
+<div class="modal inmodal fade" id="SelectSoftSkillModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><i class="fa fa-industry">&nbsp;Select Soft Skill Set</i></h4>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div class="row">
+                    <div class="col-lg-12" id="divSelectSoftSkillCategoryContainer">
+                        <h2> Select Soft Skill Category.</h2>
+                        <small>*If not found add category.</small><br />
+
+                        <select asp-for="SoftSKillCategoryID" asp-items="@Model.ListOfSoftSkillCategories" class="full-width SoftSkill-Category-Select"></select>
+
+
+                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkillCategory();">
+                            <i class="fa fa-plus">&nbsp;Add Category</i>
+                        </button>
+
+                    </div>
+                    <div class="col-lg-12 " style="display: none;" id="divAddSoftSkillCategoryContainer">
+                        <h2>Add Skill Category</h2>
+                        <small>*To revert back to the selection option select cancel or add new category.</small>
+                        <input type="text" id="txtAddNewSoftSkillCategory" class="form-control" placeholder="Add New Category Here" />
+                        <div class="pull-right">
+                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectSoftSkillCategory();">
+                                Cancel
+                            </button>
+                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddNewSoftSkillCategory();">
+                                <i class="fa fa-plus">&nbsp;Add Soft kill Category</i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12" id="divSelectSoftSkillContainer">
+
+                        <h2> Select Soft Skill.</h2>
+                        <small>*First Select Category - if not found add Soft SKill.</small>
+
+                        <select class="full-width SoftSkill-Select"></select>
+
+
+                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
+                    </div>
+                    <div class="col-lg-12" style="display:none;" id="divAddSoftSkillContainer">
+
+                        <h2>Add Soft Skill.</h2>
+                        <small>*To revert back to the selection option select cancel or add new Skill.</small>
+
+                        <input type="text" class="form-control" id="txtAddNewSoftSkill" placeholder="Add New Skill Here" />
+
+                        <div class="pull-right">
+                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectSoftSkill();">
+                                Cancel
+                            </button>
+                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddSoftSkill();">
+                                <i class="fa fa-plus">&nbsp;Add Skill</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <input type="text" class="js-range-slider-SoftSkill-Competency-Level" name="SoftSkillCompentencyLevelSlider" value="" />
+
+                        <input type="hidden" id="hidCurrentValueOfSoftSkillLevel" value="0" />
+                        Indicate Level of Skill Competency/Experince.
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Selection Summary</h2>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Category Selected</th>
+                                    <th> Skill Selected</th>
+                                    <th> Competency/Experince Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td id="AddSoftSkillSummary-Category"></td>
+                                    <td id="AddSoftSkillSummary-Industry"> </td>
+                                    <td id="AddSoftSkillSummary-CompetencyLevel">
+                                        <div class="progress" style="background-color:#ffffff;">
+                                            <div id="SoftSkillCompetencyLevelSummary" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addSelectedSoftSkillDataItemToLocalDataStore();"><i class="fa fa-plus">&nbsp;Add Selected Skill</i></button>
             </div>
         </div>
     </div>
 </div>
+
+<!--Add Soft Skill Modal-->
+
+<input type="hidden" id="hidAchievementText" value="" />
+<input type="hidden" id="hidWorkExperienceText" value="" />
+
 @section Styles {
 
     <environment names="Development,Staging,Production">
@@ -231,6 +738,8 @@
         <link rel="stylesheet" href="~/lib/sweetalert/dist/sweetalert.css" />
         <link rel="stylesheet" href="~/lib/dataTables/datatables.min.css" />
         <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+        <link rel="stylesheet" href="~/lib/iCheck/custom.css" />
+        <link rel="stylesheet" href="~/lib/ionRangeSlider/ion.rangeSlider.css" />
     </environment>
 }
 
@@ -238,7 +747,6 @@
     <partial name="_ValidationScriptsPartial" />
 
     <environment names="Development,Staging,Production">
-
         <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
         <script src="~/lib/toastr/toastr.min.js"></script>
         <script src="~/lib/summernote/summernote-bs4.js"></script>
@@ -247,81 +755,1601 @@
         <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
         <script src="~/lib/select2/dist/js/select2.min.js"></script>
         <script src="~/lib/dualListbox/jquery.bootstrap-duallistbox.js"></script>
+
+        <script src="~/lib/ionRangeSlider/ion.rangeSlider.min.js"></script>
     </environment>
 
     <script type="text/javascript">
 
-
         var _ViewModel = JSON.parse('{}');
-        function showSearch() {
-            $('#myModal').modal('show');
+        /*Global Variables
+         * ****************/
+
+        //MainForm Variables
+        var divObjWorkExperienceSummary;
+        var divObjAddNewWorkExperienceWizard;
+        //END Main from Variables
+
+        //Editor Variables
+        var hidObjAchienvementText;
+        var hidObjWorkExperienceText;
+        var spanObjAchienvementGlobalStatus;
+        var spanObjWorkExperienceGlobalStatus;
+        //END Editor Variables
+
+        //Job Title Variables
+        var txtObjselectedJobTitle;
+        var cboObjJobTitle;
+        var spanObjJobTitleGlobalStatus;
+        //END Job Title Varaiables
 
 
+        //Compnay Variables
+        var cboObjCompany;
+        var YearEndedEmployment;
+        var YearStartEmployment;
+        var spanObjCompanyGlobalStatus;
+        var txtObjAddCompany;
+        //END Company Variables
+
+        //Industry Variables
+        var SelectedIndustryInvolvmentLevelSlider;
+        var SelectIndustryCategoryContainer;
+        var AddIndustryCategoryContainer;
+        var SelectIndustryContainer;
+        var AddIndustryContainer;
+        var cboObjSelectIndustry;
+        var cboObjSelectIndustryCategory;
+        var txtAddNewIndustryObj;
+        var txtAddNewIndustryCategoryObj;
+        var hidCurrentValueOfIndustryInvolvementObj;
+        //END - Industry Variables
+
+        //HardSkill Variables
+        var SelectedHardSkillInvolvmentLevelSlider;
+        var SelectHardSkillCategoryContainer;
+        var AddHardSkillCategoryContainer;
+        var SelectHardSkillContainer;
+        var AddHardSkillContainer;
+        var cboObjSelectHardSkillCategory;
+        var cboObjSelectHardSkill;
+        var txtAddNewHardSkillObj;
+        var txtAddNewHardSkillCategoryObj;
+        var hidCurrentValueOfHardSkillInvolvementObj;
+        var spanObjJobRelatedHardSkillGlobalStatus;
+        //END - HardSkill Variables
+
+        //SoftSkill Variables
+        var SelectedSoftSkillInvolvmentLevelSlider;
+        var SelectSoftSkillCategoryContainer;
+        var AddSoftSkillCategoryContainer;
+        var SelectSoftSkillContainer;
+        var AddSoftSkillContainer;
+        var cboObjSelectSoftSkillCategory;
+        var cboObjSelectSoftSkill;
+        var txtAddNewSoftSkillObj;
+        var txtAddNewSoftSkillCategoryObj;
+        var hidCurrentValueOfSoftSkillInvolvementObj;
+        var spanObjJobRelatedSoftSkillGlobalStatus;
+        //END - SoftSkill Variables
+
+        //Selected DataItems Summary Variables
+        var IndustrySummaryContainer;
+        var HardSkillSummaryContainer;
+        var SoftSkillSummaryContainer;
+        /*Selected Industry Data Structure
+        * *****************************/
+        /*Object Structure Example
+         [
+            {
+                DataType: "{EnumDataType}" SEE DATA TYPE REFERENCE
+                SelectedCategory: {Indusrty Category} OR {Hard SKill Category} OR { Soft Skill Category},
+                SelectedCategoryID: 0,
+                SelectedDataItems:
+                    [{
+                        DataItemID: 0,
+                        DataItemTEXT: "{Indusrty Name} OR {Hard SKill Name} OR { Soft Skill Name}",
+                        DataItemLevel: 0
+                    }]
+            }]
+            **************************/
+        //Enum used to determine the type of datastored in the Main Data structure.
+        var EnumDataType = JSON.parse('{}');
+        EnumDataType.Industry = "INDUSTRY_TYPE";
+        EnumDataType.SoftSkill = "SOFTSKILL_TYPE";
+        EnumDataType.HardSkill = "HARDSKILL_TYPE";
+
+        var LocalDataStructure = new Array();
+        /*Local Data Store Methods
+         * *************************/
+
+
+        /*END Local Data Store Methods
+         * *************************/
+        /*End Selected Industry Data Structure
+         * *****************************/
+        //End Industry Variables
+
+        /*End Global Variables
+         * *******************/
+
+        /*Global Status Update
+         * *********************/
+        function UpdateGlobalStatus() {
+            //Update Job Related Industry Status
+            if (LocalDataStructure.length > 0) {
+                var iIndusrtryItemCounter = 0;
+                var iHardSkillItemCounter = 0;
+                var iSoftSkillItemCounter = 0;
+
+                $.each(LocalDataStructure, function (i, LocalDataItem) {
+                    if (LocalDataItem.DataType == EnumDataType.Industry) {
+                        $.each(LocalDataItem.SelectedDataItems, function (j, IndustryItem) {
+                            iIndusrtryItemCounter++;
+                        });
+                    }
+                    if (LocalDataItem.DataType == EnumDataType.HardSkill) {
+                        $.each(LocalDataItem.SelectedDataItems, function (j, IndustryItem) {
+                            iHardSkillItemCounter++;
+                        });
+                    }
+                    if (LocalDataItem.DataType == EnumDataType.SoftSkill) {
+                        $.each(LocalDataItem.SelectedDataItems, function (j, IndustryItem) {
+                            iSoftSkillItemCounter++;
+                        });
+                    }
+                });
+                if (iIndusrtryItemCounter > 0) {
+                    spanObjJobRelatedIndustryGlobalStatus.html("Total of " + iIndusrtryItemCounter + " Industry Items Selected");
+                    spanObjJobRelatedIndustryGlobalStatus.removeClass("text-warning");
+                } else {
+                    spanObjJobRelatedIndustryGlobalStatus.html("None Listed.");
+                    spanObjJobRelatedIndustryGlobalStatus.addClass("text-warning");
+                }
+                if (iHardSkillItemCounter > 0) {
+                    spanObjJobRelatedHardSkillGlobalStatus.html("Total of " + iHardSkillItemCounter + " Skill Items Selected");
+                    spanObjJobRelatedHardSkillGlobalStatus.removeClass("text-warning");
+                } else {
+                    spanObjJobRelatedHardSkillGlobalStatus.html("None Listed.");
+                    spanObjJobRelatedHardSkillGlobalStatus.addClass("text-warning");
+                }
+                if (iSoftSkillItemCounter > 0) {
+                    spanObjJobRelatedSoftSkillGlobalStatus.html("Total of " + iSoftSkillItemCounter + " Skill Items Selected");
+                    spanObjJobRelatedSoftSkillGlobalStatus.removeClass("text-warning");
+                } else {
+                    spanObjJobRelatedSoftSkillGlobalStatus.html("None Listed.");
+                    spanObjJobRelatedSoftSkillGlobalStatus.addClass("text-warning");
+                }
+            } else {
+                spanObjJobRelatedIndustryGlobalStatus.html("None Listed.");
+                spanObjJobRelatedIndustryGlobalStatus.addClass("text-warning");
+                spanObjJobRelatedHardSkillGlobalStatus.html("None Listed.");
+                spanObjJobRelatedHardSkillGlobalStatus.addClass("text-warning");
+                //TODO: Must still add the itms for hard and soft skill
+            }
+
+            //Sets Company Global Status
+            if (cboObjCompany.val() != null) {
+
+                spanObjCompanyGlobalStatus.html("Selected: " + cboObjCompany.find('option:selected').text());
+                spanObjCompanyGlobalStatus.removeClass("text-warning");
+            } else {
+
+                spanObjCompanyGlobalStatus.addClass("text-warning");
+                spanObjCompanyGlobalStatus.html("None Listed.");
+            }
+            //updates the dates statuses
+            spanObjCompanyYearStartEmploymentGlobalStatus.html($(YearStartEmployment).datepicker("getFormattedDate"));
+            spanObjCompanyYearEndedEmploymentGlobalStatus.html($(YearEndedEmployment).datepicker("getFormattedDate"));
+
+            //updates the statuses for the text Editors
+            if (hidObjAchienvementText.val().length > 0) {
+                spanObjAchienvementGlobalStatus.html("Achievements Section Edited");
+                spanObjAchienvementGlobalStatus.removeClass("text-warning");
+            } else {
+                spanObjAchienvementGlobalStatus.addClass("text-warning");
+                spanObjAchienvementGlobalStatus.html("Not Yet Edited.");
+            }
+            if (hidObjWorkExperienceText.val().length > 0) {
+                spanObjWorkExperienceGlobalStatus.html("Experiences Section Edited");
+                spanObjWorkExperienceGlobalStatus.removeClass("text-warning");
+            } else {
+                spanObjWorkExperienceGlobalStatus.addClass("text-warning");
+                spanObjWorkExperienceGlobalStatus.html("Not Yet Edited.");
+            }
+
+            if (txtObjselectedJobTitle.val().length > 0) {
+                spanObjJobTitleGlobalStatus.html("Title: " + txtObjselectedJobTitle.val());
+                spanObjJobTitleGlobalStatus.removeClass("text-warning");
+            } else {
+                spanObjJobTitleGlobalStatus.addClass("text-warning");
+                spanObjJobTitleGlobalStatus.html("Not Selected.");
+            }
+
+
+
+            //END - Update Job Related Industry Status
+        }
+        /*End Global Status Update
+         * *********************/
+
+        /*Company Methods
+         * ****************/
+          /*Sends a request the controller to add a new Industry.
+         * It the then populates the Industry Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddCompany() {
+            var _ViewModel = JSON.parse('{}');
+            if (txtObjAddCompany.val().length > 0) {
+
+                _ViewModel.TEXT = txtObjAddCompany.val();//cboObjCompany.find('option:selected').text();
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddCompanyToDatabase", "CurriculumVitae")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        //Add industry to select list
+                        var newOption = new Option(data.companyName, data.id, true, true);
+                        cboObjCompany.append(newOption).trigger('change');
+                        txtObjAddCompany.val('');
+                        UpdateGlobalStatus();
+                        //show success message
+                        toastr.success("Company Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        txtObjAddCompany.val('');
+                        toastr.error("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Company", 'Warning');
+            }
+        }
+        /*END CompanyMethods
+         * ***********************/
+
+        /*SoftSkill Methods
+         * *****************/
+
+        /*Sends a request the controller to add a new Industry Category.
+         * It the then populates the Industry Category Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddNewSoftSkillCategory() {
+            var _ViewModel = JSON.parse('{}');
+
+            if (txtAddNewSoftSkillCategoryObj.val().length > 0) {
+
+                _ViewModel.ID = 2; // from Enum for the Skill Type the Value for the Hard SKill Type is 2
+                _ViewModel.TEXT = txtAddNewSoftSkillCategoryObj.val();
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddSkillCategory", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        //Add New category to list
+                        //Adds the new item to the drop down
+                        var newOption = new Option(data.coreSkillCategoryName, data.id, true, true);
+                        cboObjSelectSoftSkillCategory.append(newOption).trigger('change');
+                        showSelectSoftSkillCategory();
+                        //show success message
+                        toastr.success("Category Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.error("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Category", 'Warning');
+            }
+        }
+         /*Sends a request the controller to add a new Industry.
+         * It the then populates the Industry Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddSoftSkill() {
+            var _ViewModel = JSON.parse('{}');
+            if (txtAddNewSoftSkillObj.val().length > 0) {
+                _ViewModel.ID = cboObjSelectSoftSkillCategory.val();
+                _ViewModel.TEXT = txtAddNewSoftSkillObj.val();
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddSkill", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        //Add industry to select list
+                        var newOption = new Option(data.coreSkill, data.id, true, true);
+                        cboObjSelectSoftSkill.append(newOption).trigger('change');
+                        showSelectSoftSkill();
+                        //show success message
+                        toastr.success("Skill Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Skill", 'Warning');
+            }
+        }
+        //Clears all items from the SoftSkill Select Control.
+        function ClearSoftSkillSelect() {
+
+            cboObjSelectSoftSkill.empty();
+            cboObjSelectSoftSkill.val(null).trigger('change');
+        }
+        function populateSoftSkillSelect(data) { // Ckecked and correct
+            ClearSoftSkillSelect();
+            $.each(data, function (i, SoftSkillItem) {
+                //if the caetorgy is added locally to the loacl datastore then check to see if the industry is added locally.
+                //Else add the item to the list.
+                if (DetermineIfSoftSkillCategoryIsAddedLocally(SoftSkillItem)) {
+
+                    $.each(LocalDataStructure, function (i, LocalItem) {
+
+                        if (SoftSkillItem.skillCategoryID == LocalItem.SelectedCategoryID && LocalItem.DataType == EnumDataType.SoftSkill) {
+
+                            if (!DetermineIfSoftSkillIsAddedLocal(LocalItem, SoftSkillItem)) {
+                                var newOption = new Option(SoftSkillItem.skill, SoftSkillItem.id, false, false);
+                                cboObjSelectSoftSkill.append(newOption).trigger('change');
+                            }
+                        }
+                    });
+                } else {
+                    var newOption = new Option(SoftSkillItem.skill, SoftSkillItem.id, false, false);
+                    cboObjSelectSoftSkill.append(newOption).trigger('change');
+                }
+            });
+        }
+        function DetermineIfSoftSkillCategoryIsAddedLocally(SoftSkillItem) {
+            var finalvalue = false;
+            $.each(LocalDataStructure, function (i, DataItem) {
+
+                if (SoftSkillItem.skillCategoryID == DataItem.SelectedCategoryID && DataItem.DataType == EnumDataType.SoftSkill) {
+                    finalvalue = true;
+                }
+            });
+
+            return finalvalue;
+        }
+        function DetermineIfSoftSkillIsAddedLocal(LocalItem, SoftSkillItem) {//Checked and correct
+
+            var Rtn = false;//default is false.
+            $.each(LocalItem.SelectedDataItems, function (j, LocalDataItem) {
+
+                if (LocalDataItem.DataItemID == SoftSkillItem.id) {
+                    Rtn = true;
+                }
+            });
+            return Rtn;
+        }
+        //Sets the summary table at the base of the Panel to add industry.
+        function setSoftSkillSelectionSummary() {
+            if (cboObjSelectSoftSkillCategory.val() != null) {
+                //$("#myselect option:selected").text();
+                $("#AddSoftSkillSummary-Category").html(cboObjSelectSoftSkillCategory.find('option:selected').text());
+            } else {
+                $("#AddSoftSkillSummary-Category").html("None Currently Selected.");
+            }
+            if (cboObjSelectSoftSkill.val() != null) {
+                $("#AddSoftSkillSummary-Industry").html(cboObjSelectSoftSkill.find('option:selected').text());
+            } else {
+                $("#AddSoftSkillSummary-Industry").html("None Currently Selected.");
+            }
+        }
+         /*Queries the controller and gets back the Industries for the the selected Category.
+         * It the then populates the Industry Select control with the items retieved from the KB.
+         * ********************************************************************************/
+        function LoadSoftSkills(CoreCategoryID) {
+
+            var _ViewModel = JSON.parse('{}');
+
+            if (CoreCategoryID != null) {
+
+                _ViewModel.ID = CoreCategoryID;
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetSkillsByCategory", "KnowledgeBase")',
+                            data: JSON.stringify(_ViewModel),
+                            contentType: "application/json; charset=utf-8",
+                            beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                    dataType: "json",
+                    success: function (data) {
+                        ClearSoftSkillSelect();
+                        populateSoftSkillSelect(data);
+                    },
+                     error: function (data, textStatus, error) {
+                         toastr.error("Something went wrong - " + error, 'Error');
+                    }
+                });
+            } else {
+                ClearSoftSkillSelect();
+            }
+        }
+        function showAddSoftSkillCategory() {
+            SelectSoftSkillCategoryContainer.hide();
+            AddSoftSkillCategoryContainer.show();
+            txtAddNewSoftSkillCategoryObj.val('');
+            txtAddNewSoftSkillCategoryObj.focus();
         }
 
-        $(document).ready(function () {
+        function showSelectSoftSkillCategory() {
+            SelectSoftSkillCategoryContainer.show();
+            AddSoftSkillCategoryContainer.hide();
+        }
+        //Hides the Industry Select dropdown control and shows the Add Industry Text box for the Industry Panel
+        function showAddSoftSkill() {
+            SelectSoftSkillContainer.hide();
+            AddSoftSkillContainer.show();
+            txtAddNewSoftSkillObj.val('');
+            txtAddNewSoftSkillObj.focus();
+        }
+        //Hides the Add Industry Text box and shows the Industry Select dropdown control for the Industry Panel,
+        //Normally after the industry has been added or user canceled.
+        function showSelectSoftSkill() {
+            SelectSoftSkillContainer.show();
+            AddSoftSkillContainer.hide();
+        }
 
+        function addSelectedSoftSkillDataItemToLocalDataStore() {
+            //Test to ensure a selection has been made by the user
+            if (cboObjSelectSoftSkillCategory.val() != null
+                && cboObjSelectSoftSkill.val() !== null
+                && hidCurrentValueOfSoftSkillInvolvementObj.val() != 0) {
+                //create new object and initilise it with the values selected.
+                var _SelectedSoftSkillDataObj = JSON.parse('{}');
 
-            $('.click2edit_WorkExperience').summernote('code', $('#WorkExperienceDescription').val());
-
-            $('.click2edit_Achievements').summernote('code', $('#Achievements').val());
-
-            $('.dual_select').bootstrapDualListbox({
-                selectorMinimalHeight: 160
-            });
-
-            $('#YearStarted .input-group.date').datepicker({
-                format: "yyyy",
-                startView: 2,
-                minViewMode: 2,
-                maxViewMode: 2,
-                keyboardNavigation: false,
-                autoclose: true,
-                defaultViewDate: { year: 2019, month: 01, day: 01 }
-            });
-            $('#YearCompleted .input-group.date').datepicker({
-                format: "yyyy",
-                startView: 2,
-                minViewMode: 2,
-                maxViewMode: 2,
-                keyboardNavigation: false,
-                autoclose: true,
-                defaultViewDate: { year: 2019, month: 01, day: 01 }
-            });
-
-            $(".company-select").select2();
-
-            $("#myModal").on('shown.bs.modal', function () {
-
-                $(".jobs-select").select2({
-                    placeholder: "Select a Job Title/Function",
-                    allowClear: true,
-                    dropdownParent: $("#collapseOne")
-                });
-            });
-            $('.jobs-select').on('select2:select', function (e) {
-                var data = e.params.data;
-                //alert(data.text);
-                /*
-                 {
-                    "id": 1,
-                    "text": "Tyto alba",
-                    "genus": "Tyto",
-                    "species": "alba"
+                _SelectedSoftSkillDataObj.DataType = EnumDataType.SoftSkill; // Type is Industry from the Local ENUM
+                _SelectedSoftSkillDataObj.SelectedCategory = cboObjSelectSoftSkillCategory.find('option:selected').text();
+                _SelectedSoftSkillDataObj.SelectedCategoryID = cboObjSelectSoftSkillCategory.val();
+                _SelectedSoftSkillDataObj.SelectedDataItems = [
+                    {
+                        DataItemID: cboObjSelectSoftSkill.val(),
+                        DataItemTEXT: cboObjSelectSoftSkill.find('option:selected').text(),
+                        DataItemLevel: hidCurrentValueOfSoftSkillInvolvementObj.val()
                     }
-                 */
+                ];
+                //Add Newy Created DataItem to the LocalDataStore
+                addDataItemToLocalDataStore(_SelectedSoftSkillDataObj, EnumDataType.SoftSkill);
+                intialiseSelectSoftSkillForm();
+
+            } else {
+                toastr.warning("Please select a category and Skill, as well as level of Competency can not be zero.", 'Warning');
+            }
+        }
+        function intialiseSelectSoftSkillForm() {
+            SelectedSoftSkillInvolvmentLevelSlider.update({
+               from: 0
             });
-            $('.jobs-select').on('select2:unselect', function (e) {
-                var data = e.params.data;
-                //alert('select2:unselect');
+            cboObjSelectSoftSkill.val(null).trigger('change');
+            cboObjSelectSoftSkillCategory.val(null).trigger('change');
+            BuildselectedDataItemSummary(EnumDataType.SoftSkill);
+        }
+
+
+
+
+        /*END SoftSkill Methods
+         * *****************/
+
+
+
+        /*HardSkill Methods
+         * *****************/
+        /*Sends a request the controller to add a new Industry Category.
+         * It the then populates the Industry Category Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddNewHardSkillCategory() {
+            var _ViewModel = JSON.parse('{}');
+
+            if (txtAddNewHardSkillCategoryObj.val().length > 0) {
+
+                _ViewModel.ID = 1; // from Enum for the Skill Type the Value for the Hard SKill Type is 1
+                _ViewModel.TEXT = txtAddNewHardSkillCategoryObj.val();
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddSkillCategory", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        //Add New category to list
+                        //Adds the new item to the drop down
+                        var newOption = new Option(data.coreSkillCategoryName, data.id, true, true);
+                        cboObjSelectHardSkillCategory.append(newOption).trigger('change');
+                        showSelectHardSkillCategory();
+                        //show success message
+                        toastr.success("Category Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Category", 'Warning');
+            }
+        }
+         /*Sends a request the controller to add a new Industry.
+         * It the then populates the Industry Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddHardSkill() {
+            var _ViewModel = JSON.parse('{}');
+            if (txtAddNewHardSkillObj.val().length > 0) {
+                _ViewModel.ID = cboObjSelectHardSkillCategory.val();
+                _ViewModel.TEXT = txtAddNewHardSkillObj.val();
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddSkill", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        //Add industry to select list
+                        var newOption = new Option(data.coreSkill, data.id, true, true);
+                        cboObjSelectHardSkill.append(newOption).trigger('change');
+                        showSelectHardSkill();
+                        //show success message
+                        toastr.success("Skill Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Skill", 'Warning');
+            }
+        }
+        //Clears all items from the HardSkill Select Control.
+        function ClearHardSkillSelect() {
+
+            cboObjSelectHardSkill.empty();
+            cboObjSelectHardSkill.val(null).trigger('change');
+        }
+        function populateHardSkillSelect(data) { // Ckecked and correct
+            ClearHardSkillSelect();
+            $.each(data, function (i, HardSkillItem) {
+                //if the caetorgy is added locally to the loacl datastore then check to see if the industry is added locally.
+                //Else add the item to the list.
+                if (DetermineIfHardSkillCategoryIsAddedLocally(HardSkillItem)) {
+
+                    $.each(LocalDataStructure, function (i, LocalItem) {
+
+                        if (HardSkillItem.skillCategoryID == LocalItem.SelectedCategoryID && LocalItem.DataType == EnumDataType.HardSkill) {
+
+                            if (!DetermineIfHardSkillIsAddedLocal(LocalItem, HardSkillItem)) {
+                                var newOption = new Option(HardSkillItem.skill, HardSkillItem.id, false, false);
+                                cboObjSelectHardSkill.append(newOption).trigger('change');
+                            }
+                        }
+                    });
+                } else {
+                    var newOption = new Option(HardSkillItem.skill, HardSkillItem.id, false, false);
+                    cboObjSelectHardSkill.append(newOption).trigger('change');
+                }
+            });
+        }
+        function DetermineIfHardSkillCategoryIsAddedLocally(HardSkillItem) {
+            var finalvalue = false;
+            $.each(LocalDataStructure, function (i, DataItem) {
+
+                if (HardSkillItem.skillCategoryID == DataItem.SelectedCategoryID && DataItem.DataType == EnumDataType.HardSkill) {
+                    finalvalue = true;
+                }
+            });
+
+            return finalvalue;
+        }
+        function DetermineIfHardSkillIsAddedLocal(LocalItem, HardSkillItem) {//Checked and correct
+
+            var Rtn = false;//default is false.
+            $.each(LocalItem.SelectedDataItems, function (j, LocalDataItem) {
+
+                if (LocalDataItem.DataItemID == HardSkillItem.id) {
+                    Rtn = true;
+                }
+            });
+            return Rtn;
+        }
+        //Sets the summary table at the base of the Panel to add industry.
+        function setHardSkillSelectionSummary() {
+            if (cboObjSelectHardSkillCategory.val() != null) {
+                //$("#myselect option:selected").text();
+                $("#AddHardSkillSummary-Category").html(cboObjSelectHardSkillCategory.find('option:selected').text());
+            } else {
+                $("#AddHardSkillSummary-Category").html("None Currently Selected.");
+            }
+            if (cboObjSelectHardSkill.val() != null) {
+                $("#AddHardSkillSummary-Industry").html(cboObjSelectHardSkill.find('option:selected').text());
+            } else {
+                $("#AddHardSkillSummary-Industry").html("None Currently Selected.");
+            }
+        }
+         /*Queries the controller and gets back the Industries for the the selected Category.
+         * It the then populates the Industry Select control with the items retieved from the KB.
+         * ********************************************************************************/
+        function LoadHardSkills(CoreCategoryID) {
+
+            var _ViewModel = JSON.parse('{}');
+
+            if (CoreCategoryID != null) {
+
+                _ViewModel.ID = CoreCategoryID;
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetSkillsByCategory", "KnowledgeBase")',
+                            data: JSON.stringify(_ViewModel),
+                            contentType: "application/json; charset=utf-8",
+                            beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                    dataType: "json",
+                    success: function (data) {
+                        ClearHardSkillSelect();
+                        populateHardSkillSelect(data);
+                    },
+                     error: function (data, textStatus, error) {
+                         toastr.error("Something went wrong - " + error, 'Error');
+                    }
+                });
+            } else {
+                ClearHardSkillSelect();
+            }
+        }
+        function showAddHardSkillCategory() {
+            SelectHardSkillCategoryContainer.hide();
+            AddHardSkillCategoryContainer.show();
+            txtAddNewHardSkillCategoryObj.val('');
+            txtAddNewHardSkillCategoryObj.focus();
+        }
+
+        function showSelectHardSkillCategory() {
+            SelectHardSkillCategoryContainer.show();
+            AddHardSkillCategoryContainer.hide();
+        }
+        //Hides the Industry Select dropdown control and shows the Add Industry Text box for the Industry Panel
+        function showAddHardSkill() {
+            SelectHardSkillContainer.hide();
+            AddHardSkillContainer.show();
+            txtAddNewHardSkillObj.val('');
+            txtAddNewHardSkillObj.focus();
+        }
+        //Hides the Add Industry Text box and shows the Industry Select dropdown control for the Industry Panel,
+        //Normally after the industry has been added or user canceled.
+        function showSelectHardSkill() {
+            SelectHardSkillContainer.show();
+            AddHardSkillContainer.hide();
+        }
+
+        function addSelectedHardSkillDataItemToLocalDataStore() {
+            //Test to ensure a selection has been made by the user
+            if (cboObjSelectHardSkillCategory.val() != null
+                && cboObjSelectHardSkill.val() !== null
+                && hidCurrentValueOfHardSkillInvolvementObj.val() != 0) {
+                //create new object and initilise it with the values selected.
+                var _SelectedHardSkillDataObj = JSON.parse('{}');
+
+                _SelectedHardSkillDataObj.DataType = EnumDataType.HardSkill; // Type is Industry from the Local ENUM
+                _SelectedHardSkillDataObj.SelectedCategory = cboObjSelectHardSkillCategory.find('option:selected').text();
+                _SelectedHardSkillDataObj.SelectedCategoryID = cboObjSelectHardSkillCategory.val();
+                _SelectedHardSkillDataObj.SelectedDataItems = [
+                    {
+                        DataItemID: cboObjSelectHardSkill.val(),
+                        DataItemTEXT: cboObjSelectHardSkill.find('option:selected').text(),
+                        DataItemLevel: hidCurrentValueOfHardSkillInvolvementObj.val()
+                    }
+                ];
+                //Add Newy Created DataItem to the LocalDataStore
+                addDataItemToLocalDataStore(_SelectedHardSkillDataObj, EnumDataType.HardSkill);
+                intialiseSelectHardSkillForm();
+
+            } else {
+                toastr.warning("Please select a category and Skill, as well as level of Competency can not be zero.", 'Warning');
+            }
+        }
+        function intialiseSelectHardSkillForm() {
+            SelectedHardSkillInvolvmentLevelSlider.update({
+               from: 0
+            });
+            cboObjSelectHardSkill.val(null).trigger('change');
+            cboObjSelectHardSkillCategory.val(null).trigger('change');
+            BuildselectedDataItemSummary(EnumDataType.HardSkill);
+        }
+
+
+
+         /*END - HardSkill Methods
+         * *****************/
+
+        /*Industry Methods
+         * ***********************/
+        /*Example of the html generated for the summary item taht is added to the main container
+         * ************************************************************************************
+        <div class="Industry-Item">
+            <div class="Slected-Industry-Category full-width  ">
+                <h4>&nbsp;Category  - Mining</h4>
+            </div>
+            <div style="margin-left: 10px; margin-right: 10px; padding:2px;" class="Selected-Industry-Item  panel panel-primary ">
+                <button type="button" class="btn btn-primary">
+                    <i style="cursor: pointer; " title="Remove Selection" class="fa fa-remove">
+                    </i>
+                </button>&nbsp;[Selected Industry]
+             </div>
+        </div>
+        Verson 2
+        <div style="margin-left: 10px; margin-right: 10px; padding:2px;" class="Selected-Industry-Item  panel panel-primary ">
+            <div class="row">
+                <div class="col-lg-3">
+                    <button type="button" class="btn btn-primary"><i style="cursor: pointer; " title="Remove Selection" class="fa fa-remove"></i></button>
+                </div>
+                <div class="col-lg-9">
+                    &nbsp;[Selected Industry]
+
+                    <div class="progress" style="background-color:rgba(219, 219, 219, 0.35);">
+                        <div id="SelectedIndustryInvolvementLevelSummary" style="width: 10%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-info"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        *****************************************************************************************/
+        function BuildselectedDataItemSummary(DataType) {
+
+            var MainInnerContainer;
+
+            //Check that the item is of Industry Type
+            if (DataType == EnumDataType.Industry) {
+                //Clears Out currenlty added items.
+                IndustrySummaryContainer.empty();
+
+                MainInnerContainer = $('<div/>', {
+                    class: 'Selected-Industry-Container'
+                }).appendTo(IndustrySummaryContainer);
+            }
+            //Check that the item is of Industry Type
+            if (DataType == EnumDataType.HardSkill) {
+                //Clears Out currenlty added items.
+                HardSkillSummaryContainer.empty();
+
+                MainInnerContainer = $('<div/>', {
+                    class: 'Selected-Industry-Container'
+                }).appendTo(HardSkillSummaryContainer);
+            }
+            //Check that the item is of Industry Type
+            if (DataType == EnumDataType.SoftSkill) {
+                //Clears Out currenlty added items.
+                SoftSkillSummaryContainer.empty();
+
+                MainInnerContainer = $('<div/>', {
+                    class: 'Selected-Industry-Container'
+                }).appendTo(SoftSkillSummaryContainer);
+            }
+
+            if (LocalDataStructure.length > 0) {
+                var iCounter = 0;
+                $.each(LocalDataStructure, function (i, LocalItem) {
+
+                    if (LocalItem.DataType == DataType) {
+                        iCounter++;
+                        var divIndustryItem = $("<div></div>", {
+                            class: "Industry-Item"
+                        }).appendTo(MainInnerContainer);
+
+                        var divCeategoryHeading = $("<div></div>", {
+                            class: "Selected-Industry-Category full-width"
+                        })
+                            .html(" <h4>&nbsp;Category - " + LocalItem.SelectedCategory + "</h4>")
+                            .appendTo(divIndustryItem);
+
+                        $.each(LocalItem.SelectedDataItems, function (j, InnerItem) {
+                            //var divCeategoryHeading = $("<div></div>", {
+                            //    class: "Selected-Industry-Item  panel panel-primary",
+                            //    style: "margin-left: 10px; margin-right: 10px; padding:2px;"
+                            //}).html("<button type='button' class='btn btn-primary'><i style = 'cursor: pointer;' title='Remove Selection' class='fa fa-remove' ></i></button>&nbsp;" + InnerItem.IndustryName).appendTo(divIndustryItem);
+
+
+                            var divCeategoryItem = $("<div></div>", {
+                                class: "Selected-Industry-Item  panel panel-primary",
+                                style: "margin-left: 10px; margin-right: 10px; padding:2px;"
+                            }).appendTo(divIndustryItem);
+
+                            var divInnerRow = $("<div></div>", {
+                                class: "row"
+                            }).appendTo(divCeategoryItem);
+
+                            var divButtonCol = $("<div></div>", {
+                                class: "col-sm-2"
+                            }).appendTo(divInnerRow);
+
+                            var btnRemoveButton = $("<button></button>", {
+                                class: "btn btn-primary"
+                            }).html('<i style="cursor: pointer; " title="Remove Selection" class="fa fa-remove"></i>').appendTo(divButtonCol);
+
+
+
+                            btnRemoveButton.on("click", function () {
+                                removeSelectedDataItemFromLocalDataStore(LocalItem.SelectedCategoryID, InnerItem.DataItemID, LocalItem.DataType);
+                            });
+
+                            var divIndusrtryItem = $("<div></div>", {
+                                class: "col-sm-10"
+                            }).html(InnerItem.DataItemTEXT).appendTo(divInnerRow);
+
+                            var divProgressOutter = $("<div></div>", {
+                                class: "progress",
+                                style: "background-color:rgba(219, 219, 219, 0.35);"
+                            }).appendTo(divIndusrtryItem);
+
+                            var divProgressInner = $("<div></div>", {
+                                class: 'progress-bar bg-info"',
+                                style: "width: " + InnerItem.DataItemLevel + "%;",
+                                "aria-valuemax": "100",
+                                "aria-valuemin": "0",
+                                "aria-valuenow": "0",
+                                role: "progressbar"
+                            }).appendTo(divProgressOutter);
+
+                        });
+                    }
+                });
+                if (iCounter == 0) {
+                    var divDivNoResultsHeading = $("<div></div>", {
+                        class: "Selected-Industry-Category full-width text-center"
+                    }).html(" <h4>None Currently Selected.</h4>").appendTo(MainInnerContainer);
+                }
+            } else {
+                //var divSelectedItem = $("<div></div>", {
+                //    class: "Industry-Item"
+                //}).appendTo(MainInnerContainer);
+                //var divCeategoryHeading = $("<div></div>", {
+                //    class: "Selected-Industry-Category full-width text-center"
+                //}).html(" <h4>None Currently Selected.</h4>").appendTo(divSelectedItem);
+                var divDivNoResultsHeading = $("<div></div>", {
+                    class: "Selected-Industry-Category full-width text-center"
+                }).html(" <h4>None Currently Selected.</h4>").appendTo(MainInnerContainer);
+            }
+            UpdateGlobalStatus();
+        }
+
+        function removeSelectedDataItemFromLocalDataStore(CategoryID_ToREmove, DataItemID_ToRemove, DataItemType ) {//NEW REPLACEMENT METHOD
+            swal({
+                title: "Are you sure you wish to remove?",
+                text: "If you remove this selection you can add it agian by clicking the add/edit button!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Remove Selection!",
+                closeOnConfirm: false
+            }, function () {
+                $.each(LocalDataStructure, function (i, LocalDataStoreDataItem) {
+                    if (LocalDataStoreDataItem.SelectedCategoryID == CategoryID_ToREmove && LocalDataStoreDataItem.DataType == DataItemType ) {
+                        var iIndexOfItemToRemove = 0;
+                        $.each(LocalDataStoreDataItem.SelectedDataItems, function (j, innerItem) {
+                            if (innerItem.DataItemID == DataItemID_ToRemove) {
+                                iIndexOfItemToRemove = j;
+                            }
+                        });
+                        LocalDataStoreDataItem.SelectedDataItems.splice(iIndexOfItemToRemove, 1)
+                    }
+                    if (LocalDataStoreDataItem.SelectedDataItems.length == 0) {
+                        LocalDataStructure.splice(i, 1);
+                    }
+                });
+                swal("Removed!", "Your selection has been removed.", "success");
+                BuildselectedDataItemSummary(DataItemType);
+            });
+        }
+        /*Generates New Industry DataItem from the user selection to be added to the Local DataStore
+        --Industry Method
+        *******************************************************************************************/
+        function addSelectedIndustryDataItemToLocalDataStore() {
+            //Test to ensure a selection has been made by the user
+            if (cboObjSelectIndustryCategory.val() != null
+                && cboObjSelectIndustry.val() !== null
+                && hidCurrentValueOfIndustryInvolvementObj.val() != 0) {
+                //create new object and initilise it with the values selected.
+                var _SelectedIndustryDataObj = JSON.parse('{}');
+
+                _SelectedIndustryDataObj.DataType = EnumDataType.Industry; // Type is Industry from the Local ENUM
+                _SelectedIndustryDataObj.SelectedCategory = cboObjSelectIndustryCategory.find('option:selected').text();
+                _SelectedIndustryDataObj.SelectedCategoryID = cboObjSelectIndustryCategory.val();
+                _SelectedIndustryDataObj.SelectedDataItems = [
+                    {
+                        DataItemID: cboObjSelectIndustry.val(),
+                        DataItemTEXT: cboObjSelectIndustry.find('option:selected').text(),
+                        DataItemLevel: hidCurrentValueOfIndustryInvolvementObj.val()
+                    }
+                ];
+                //Add Newy Created DataItem to the LocalDataStore
+                addDataItemToLocalDataStore(_SelectedIndustryDataObj, EnumDataType.Industry);
+                intialiseSelectIndustryForm();
+
+            } else {
+                toastr.warning("Please select a category and Industry, as well as level of Involvement can not be zero.", 'Warning');
+            }
+        }
+        /*New Add ITem To Main DataStructure
+        --Local Data Structure Method
+        ********************************************/
+        function addDataItemToLocalDataStore(DataItem, DataItemType) {//NEW REPLACEMENT METHOD
+
+            if (LocalDataStructure.length > 0) {
+                //Determin if the category is added if not add the item
+                if (!DetermineIfCategoryIsAdded(DataItem, DataItemType)) {
+                    //adding as the category does not exist
+                    LocalDataStructure.push(DataItem);
+                } else {
+                    //if does exists Merge item to existing category DataItems
+                    $.each(LocalDataStructure, function (i, LocalDataStoreDataItem ) {
+                        if (LocalDataStoreDataItem.SelectedCategoryID == DataItem.SelectedCategoryID && LocalDataStoreDataItem.DataType == DataItemType ) {
+                            $.merge(LocalDataStoreDataItem.SelectedDataItems, DataItem.SelectedDataItems);
+                        }
+                    });
+                }
+            } else {
+                LocalDataStructure.push(DataItem);
+            }
+        }
+        //if not added will add the item to the list
+        function DetermineIfCategoryIsAdded(DataItemToCompare, DataItemType) {//NEW REPLACEMENT METHOD
+            var Rtn = false;
+            $.each(LocalDataStructure, function (i, DataItem) {
+                if (DataItem.SelectedCategoryID == DataItemToCompare.SelectedCategoryID && DataItem.DataType == DataItemType ) {
+                    Rtn = true;
+                }
+            });
+            return Rtn;
+        }
+        /*CUSTOM Industry Method
+        Used in the filtering of the select drop down controls to determine of the Items has already been selected.
+        ***********************************************************************************************************/
+        function DetermineIfIndustryCategoryIsAddedLocally(IndustryItem) {
+            var finalvalue = false;
+            $.each(LocalDataStructure, function (i, DataItem) {
+
+                if (IndustryItem.industryCategoryID == DataItem.SelectedCategoryID && DataItem.DataType == EnumDataType.Industry) {
+                    finalvalue = true;
+                }
+            });
+
+            return finalvalue;
+        }
+
+        function intialiseSelectIndustryForm() {
+            SelectedIndustryInvolvmentLevelSlider.update({
+                from: 0
+            });
+            cboObjSelectIndustry.val(null).trigger('change');
+            cboObjSelectIndustryCategory.val(null).trigger('change');
+            BuildselectedDataItemSummary(EnumDataType.Industry);
+        }
+
+        function showAddIndustryCategory() {
+            SelectIndustryCategoryContainer.hide();
+            AddIndustryCategoryContainer.show();
+            txtAddNewIndustryCategoryObj.val('');
+            txtAddNewIndustryCategoryObj.focus();
+        }
+
+        function showSelectIndustryCategory() {
+            SelectIndustryCategoryContainer.show();
+            AddIndustryCategoryContainer.hide();
+        }
+        //Hides the Industry Select dropdown control and shows the Add Industry Text box for the Industry Panel
+        function showAddIndustry() {
+            SelectIndustryContainer.hide();
+            AddIndustryContainer.show();
+            txtAddNewIndustryObj.val('');
+            txtAddNewIndustryObj.focus();
+        }
+        //Hides the Add Industry Text box and shows the Industry Select dropdown control for the Industry Panel,
+        //Normally after the industry has been added or user canceled.
+        function showSelectIndustry() {
+            SelectIndustryContainer.show();
+            AddIndustryContainer.hide();
+        }
+
+        /*Adds Industry Items to the Select Drop down control from the DataBase.
+         --Industry Method
+         **********************************************************************/
+        function populateIndustrySelect(data) { // Ckecked and correct
+            ClearIndustrySelect();
+            $.each(data, function (i, IndustryItem) {
+                //if the caetorgy is added locally to the loacl datastore then check to see if the industry is added locally.
+                //Else add the item to the list.
+                if (DetermineIfIndustryCategoryIsAddedLocally(IndustryItem)) {
+
+                    $.each(LocalDataStructure, function (i, LocalItem) {
+
+                        if (IndustryItem.industryCategoryID == LocalItem.SelectedCategoryID && LocalItem.DataType == EnumDataType.Industry) {
+
+                            if (!DetermineIfIndustryIsAddedLocal(LocalItem,IndustryItem)) {
+                                var newOption = new Option(IndustryItem.industry, IndustryItem.id, false, false);
+                                cboObjSelectIndustry.append(newOption).trigger('change');
+                            }
+                        }
+                    });
+                } else {
+                    var newOption = new Option(IndustryItem.industry, IndustryItem.id, false, false);
+                    cboObjSelectIndustry.append(newOption).trigger('change');
+                }
+            });
+        }
+
+
+        /*Used in the filtering of the select drop down controls to determine of the Items has already been selected.
+         --Industry Method
+         **************************************************************************************************************/
+        function DetermineIfIndustryIsAddedLocal(LocalItem, IndustryItem) {//Checked and correct
+
+            var IsIndustryAlreadyAddedLocaly = false;//default is false.
+            $.each(LocalItem.SelectedDataItems, function (j, LocalDataItem) {
+
+                if (LocalDataItem.DataItemID == IndustryItem.id) {
+                    IsIndustryAlreadyAddedLocaly = true;
+                }
+            });
+            return IsIndustryAlreadyAddedLocaly;
+        }
+
+        //Sets the summary table at the base of the Panel to add industry.
+        function setIndustrySelectionSummary() {
+            if (cboObjSelectIndustryCategory.val() != null) {
+                //$("#myselect option:selected").text();
+                $("#AddIndustrySummary-Category").html(cboObjSelectIndustryCategory.find('option:selected').text());
+            } else {
+                $("#AddIndustrySummary-Category").html("None Currently Selected.");
+            }
+            if (cboObjSelectIndustry.val() != null) {
+                $("#AddIndustrySummary-Industry").html(cboObjSelectIndustry.find('option:selected').text());
+            } else {
+                $("#AddIndustrySummary-Industry").html("None Currently Selected.");
+            }
+        }
+        //Clears all items from the Industry Select Control.
+        function ClearIndustrySelect() {
+            cboObjSelectIndustry.empty();
+            cboObjSelectIndustry.val(null).trigger('change');
+        }
+        /*Queries the controller and gets back the Industries for the the selected Category.
+         * It the then populates the Industry Select control with the items retieved from the KB.
+         * ********************************************************************************/
+        function LoadIndustries(CoreIndustryCategoryID) {
+
+            var _ViewModel = JSON.parse('{}');
+
+            if (CoreIndustryCategoryID != null) {
+
+                _ViewModel.ID = CoreIndustryCategoryID;
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetIndustryByCategroy", "KnowledgeBase")',
+                            data: JSON.stringify(_ViewModel),
+                            contentType: "application/json; charset=utf-8",
+                            beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                    dataType: "json",
+                    success: function (data) {
+                        ClearIndustrySelect();
+                        populateIndustrySelect(data);
+                    },
+                     error: function (data, textStatus, error) {
+                         toastr.error("Something went wrong - " + error, 'Error');
+                    }
+                });
+            } else {
+                ClearIndustrySelect();
+            }
+        }
+        /*Sends a request the controller to add a new Industry Category.
+         * It the then populates the Industry Category Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddNewIndustryCategory() {
+            var _ViewModel = JSON.parse('{}');
+
+            if (txtAddNewIndustryCategoryObj.val().length > 0) {
+
+                //_ViewModel.ID = $("#IndustryCategoryID").val();
+                _ViewModel.TEXT = txtAddNewIndustryCategoryObj.val();
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddIndustryCategroy", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        //Add New category to list
+                        //Adds the new item to the drop down
+                        var newOption = new Option(data.coreKbIndustryCategoryName, data.id, true, true);
+                        cboObjSelectIndustryCategory.append(newOption).trigger('change');
+                        showSelectIndustryCategory();
+                        //show success message
+                        toastr.success("Category Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Category", 'Warning');
+            }
+        }
+         /*Sends a request the controller to add a new Industry.
+         * It the then populates the Industry Select control with the item new add to the KB.
+         * ********************************************************************************/
+        function AddIndustry() {
+             var _ViewModel = JSON.parse('{}');
+            if (txtAddNewIndustryObj.val().length > 0) {
+                _ViewModel.ID = cboObjSelectIndustryCategory.val();
+                _ViewModel.TEXT = txtAddNewIndustryObj.val();
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddIndustry", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        //Add industry to select list
+                        var newOption = new Option(data.coreKbIndustryName, data.id, true, true);
+                        cboObjSelectIndustry.append(newOption).trigger('change');
+                        showSelectIndustry();
+                        //show success message
+                        toastr.success("Industry Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Industry", 'Warning');
+            }
+        }
+        /*END Select Industry Methods
+         * ***********************/
+        function showNewWorkExperienceWizard() {
+            divObjWorkExperienceSummary.hide();
+            divObjAddNewWorkExperienceWizard.show();
+        }
+
+        function showNewWorkExperienceSummary() {
+            divObjWorkExperienceSummary.show();
+            divObjAddNewWorkExperienceWizard.hide();
+        }
+
+
+
+        $(document).ready(function () {
+            //Initialise the Main Form Variables
+            divObjWorkExperienceSummary = $("#WorkExperienceSummary");
+            divObjAddNewWorkExperienceWizard = $("#AddNewWorkExperienceWizard");
+            //END - Initialise the Main Form Variables
+
+            //Initilise Job Title Variables
+            txtObjselectedJobTitle = $("#txtselectedJobTitle");
+            spanObjJobTitleGlobalStatus = $("#Job-TitleFunction-GlobalStatus");
+            //End JobTitle Variables
+
+            //Initilise Editor Variables
+            hidObjAchienvementText = $("#hidAchievementText");
+            hidObjWorkExperienceText = $("#hidWorkExperienceText");
+            spanObjAchienvementGlobalStatus = $("#EditorForAchievments-GlobalStatus");
+            spanObjWorkExperienceGlobalStatus = $("#EditorForWorkExperience-GlobalStatus");
+            //END -Initilise Editor Variables
+
+            //Initiailse Company Varibales
+            spanObjCompanyGlobalStatus = $("#Company-GlobalStatus");
+            txtObjAddCompany = $("#txtAddCompany");
+            spanObjCompanyYearStartEmploymentGlobalStatus = $("#EmploymentPeriod-Start-GlobalStatus");
+            spanObjCompanyYearEndedEmploymentGlobalStatus = $("#EmploymentPeriod-Ended-GlobalStatus");
+            //END
+
+            //Initalise Industry Varaibales
+            SelectIndustryCategoryContainer = $("#divSelectIndustryCategoryContainer");
+            AddIndustryCategoryContainer = $("#divAddIndustryCategoryContainer");
+            SelectIndustryContainer = $("#divSelectIndustryContainer");
+            AddIndustryContainer = $("#divAddIndustryContainer");
+            txtAddNewIndustryObj = $("#txtAddNewIndustry");
+            txtAddNewIndustryCategoryObj = $("#txtAddNewIndustryCategory");
+            hidCurrentValueOfIndustryInvolvementObj = $("#hidCurrentValueOfIndustryInvolvement");
+            spanObjJobRelatedIndustryGlobalStatus = $("#Job-Related-Industry-GlobalStatus");
+            //END - Initalise Industry Varaibales
+
+            //Initalise HardSkill Varaibales
+            SelectHardSkillCategoryContainer = $("#divSelectHardSkillCategoryContainer");
+            AddHardSkillCategoryContainer = $("#divAddHardSkillCategoryContainer");
+            SelectHardSkillContainer = $("#divSelectHardSkillContainer");
+            AddHardSkillContainer = $("#divAddHardSkillContainer");
+            txtAddNewHardSkillObj = $("#txtAddNewHardSkill");
+            txtAddNewHardSkillCategoryObj = $("#txtAddNewHardSkillCategory");
+            hidCurrentValueOfHardSkillInvolvementObj = $("#hidCurrentValueOfHardSkillLevel");
+            spanObjJobRelatedHardSkillGlobalStatus = $("#HardSkill-GlobalStatus");
+            //END - Initalise HardSkill Varaibales
+
+            //Initalise SoftSkill Varaibales
+            SelectSoftSkillCategoryContainer = $("#divSelectSoftSkillCategoryContainer");
+            AddSoftSkillCategoryContainer = $("#divAddSoftSkillCategoryContainer");
+            SelectSoftSkillContainer = $("#divSelectSoftSkillContainer");
+            AddSoftSkillContainer = $("#divAddSoftSkillContainer");
+            txtAddNewSoftSkillObj = $("#txtAddNewSoftSkill");
+            txtAddNewSoftSkillCategoryObj = $("#txtAddNewSoftSkillCategory");
+            hidCurrentValueOfSoftSkillInvolvementObj = $("#hidCurrentValueOfSoftSkillLevel");
+            spanObjJobRelatedSoftSkillGlobalStatus = $("#SoftSkill-GlobalStatus");
+            //END - Initalise SoftSkill Varaibales
+
+            //Selected Summary Variables
+            IndustrySummaryContainer = $("#SelectedIndustrySummaryContainer");
+            HardSkillSummaryContainer = $("#SelectedHardSkillSummaryContainer");
+            SoftSkillSummaryContainer = $("#SelectedSoftSkillSummaryContainer");
+
+
+
+            //Select Indusrty Slider
+            $(".js-range-slider-Industry-Involvement-Level").ionRangeSlider({
+                skin: "big",
+                min: 0,
+                max: 100,
+                from: 50,
+                grid: true,
+                prettify: my_prettify,
+                onStart: function (data) {
+                    // fired then range slider is ready
+                },
+                onChange: function (data) {
+                    // fired on every range slider update
+                    // $("#LanguageProficiencyLevel").val(data.from);
+                },
+                onFinish: function (data) {
+                    // fired on pointer release
+                    $("#SelectedIndustryInvolvementLevelSummary").css("width", data.from + "%");
+                    hidCurrentValueOfIndustryInvolvementObj.val(data.from);
+                },
+                onUpdate: function (data) {
+                    // fired on changing slider with Update method
+                    $("#SelectedIndustryInvolvementLevelSummary").css("width", data.from + "%");
+                }
+            });
+            //Select HardSkill Slider
+            $(".js-range-slider-HardSkill-Competency-Level").ionRangeSlider({
+                skin: "big",
+                min: 0,
+                max: 100,
+                from: 50,
+                grid: true,
+                prettify: my_prettifyForHardSkill,
+                onStart: function (data) {
+                    // fired then range slider is ready
+                },
+                onChange: function (data) {
+                    // fired on every range slider update
+                    // $("#LanguageProficiencyLevel").val(data.from);
+
+                },
+                onFinish: function (data) {
+                    // fired on pointer release
+                    hidCurrentValueOfHardSkillInvolvementObj.val(data.from);
+                    $("#HardSkillCompetencyLevelSummary").css("width", data.from + "%");
+                },
+                onUpdate: function (data) {
+                    // fired on changing slider with Update method
+                    $("#HardSkillCompetencyLevelSummary").css("width", data.from + "%");
+                }
+            });
+
+            //Select SoftSkill Slider
+            $(".js-range-slider-SoftSkill-Competency-Level").ionRangeSlider({
+                skin: "big",
+                min: 0,
+                max: 100,
+                from: 50,
+                grid: true,
+                prettify: my_prettifyForSoftSkill,
+                onStart: function (data) {
+                    // fired then range slider is ready
+                },
+                onChange: function (data) {
+                    // fired on every range slider update
+                    // $("#LanguageProficiencyLevel").val(data.from);
+
+                },
+                onFinish: function (data) {
+                    // fired on pointer release
+                    hidCurrentValueOfSoftSkillInvolvementObj.val(data.from);
+                    $("#SoftSkillCompetencyLevelSummary").css("width", data.from + "%");
+                },
+                onUpdate: function (data) {
+                    // fired on changing slider with Update method
+                    $("#SoftSkillCompetencyLevelSummary").css("width", data.from + "%");
+                }
+            });
+
+            //Select Indusrty Level Selector
+            SelectedIndustryInvolvmentLevelSlider = $(".js-range-slider-Industry-Involvement-Level").data("ionRangeSlider");
+
+            //Select HardSkill Level Selector
+            SelectedHardSkillInvolvmentLevelSlider = $(".js-range-slider-HardSkill-Competency-Level").data("ionRangeSlider");
+
+            //Select SoftSkill Level Selector
+            SelectedSoftSkillInvolvmentLevelSlider = $(".js-range-slider-SoftSkill-Competency-Level").data("ionRangeSlider");
+
+
+            //var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+            $('.click2edit_WorkExperience').summernote({
+                height: 200,
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['fullscreen', ['fullscreen']]
+                ],
+                dialogsInBody: true,
+                callbacks: {
+                    onChange: function (contents, $editable) {
+                        hidObjWorkExperienceText.val(contents);
+                        UpdateGlobalStatus();
+                    }
+                }
+            });
+
+
+            $('.click2edit_Achievements').summernote({
+                height: 200,
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['fullscreen', ['fullscreen']]
+                ],
+                dialogsInBody: true,
+                callbacks: {
+                    onChange: function (contents, $editable) {
+                        hidObjAchienvementText.val(contents);
+                        UpdateGlobalStatus();
+                    }
+                }
+            });
+
+
+            YearStartEmployment =  $('#YearStarted .input-group.date').datepicker({
+                format: "yyyy",
+                startView: 2,
+                minViewMode: 2,
+                maxViewMode: 2,
+                keyboardNavigation: false,
+                autoclose: true,
+                defaultViewDate: { year: 2019, month: 01, day: 01 }
+            }).on('change', function (ev) {
+               if ($(this).datepicker('getFormattedDate') > $(YearEndedEmployment).datepicker('getFormattedDate')) {
+                   $(YearEndedEmployment).datepicker('update', $(this).datepicker('getFormattedDate'));
+                   toastr.warning("The selected date can not be after the selected end date, it has been reset to the same as that of the End Date!", 'Warning');
+               }
+               UpdateGlobalStatus();
+            });
+            YearEndedEmployment = $('#YearCompleted .input-group.date').datepicker({
+                format: "yyyy",
+                startView: 2,
+                minViewMode: 2,
+                maxViewMode: 2,
+                keyboardNavigation: false,
+                autoclose: true,
+                defaultViewDate: { year: 2019, month: 01, day: 01 }
+            }).on('change', function (ev) {
+                if ($(this).datepicker('getFormattedDate') < $(YearStartEmployment).datepicker('getFormattedDate')) {
+                    $(YearStartEmployment).datepicker('update', $(this).datepicker('getFormattedDate'));
+                    toastr.warning("The selected date can not be before the selected start date, it has been reset to the same as that of the Start Date!", 'Warning');
+                }
+                UpdateGlobalStatus();
+            });
+
+
+            //JobTitle Drop down Controls
+            cboObjJobTitle = $(".JobTitle-select").select2({
+                placeholder: "Select Job Title/Function",
+                allowClear: true,
+                dropdownParent: $("#JobTitleSelectionContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            }).on("select2:unselect", function (e) {
+                //alert("unselect job function");
+                });
+            //Company Drop down
+            cboObjCompany = $(".company-select").select2({
+                placeholder: "Select Company",
+                allowClear: true,
+                dropdownParent: $("#CompanySelectionContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+            /*Industry Select Form DROP-DOWN Controls
+             * ******************************/
+            cboObjSelectIndustryCategory =  $(".Industry-Category-Select").select2({
+                placeholder: "Select a Industry Category/Sector",
+                allowClear: true,
+                dropdownParent: $("#divSelectIndustryCategoryContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+            cboObjSelectIndustry = $(".Industry-Select").select2({
+                placeholder: "Select a Industry",
+                allowClear: true,
+                dropdownParent: $("#divSelectIndustryContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+            cboObjSelectIndustryCategory.change(function () {
+                LoadIndustries($(this).val());
+                setIndustrySelectionSummary();
+            });
+            cboObjSelectIndustry.change(function () {
+                setIndustrySelectionSummary();
+            });
+
+            /*END -Industry Select Form DROP-DOWN Controls
+             * ******************************/
+
+            /*Hard Select Form DROP-DOWN Controls
+            * ******************************/
+            cboObjSelectHardSkillCategory = $(".HardSkill-Category-Select").select2({
+                placeholder: "Select a Skill Category",
+                allowClear: true,
+                dropdownParent: $("#divSelectHardSkillCategoryContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+
+            cboObjSelectHardSkill = $(".HardSkill-Select").select2({
+                placeholder: "Select a Skill",
+                allowClear: true,
+                dropdownParent: $("#divSelectHardSkillContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+
+            cboObjSelectHardSkillCategory.change(function () {
+                LoadHardSkills($(this).val());
+                setHardSkillSelectionSummary();
+            });
+            cboObjSelectHardSkill.change(function () {
+                setHardSkillSelectionSummary();
+            });
+            /*END -Hard Select Form DROP-DOWN Controls
+             * ******************************/
+            /*Soft Skill Select Form DROP-DOWN Controls
+           * ******************************/
+            cboObjSelectSoftSkillCategory = $(".SoftSkill-Category-Select").select2({
+                placeholder: "Select a Skill Category",
+                allowClear: true,
+                dropdownParent: $("#divSelectSoftSkillCategoryContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+
+            cboObjSelectSoftSkill = $(".SoftSkill-Select").select2({
+                placeholder: "Select a Skill",
+                allowClear: true,
+                dropdownParent: $("#divSelectSoftSkillContainer"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+
+            cboObjSelectSoftSkillCategory.change(function () {
+                LoadSoftSkills($(this).val());
+                setSoftSkillSelectionSummary();
+            });
+            cboObjSelectSoftSkill.change(function () {
+                setSoftSkillSelectionSummary();
+            });
+            /*END -Soft Skill Select Form DROP-DOWN Controls
+             * ******************************/
+
+
+            //Job Title Event
+            txtObjselectedJobTitle.change(function () {
+                //alert("Current value : "  + txtObjselectedJobTitle.val());
+                UpdateGlobalStatus();
+            });
+            cboObjJobTitle.change(function () {
+                if ($(this).val() != null) {
+                    txtObjselectedJobTitle.val($(this).find('option:selected').text());
+                } else {
+                    txtObjselectedJobTitle.val("");
+                }
+                txtObjselectedJobTitle.trigger('change');
+            });
+            cboObjJobTitle.val(null).trigger('change');
+            //END Job Title Events
+
+            cboObjCompany.change(function () {
+
+                UpdateGlobalStatus();
+            });
+            cboObjCompany.val(null).trigger('change');
+            //cboObjSelectIndustry.val(null).trigger('change');
+
+
+            $('.dataTables-WorkExperience').DataTable({
+                pageLength: 10
             });
         });
 
 
+        function my_prettify(n) {
 
+            return n + " %";
+        }
+        function my_prettifyForHardSkill(n) {
+
+            return n + " %";
+        }
+        function my_prettifyForSoftSkill(n) {
+
+            return n + " %";
+        }
 
 
 
     </script>
 
 }
+
+

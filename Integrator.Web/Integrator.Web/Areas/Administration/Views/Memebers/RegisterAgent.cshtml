@@ -1,0 +1,103 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "RegisterAgent";
+    Layout = "~/Areas/Administration/Views/Shared/_AdministrationPortalLayout.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Profile 2</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a>App views</a>
+            </li>
+            <li class="active breadcrumb-item">
+                <strong>Profile 2</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content middle-box animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Register Agent </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12 b-r">
+
+                            <form asp-action="RegisterAgent">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="UserEmail" class="control-label"></label>
+                                    <input asp-for="UserEmail" class="form-control" />
+                                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FirstName" class="control-label"></label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LastName" class="control-label"></label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="UserPassword" class="control-label"></label>
+                                    <input asp-for="UserPassword" class="form-control" />
+                                    <span asp-validation-for="UserPassword" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ConfirmUserPassword" class="control-label"></label>
+                                    <input asp-for="ConfirmUserPassword" class="form-control" />
+                                    <span asp-validation-for="ConfirmUserPassword" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="TermsAndConditions" /> @Html.DisplayNameFor(model => model.TermsAndConditions)
+                                    </label>
+                                </div>
+                                
+                                <input type="hidden" asp-for="UserRole" />
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

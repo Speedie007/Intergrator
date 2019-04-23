@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Integrator.Data
 {
@@ -67,6 +68,8 @@ namespace Integrator.Data
             return Entities.Find(id);
         }
 
+        
+
         /// <summary>
         /// Insert entity
         /// </summary>
@@ -87,6 +90,8 @@ namespace Integrator.Data
                 throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
             }
         }
+
+       
 
         /// <summary>
         /// Insert entities
@@ -109,6 +114,8 @@ namespace Integrator.Data
             }
         }
 
+       
+
         /// <summary>
         /// Update entity
         /// </summary>
@@ -129,7 +136,7 @@ namespace Integrator.Data
                 throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
             }
         }
-
+        
         /// <summary>
         /// Update entities
         /// </summary>
@@ -151,6 +158,8 @@ namespace Integrator.Data
             }
         }
 
+       
+
         /// <summary>
         /// Delete entity
         /// </summary>
@@ -171,11 +180,10 @@ namespace Integrator.Data
                 throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
             }
         }
+       
 
-        /// <summary>
-        /// Delete entities
-        /// </summary>
-        /// <param name="entities">Entities</param>
+       
+
         public virtual void Delete(IEnumerable<TEntity> entities)
         {
             if (entities == null)
@@ -192,6 +200,10 @@ namespace Integrator.Data
                 throw new Exception(GetFullErrorTextAndRollbackEntityChanges(exception), exception);
             }
         }
+
+
+
+
 
         #endregion
 

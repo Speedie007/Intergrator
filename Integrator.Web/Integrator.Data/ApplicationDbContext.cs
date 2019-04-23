@@ -85,6 +85,8 @@ namespace Integrator.Data
                 //    .HasForeignKey(ul => ul.BeachClubMemberID)
                 //    .IsRequired();
 
+               
+
                 // Each User can have many UserClaims
                 b.HasMany(e => e.Claims)
                     .WithOne(e => e.IntegratorUser)

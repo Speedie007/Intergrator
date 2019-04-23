@@ -1,4 +1,5 @@
 ﻿using Integrator.Models.Domain.Authentication;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace Integrator.Models.Domain.CurriculumVitaes
     {
         public CurriculumVitea()
         {
-            CurriculumViteaWorkExperiences = new HashSet<CurriculumViteaWorkExperiences>();
+            UserJobs = new HashSet<UserJob>();
         }
 
         //public int CurriculumViteaId { get; set; }
@@ -16,7 +17,13 @@ namespace Integrator.Models.Domain.CurriculumVitaes
         public DateTime DateLastUpdated { get; set; }
         public string CareerSummary { get; set; }
 
+        public virtual ICollection<UserJob> UserJobs { get; set; }
+
         public virtual IntegratorUser IntegratorUser { get; set; }
-        public virtual ICollection<CurriculumViteaWorkExperiences> CurriculumViteaWorkExperiences { get; set; }
+        
+        ///
+        
+
+        
     }
 }

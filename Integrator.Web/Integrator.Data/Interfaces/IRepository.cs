@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Integrator.Data.Interfaces
 {
@@ -21,11 +22,15 @@ namespace Integrator.Data.Interfaces
         /// <returns>Entity</returns>
         TEntity GetById(object id);
 
+        
+
         /// <summary>
         /// Insert entity
         /// </summary>
         /// <param name="entity">Entity</param>
         void Insert(TEntity entity);
+
+       
 
         /// <summary>
         /// Insert entities
@@ -33,6 +38,8 @@ namespace Integrator.Data.Interfaces
         /// <param name="entities">Entities</param>
         void Insert(IEnumerable<TEntity> entities);
 
+
+       
         /// <summary>
         /// Update entity
         /// </summary>
@@ -45,12 +52,17 @@ namespace Integrator.Data.Interfaces
         /// <param name="entities">Entities</param>
         void Update(IEnumerable<TEntity> entities);
 
+        
+
         /// <summary>
         /// Delete entity
         /// </summary>
         /// <param name="entity">Entity</param>
         void Delete(TEntity entity);
 
+      
+
+       
         /// <summary>
         /// Delete entities
         /// </summary>

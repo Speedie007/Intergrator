@@ -69,7 +69,7 @@ namespace Integrator.Services.Users
             this._userProfilePictureRepository = userProfilePictureRepository;
         }
 
-        //private async Task SetCurrentlyLoggedInUserAsync()
+        //private > SetCurrentlyLoggedInUser()
         //{
         //    var CurrentUserLoggedIn = _userManager.get(_httpContextAccessor.HttpContext.User.Identity.Name);
         //    CurrentUserLoggedIn.
@@ -94,34 +94,28 @@ namespace Integrator.Services.Users
         {
             ////using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             ////{
-            ////    var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>>();
+            ////    var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>();
 
-            ////    user = await _userManager.GetRolesAsync();
+            ////    user =  _userManager.GetRoles();
 
             ////}
 
             ////using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             ////{
-            ////    var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>>();
-            ////    _userManager.GetRolesAsync()
+            ////    var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>();
+            ////    _userManager.GetRoles()
             ////};
             return await _userManager.GetRolesAsync((IntegratorUser)_httpContextAccessor.HttpContext.User.Identity);
 
         }
 
-        public IPagedList<IntegratorUser> GetAllUsers(
-            DateTime?
-            createdFromUtc = null,
-            DateTime? createdToUtc = null,
-            int[] UserRoleIds = null,
-            string email = null,
-            string username = null,
-            string firstName = null,
-            string lastName = null,
-            string phone = null,
-            int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false)
+        public async Task<IList<IntegratorUser>> GetAllUsersByRole(
+            string roleName
+           )
         {
-            throw new NotImplementedException();
+            var ListOfUsers = await _userManager.GetUsersInRoleAsync(roleName);
+
+            return ListOfUsers;
         }
 
 
@@ -131,9 +125,9 @@ namespace Integrator.Services.Users
 
             //using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             //{
-            //    var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>>();
+            //    var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>();
 
-            //    // user = await _userManager.FindByEmailAsync(email.ToUpper());
+            //    // user =  _userManager.FindByEmail(email.ToUpper());
 
             //}
             throw new NotImplementedException();
@@ -157,7 +151,7 @@ namespace Integrator.Services.Users
 
         public IntegratorUser GetUserById(int userId)
         {
-            //_userManager.GetUserAsync()
+            //_userManager.GetUser()
             throw new NotImplementedException();
         }
 
@@ -218,7 +212,7 @@ namespace Integrator.Services.Users
                 var success = await _userManager.CreateAsync(NewUser, password);
                 CreatedSuccessfully = success;
             }
-            return CreatedSuccessfully;//await _userManager.CreateAsync(NewUser, password); ;
+            return CreatedSuccessfully;// _userManager.Create(NewUser, password); ;
         }
 
         public void InsertUserPassword(string userPassword)
@@ -232,7 +226,7 @@ namespace Integrator.Services.Users
             using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var _userManager = serviceScope.ServiceProvider.GetService<UserManager<IntegratorUser>>();
-                await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(userNameAsEmailAddress), role);
+                await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync(userNameAsEmailAddress), role);
             }
 
         }
@@ -336,7 +330,7 @@ namespace Integrator.Services.Users
         {
             var UserID = GetUserID();
             var query = from ULR in _userLanguagesRepository.Table
-                        .Include(a => a.LanguageSpoken)
+                        .Include(a => a.SpokenLanguage)
                         where ULR.IntegratorUserID == UserID
                         select ULR;
 
@@ -351,8 +345,17 @@ namespace Integrator.Services.Users
                             // .Include(a=>a.InterestLevel)
                         where ULR.IntegratorUserID == UserID
                         select ULR;
+            List<IntegratorUserInterest> ddddd = new List<IntegratorUserInterest>();
+            try
+            {
+                ddddd = query.ToList();
+            }
+            catch (Exception e)
+            {
+                var xxxx = e.Message;
+            }
 
-            return query.ToList();
+            return ddddd;
         }
         #region Curriculum Vitae Components
         #region Insert Methods
@@ -515,7 +518,7 @@ namespace Integrator.Services.Users
                     ResetAllUserPicturesAsNotDefault();
                 }
 
-                _commonIntegratorFileRepository.Update(entity);
+                _commonIntegratorFileRepository.Insert(entity);
                 _entityCRUDResponse.Returned_ID = entity.Id;
                 _entityCRUDResponse.Success = true;
                 _entityCRUDResponse.Message = "User Profile Picture was Successfully Added.";
@@ -563,7 +566,7 @@ namespace Integrator.Services.Users
                 .Include(x => x.InegratorFileBlob)
                 .Include(x => x.UserPicture)
                         where a.UserPicture.IsCurrentProfilePicture == true && a.UserPicture.IntegratorUserID == GetUserID()
-            select a.InegratorFileBlob.FileBlob;
+                        select a.InegratorFileBlob.FileBlob;
 
             return await query.FirstOrDefaultAsync();
         }

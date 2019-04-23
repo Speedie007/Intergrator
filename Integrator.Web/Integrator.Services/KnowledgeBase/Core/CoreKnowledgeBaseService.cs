@@ -6,6 +6,7 @@ using Integrator.Data.Interfaces;
 using Integrator.Models.Domain.KnowledgeBase.Core;
 using Microsoft.EntityFrameworkCore;
 using Integrator.Common;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Integrator.Services.KnowledgeBase.Core
 {
@@ -13,338 +14,409 @@ namespace Integrator.Services.KnowledgeBase.Core
     {
 
         #region Fields
-
-        private readonly IRepository<CoreKBIndustryType> _coreIndustryRepository;
-        private readonly IRepository<CoreKBIndustryCategory> _coreCategoryRepository;
-        private readonly IRepository<CoreKBIndustryCategoryJob> _coreJobRepository;
-        private readonly IRepository<CoreKBIndustryCategoryJobSkillSet> _coreSkillSetRepository;
+        private readonly IRepository<CoreKbSkill> _coreKbSkillRepository;
+        private readonly IRepository<CoreKbSkillType> _coreKbSkillTypeRepository;
+        private readonly IRepository<CoreSkillCategory> _coreKbSkillCategoryRepository;
+        private readonly IRepository<CoreKbJobSkill> _coreKbJobSkillRepository;
+        private readonly IRepository<CoreKbJob> _coreKbJobRepository;
+        private readonly IRepository<CoreKbIndustryJob> _coreKbIndustryJobRepository;
+        private readonly IRepository<CoreKbIndustry> _coreKbIndustryRepository;
+        private readonly IRepository<CoreKbIndustryCategory> _coreKbIndustryCategoryRepository;
         #endregion
 
         #region Cstor
         public CoreKnowledgeBaseService(
-            IRepository<CoreKBIndustryType> CoreKBIndustryTypeRepository,
-            IRepository<CoreKBIndustryCategory> CoreKBIndustryCategoryRepository,
-            IRepository<CoreKBIndustryCategoryJob> CoreKBIndustryCategoryJobRepository,
-            IRepository<CoreKBIndustryCategoryJobSkillSet> CoreKBIndustryCategoryJobSkillSetRepository
+            IRepository<CoreKbSkill> CoreKbSkillRepository,
+            IRepository<CoreKbSkillType> coreKbSkillTypeRepository,
+            IRepository<CoreSkillCategory> coreKbSkillCategoryRepository,
+              IRepository<CoreKbJobSkill> coreKbJobSkillRepository,
+              IRepository<CoreKbJob> coreKbJobRepository,
+              IRepository<CoreKbIndustryJob> coreKbIndustryJobRepository,
+              IRepository<CoreKbIndustry> coreKbIndustryRepository,
+              IRepository<CoreKbIndustryCategory> coreKbIndustryCategoryRepository
             )
         {
-            this._coreIndustryRepository = CoreKBIndustryTypeRepository;
-            this._coreCategoryRepository = CoreKBIndustryCategoryRepository;
-            this._coreJobRepository = CoreKBIndustryCategoryJobRepository;
-            this._coreSkillSetRepository = CoreKBIndustryCategoryJobSkillSetRepository;
+            this._coreKbSkillRepository = CoreKbSkillRepository;
+            this._coreKbSkillCategoryRepository = coreKbSkillCategoryRepository;
+            this._coreKbSkillTypeRepository = coreKbSkillTypeRepository;
+            this._coreKbJobSkillRepository = coreKbJobSkillRepository;
+            this._coreKbJobRepository = coreKbJobRepository;
+            this._coreKbIndustryJobRepository = coreKbIndustryJobRepository;
+            this._coreKbIndustryRepository = coreKbIndustryRepository;
+            this._coreKbIndustryCategoryRepository = coreKbIndustryCategoryRepository;
+        }
 
+
+
+
+        #endregion
+
+        #region Insert Methods
+        public void AddCategories(List<CoreKbIndustryCategory> EntityList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddIndusrtyCategory(CoreKbIndustryCategory Entity)
+        {
+            try
+            {
+                _coreKbIndustryCategoryRepository.Insert(Entity);
+
+            }
+            catch (Exception e)
+            {
+                throw new IntegratorException("Error Adding Category.", e.InnerException);
+            }
+
+        }
+
+        public void AddIndustries(List<CoreKbIndustryCategory> EntityList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddIndustry(CoreKbIndustry Entity)
+        {
+            try
+            {
+                _coreKbIndustryRepository.Insert(Entity);
+
+            }
+            catch (Exception e)
+            {
+                throw new IntegratorException("Error Adding Industry.", e.InnerException);
+            }
+
+
+        }
+
+        public void AddIndustryJob(CoreKbJob Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddIndustryJobs(List<CoreKbJob> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddJob(CoreKbJob Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddJobs(List<CoreKbJob> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddJobSkill(CoreKbJobSkill Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddJobSkills(List<CoreKbJobSkill> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddSkill(CoreKbSkill Entity)
+        {
+            try
+            {
+                _coreKbSkillRepository.Insert(Entity);
+
+            }
+            catch (Exception e)
+            {
+                throw new IntegratorException("Error Adding Skill.", e.InnerException);
+            }
+        }
+
+        public void AddSkillCategories(List<CoreSkillCategory> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddSkillCategory(CoreSkillCategory Entity)
+        {
+
+            try
+            {
+                _coreKbSkillCategoryRepository.Insert(Entity);
+
+            }
+            catch (Exception e)
+            {
+                throw new IntegratorException("Error Adding Skill Caegory.", e.InnerException);
+            }
+
+        }
+
+        public void AddSkills(List<CoreKbSkill> Entity)
+        {
+            try
+            {
+                _coreKbSkillRepository.Insert(Entity);
+
+            }
+            catch (Exception e)
+            {
+                throw new IntegratorException("Error Adding Skill.", e.InnerException);
+            }
+
+        }
+
+        public void AddSkillType(CoreKbSkillType Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddSkillTypes(List<CoreKbSkillType> Entity)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 
         #region Delete Section
 
-        public bool DeleteCategories(List<CoreKBIndustryCategory> Categories)
+        public bool DeleteCategories(List<CoreKbIndustryCategory> EntityList)
         {
-            try
-            {
-                _coreCategoryRepository.Delete(Categories);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteCategory(CoreKBIndustryCategory Category)
+        public bool DeleteCategory(CoreKbIndustryCategory Entity)
         {
-            try
-            {
-                _coreCategoryRepository.Delete(Category);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteIndustries(List<CoreKBIndustryType> Industrires)
+        public bool DeleteIndustries(List<CoreKbIndustryCategory> EntityList)
         {
-            try
-            {
-                _coreIndustryRepository.Delete(Industrires);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteIndustry(CoreKBIndustryType Industry)
+        public bool DeleteIndustry(CoreKbIndustry Entity)
         {
-            try
-            {
-                _coreIndustryRepository.Delete(Industry);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteJob(CoreKBIndustryCategoryJob Job)
+        public bool DeleteIndustryJob(CoreKbJob Entity)
         {
-            try
-            {
-                _coreJobRepository.Delete(Job);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteJobs(List<CoreKBIndustryCategoryJob> Jobs)
+        public bool DeleteIndustryJobs(List<CoreKbJob> Entity)
         {
-            try
-            {
-                _coreJobRepository.Delete(Jobs);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteSkillSet(CoreKBIndustryCategoryJobSkillSet SkillSet)
+        public bool DeleteJob(CoreKbJob Entity)
         {
-            try
-            {
-                _coreSkillSetRepository.Delete(SkillSet);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
-        public bool DeleteSkillSets(List<CoreKBIndustryCategoryJobSkillSet> SkillSets)
+        public bool DeleteJobs(List<CoreKbJob> Entity)
         {
-            try
-            {
-                _coreSkillSetRepository.Delete(SkillSets);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
+            throw new NotImplementedException();
         }
 
+        public bool DeleteJobSkill(CoreKbJobSkill Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteJobSkills(List<CoreKbJobSkill> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteSkill(CoreKbSkill Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteSkillCategory(CoreSkillCategory Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteSkills(List<CoreKbSkill> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteSkillsCategory(List<CoreSkillCategory> Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteSkillType(CoreKbSkillType Entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteSkillTypes(List<CoreKbSkillType> Entity)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
         #region Select Section
-        public CoreKBIndustryCategory GetCategory(int IndustryCategoryID)
+        public CoreKbIndustry GetIndustry(int ID)
         {
-            var query = from a in _coreCategoryRepository.Table
-                        where a.Id == IndustryCategoryID
-                        select a;
-
+            var query = _coreKbIndustryRepository.Table.Where(x => x.Id == ID);
             return query.FirstOrDefault();
         }
 
-        public CoreKBIndustryType GetIndustry(int IndustryID)
+        public CoreKbIndustryCategory GetIndustryCategory(int ID)
         {
-            var query = from a in _coreIndustryRepository.Table
-                        where a.Id == IndustryID
-                        select a;
-
+            var query = _coreKbIndustryCategoryRepository.Table.Where(x => x.Id == ID);
             return query.FirstOrDefault();
         }
 
-        public CoreKBIndustryCategoryJob GetJob(int CoreKBIndustryCategoryJobID)
+        public CoreKbIndustryJob GetIndustryJob(int ID)
         {
-            var query = from a in _coreJobRepository.Table
-                        where a.Id == CoreKBIndustryCategoryJobID
-                        select a;
-
+            var query = _coreKbIndustryJobRepository.Table.Where(x => x.Id == ID);
             return query.FirstOrDefault();
         }
 
-        public CoreKBIndustryCategoryJobSkillSet GetSkillSet(int IndustryCategorySkillSetID)
+        public CoreKbJob GetJob(int ID)
         {
-            var query = from a in _coreSkillSetRepository.Table
-                        where a.Id == IndustryCategorySkillSetID
-                        select a;
-
+            var query = _coreKbJobRepository.Table.Where(x => x.Id == ID);
             return query.FirstOrDefault();
         }
 
-        public List<CoreKBIndustryType> ListAllIndustries()
+        public CoreKbJobSkill GetJobSkill(int ID)
         {
-            var query = from a in _coreIndustryRepository.Table
-                        select a;
+            var query = _coreKbJobSkillRepository.Table.Where(x => x.Id == ID);
+            return query.FirstOrDefault();
+        }
+
+        public CoreKbSkill GetSkill(int ID)
+        {
+            var query = _coreKbSkillRepository.Table.Where(x => x.Id == ID);
+            return query.FirstOrDefault();
+        }
+
+        public CoreSkillCategory GetSkillCategory(int ID)
+        {
+            var query = _coreKbSkillCategoryRepository.Table.Where(x => x.Id == ID);
+            return query.FirstOrDefault();
+        }
+
+        public CoreKbSkillType GetSkillType(int ID)
+        {
+            var query = _coreKbSkillTypeRepository.Table.Where(x => x.Id == ID);
+            return query.FirstOrDefault();
+        }
+
+        public List<CoreKbSkill> ListHardSkills()
+        {
+            var query = _coreKbSkillRepository.Table
+                .Include(x => x.CoreSkillCategory)
+                .Where(x => x.CoreSkillCategory.CoreKbSkillType.CoreKbSkillTypeName.Equals("Hard"));
+            return query.ToList();
+        }
+
+        public List<CoreKbIndustry> ListIndustries()
+        {
+            var query = _coreKbIndustryRepository.Table;
+            return query.ToList();
+        }
+        public List<CoreKbIndustry> ListIndustriesByCategory(int CategoryID)
+        {
+            var query = _coreKbIndustryRepository.Table.Where(x => x.CoreKbIndustryCategoryID == CategoryID);
+            return query.ToList();
+        }
+
+        public List<CoreKbIndustryCategory> ListIndustryCategories()
+        {
+            var query = _coreKbIndustryCategoryRepository.Table;
+            return query.ToList();
+        }
+
+        public List<CoreKbIndustryJob> ListIndustryJobs()
+        {
+            var query = _coreKbIndustryJobRepository.Table;
+            return query.ToList();
+        }
+
+        public List<CoreKbJob> ListJobs()
+        {
+            var query = _coreKbJobRepository.Table;
+            return query.ToList();
+        }
+
+        public List<CoreKbJobSkill> ListJobSkills(int JobID)
+        {
+            var query = _coreKbJobSkillRepository.Table
+                .Include(x => x.CoreSkill)
+                .Where(x => x.CoreKbJobID == JobID);
+            return query.ToList();
+        }
+
+        public List<CoreSkillCategory> ListSkillCategoriesBySkillType(int SkillTypeID)
+        {
+            var query = _coreKbSkillCategoryRepository.Table.Where(x => x.CoreKbSkillTypeID == SkillTypeID);
+            return query.ToList();
+        }
+        public List<CoreSkillCategory> ListSkillCategories()
+        {
+            var query = _coreKbSkillCategoryRepository.Table;
+            return query.ToList();
+        }
+
+        public List<CoreKbJobSkill> ListSkillJobs(int SkillID)
+        {
+            var query = _coreKbJobSkillRepository.Table
+                .Include(x => x.CoreJob)
+                .Where(x => x.CoreKbSkillID == SkillID);
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of skills, if no type is supplied then all skills are returned.
+        /// </summary>
+        /// <param name="SkillType"></param>
+        /// <returns></returns>
+        public List<CoreKbSkill> ListSkills()
+        {
+
+            var query = _coreKbSkillRepository.Table
+                       .Include(x => x.CoreSkillCategory)
+                       .Include(x => x.CoreSkillCategory.CoreKbSkillType);
+
+            return query.ToList();
+
+        }
+        public List<CoreKbSkill> ListSkillsByCategory(int CategoryID)
+        {
+            var query = _coreKbSkillRepository.Table
+                      .Include(x => x.CoreSkillCategory)
+                      .Include(x => x.CoreSkillCategory.CoreKbSkillType)
+                      .Where(x => x.CoreSkillCategoryID == CategoryID);
 
             return query.ToList();
         }
 
-        public List<CoreKBIndustryCategory> ListCategoriesPerIndustry(int IndustryID)
+        public List<CoreKbSkillType> ListSkillTypes()
         {
-            var query = from a in _coreCategoryRepository.Table
-                        where a.IndustryID == IndustryID
-                        select a;
-
+            var query = _coreKbSkillTypeRepository.Table;
             return query.ToList();
         }
 
-        public List<CoreKBIndustryCategoryJob> ListJobsPerCategory(int IndustryCategoryID)
+        public List<CoreKbSkill> ListSoftSkills()
         {
-            var query = from a in _coreJobRepository.Table
-                        where a.IndustryCategoryID == IndustryCategoryID
-                        select a;
-
+            var query = _coreKbSkillRepository.Table
+            .Include(x => x.CoreSkillCategory)
+            .Include(x => x.CoreSkillCategory.CoreKbSkillType)
+            .Where(x => x.CoreSkillCategory.CoreKbSkillType.CoreKbSkillTypeName.Equals("Soft"));
             return query.ToList();
         }
 
-        public List<CoreKBIndustryCategoryJobSkillSet> ListSkillSetsPreJob(int IndustryCategoryJobID)
-        {
-            var query = from a in _coreSkillSetRepository.Table
-                        where a.IndustryCategoryJobID == IndustryCategoryJobID
-                        select a;
-
-            return query.ToList();
-        }
-        #endregion
-
-
-        #region Insert Section
-
-
-        public bool InsertCategories(List<CoreKBIndustryCategory> Categories)
-        {
-            try
-            {
-                _coreCategoryRepository.Insert(Categories);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertCategory(CoreKBIndustryCategory Category)
-        {
-            try
-            {
-                _coreCategoryRepository.Insert(Category);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertIndustries(List<CoreKBIndustryType> Industries)
-        {
-            try
-            {
-                _coreIndustryRepository.Insert(Industries);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertIndustry(CoreKBIndustryType Industry)
-        {
-            try
-            {
-                _coreIndustryRepository.Insert(Industry);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertJob(CoreKBIndustryCategoryJob Job)
-        {
-            try
-            {
-                _coreJobRepository.Insert(Job);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertJobs(List<CoreKBIndustryCategoryJob> Jobs)
-        {
-            try
-            {
-                _coreJobRepository.Insert(Jobs);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertSkillSet(CoreKBIndustryCategoryJobSkillSet SkillSet)
-        {
-            try
-            {
-                _coreSkillSetRepository.Insert(SkillSet);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-        public bool InsertSkillSets(List<CoreKBIndustryCategoryJobSkillSet> SkillSets)
-        {
-            try
-            {
-                _coreSkillSetRepository.Insert(SkillSets);
-                return true;
-            }
-            catch (IntegratorException e)
-            {
-                //throw new IntegratorException(e.Message);
-                return false;
-            }
-        }
-
-       
 
         #endregion
-
     }
 }

@@ -13,7 +13,7 @@ namespace Integrator.Models.ViewModels.CurriculumVitaes
         public CurriculumViteaWorkExperienceViewModel()
         {
             SkillsEmployed = new List<UserSkillViewModel>();
-            
+
         }
 
         public string Company { get; set; }
@@ -23,9 +23,6 @@ namespace Integrator.Models.ViewModels.CurriculumVitaes
         public string Achievements { get; set; }
         public string WorkExperienceDescription { get; set; }
 
-       
         public ICollection<UserSkillViewModel> SkillsEmployed { get; set; }
-
-        
     }
 }

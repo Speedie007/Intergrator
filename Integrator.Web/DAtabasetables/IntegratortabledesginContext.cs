@@ -15,11 +15,9 @@ namespace DAtabasetables
         {
         }
 
-        public virtual DbSet<InegratorFileBlobs> InegratorFileBlobs { get; set; }
-        public virtual DbSet<IntegratorFiles> IntegratorFiles { get; set; }
-        public virtual DbSet<IntegratorUsers> IntegratorUsers { get; set; }
-        public virtual DbSet<UserFiles> UserFiles { get; set; }
-        public virtual DbSet<UserPictures> UserPictures { get; set; }
+        public virtual DbSet<CoreKbskillTypes> CoreKbskillTypes { get; set; }
+        public virtual DbSet<CoreKbskills> CoreKbskills { get; set; }
+        public virtual DbSet<CoreSkillCategories> CoreSkillCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,120 +32,63 @@ namespace DAtabasetables
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
-            modelBuilder.Entity<InegratorFileBlobs>(entity =>
+            modelBuilder.Entity<CoreKbskillTypes>(entity =>
             {
-                entity.HasKey(e => e.FileId);
+                entity.HasKey(e => e.CoreKbskillTypeId);
 
-                entity.Property(e => e.FileId)
-                    .HasColumnName("FileID")
-                    .ValueGeneratedNever();
+                entity.ToTable("CoreKBSkillTypes");
 
-                entity.Property(e => e.FileBlob)
+                entity.Property(e => e.CoreKbskillTypeId).HasColumnName("CoreKBSkillTypeID");
+
+                entity.Property(e => e.CoreKbskillType)
                     .IsRequired()
-                    .HasColumnType("image");
-
-                entity.HasOne(d => d.File)
-                    .WithOne(p => p.InegratorFileBlobs)
-                    .HasForeignKey<InegratorFileBlobs>(d => d.FileId)
-                    .HasConstraintName("FK_InegratorFileBlobs_IntegratorFiles");
+                    .HasColumnName("CoreKBSkillType")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
-            modelBuilder.Entity<IntegratorFiles>(entity =>
+            modelBuilder.Entity<CoreKbskills>(entity =>
             {
-                entity.HasKey(e => e.FileId);
+                entity.HasKey(e => e.CoreKbskillId)
+                    .HasName("PK_CoreSoftSkills");
 
-                entity.Property(e => e.FileId).HasColumnName("FileID");
+                entity.ToTable("CoreKBSkills");
 
-                entity.Property(e => e.ContentType)
+                entity.Property(e => e.CoreKbskillId).HasColumnName("CoreKBSkillID");
+
+                entity.Property(e => e.CoreSkill)
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+                entity.Property(e => e.CoreSkillCategoryId).HasColumnName("CoreSkillCategoryID");
 
-                entity.Property(e => e.FileExtension)
+                entity.HasOne(d => d.CoreSkillCategory)
+                    .WithMany(p => p.CoreKbskills)
+                    .HasForeignKey(d => d.CoreSkillCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CoreKBSkills_CoreSkillCategories");
+            });
+
+            modelBuilder.Entity<CoreSkillCategories>(entity =>
+            {
+                entity.HasKey(e => e.CoreSkillCategoryId)
+                    .HasName("PK_CoreSoftSkillCategories");
+
+                entity.Property(e => e.CoreSkillCategoryId).HasColumnName("CoreSkillCategoryID");
+
+                entity.Property(e => e.CoreKbskillTypeId).HasColumnName("CoreKBSkillTypeID");
+
+                entity.Property(e => e.CoreSkillCategory)
                     .IsRequired()
-                    .HasMaxLength(25)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.FileName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<IntegratorUsers>(entity =>
-            {
-                entity.HasKey(e => e.IntegratorUserId);
-
-                entity.HasIndex(e => e.NormalizedEmail)
-                    .HasName("EmailIndex");
-
-                entity.HasIndex(e => e.NormalizedUserName)
-                    .HasName("UserNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-                entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
-
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<UserFiles>(entity =>
-            {
-                entity.HasKey(e => e.UserFileId);
-
-                entity.HasIndex(e => e.FileId);
-
-                entity.HasIndex(e => e.IntegratorUserId);
-
-                entity.Property(e => e.UserFileId).HasColumnName("UserFileID");
-
-                entity.Property(e => e.FileId).HasColumnName("FileID");
-
-                entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
-
-                entity.HasOne(d => d.File)
-                    .WithMany(p => p.UserFiles)
-                    .HasForeignKey(d => d.FileId)
+                entity.HasOne(d => d.CoreKbskillType)
+                    .WithMany(p => p.CoreSkillCategories)
+                    .HasForeignKey(d => d.CoreKbskillTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserFiles_IntegratorFiles");
-
-                entity.HasOne(d => d.IntegratorUser)
-                    .WithMany(p => p.UserFiles)
-                    .HasForeignKey(d => d.IntegratorUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserFiles_Users");
-            });
-
-            modelBuilder.Entity<UserPictures>(entity =>
-            {
-                entity.HasKey(e => e.FileId);
-
-                entity.HasIndex(e => e.IntegratorUserId);
-
-                entity.Property(e => e.FileId)
-                    .HasColumnName("FileID")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
-
-                entity.HasOne(d => d.File)
-                    .WithOne(p => p.UserPictures)
-                    .HasForeignKey<UserPictures>(d => d.FileId)
-                    .HasConstraintName("FK_UserPictures_IntegratorFiles");
-
-                entity.HasOne(d => d.IntegratorUser)
-                    .WithMany(p => p.UserPictures)
-                    .HasForeignKey(d => d.IntegratorUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserPicture_Users");
+                    .HasConstraintName("FK_CoreSkillCategories_CoreKBSkillTypes");
             });
 
             OnModelCreatingPartial(modelBuilder);

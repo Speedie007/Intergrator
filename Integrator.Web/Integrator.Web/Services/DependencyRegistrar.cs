@@ -5,18 +5,18 @@ using Integrator.Common.Events;
 using Integrator.Common.Interfaces;
 using Integrator.Data;
 using Integrator.Data.Interfaces;
+using Integrator.Factories.Administration;
 using Integrator.Factories.CurriculumVitae;
+using Integrator.Factories.KnowledgeBase.Core;
 using Integrator.Factories.Users;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Services.Common;
 using Integrator.Services.Common.Files;
+using Integrator.Services.Companies;
 using Integrator.Services.CurriculumVitae;
+using Integrator.Services.KnowledgeBase.Core;
 using Integrator.Services.KnowledgeBase.Users;
 using Integrator.Services.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Integrator.Web.Services
 {
@@ -50,14 +50,19 @@ namespace Integrator.Web.Services
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerLifetimeScope();
             builder.RegisterType<FileService>().As<IFileService>().InstancePerLifetimeScope();
             builder.RegisterType<QualificationService>().As<IQualificationService>().InstancePerLifetimeScope();
+            builder.RegisterType<CoreKnowledgeBaseService>().As<ICoreKnowledgeBaseService>().InstancePerLifetimeScope();
+            builder.RegisterType<CompanyService>().As<ICompanyService>().InstancePerLifetimeScope();
             
-            
+
+
 
 
             //Factories
             builder.RegisterType<UserViewModelFactory>().As<IUserViewModelFactory>().InstancePerLifetimeScope();
             builder.RegisterType<CurriculumVitaeViewModelFactory>().As<ICurriculumVitaeViewModelFactory>().InstancePerLifetimeScope();
             builder.RegisterType<CurriculumVitaeViewModelFactory>().As<ICurriculumVitaeViewModelFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<AdministrationViewModelFactory>().As<IAdministrationViewModelFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<CoreKbSkillViewModelFactory>().As<ICoreKbSkillViewModelFactory>().InstancePerLifetimeScope();
             
 
 

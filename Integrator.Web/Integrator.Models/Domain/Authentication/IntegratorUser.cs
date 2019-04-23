@@ -24,10 +24,7 @@ namespace Integrator.Models.Domain.Authentication
         protected virtual void Init()
         {
             #region Knowledge Base
-            IntegratorUserIndustries = new HashSet<IntegratorUserIndustry>();
-            IntegratorUserIndustryCategories = new HashSet<IntegratorUserIndustryCategory>();
-            IntegratorUserIndustryCategoryJobSkillSets = new HashSet<IntegratorUserIndustryCategoryJobSkillSet>();
-            IntegratorUserIndustryCategoryJobs = new HashSet<IntegratorUserIndustryCategoryJob>();
+            UserJobs = new HashSet<UserJob>();
             #endregion
 
             #region User Pictures and Files
@@ -64,13 +61,7 @@ namespace Integrator.Models.Domain.Authentication
 
 
         #region User Knowledgebase
-        public virtual ICollection<IntegratorUserIndustry> IntegratorUserIndustries { get; set; }
-
-        public virtual ICollection<IntegratorUserIndustryCategory> IntegratorUserIndustryCategories { get; set; }
-
-        public virtual ICollection<IntegratorUserIndustryCategoryJobSkillSet> IntegratorUserIndustryCategoryJobSkillSets { get; set; }
-
-        public virtual ICollection<IntegratorUserIndustryCategoryJob> IntegratorUserIndustryCategoryJobs { get; set; }
+        public virtual ICollection<UserJob> UserJobs { get; set; }
         #endregion User Knowledgebase
 
         #region User Pictures and Files

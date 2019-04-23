@@ -15,10 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustry.cs" />
-    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustryCategory.cs" />
-    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustryCategoryJob.cs" />
-    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IntegratorUserIndustryCategoryJobSkillSet.cs" />
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\UserJobRelatedIndustries.cs" />
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\UserJobs.cs" />
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\UserJobSkills.cs" />
   </ItemGroup>
 
   <ItemGroup>

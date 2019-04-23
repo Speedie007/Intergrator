@@ -6,13 +6,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Integrator.Factories.CurriculumVitae;
 using Integrator.Models.Domain.Common;
+using Integrator.Models.Domain.Companies;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.Domain.Files;
 using Integrator.Models.ViewModels.Common;
+using Integrator.Models.ViewModels.Common.DropDownList;
 using Integrator.Models.ViewModels.Common.Files;
 using Integrator.Models.ViewModels.CurriculumVitaes;
 using Integrator.Models.ViewModels.Users;
 using Integrator.Services.Common;
+using Integrator.Services.Companies;
 using Integrator.Services.CurriculumVitae;
 using Integrator.Services.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +36,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         private readonly IEducationInstitutionService _educationInstitutionService;
         private IEntityCRUDResponse _entityCRUDResponse;
         private readonly IInterestService _interestService;
+        private readonly ICompanyService _companyService;
 
         #endregion
 
@@ -43,7 +47,8 @@ namespace Integrator.Web.Areas.Individuals.Controllers
                 IUserService userService,
                 IEducationInstitutionService educationInstitutionService,
                 IEntityCRUDResponse entityCRUDResponse,
-                IInterestService interestService
+                IInterestService interestService,
+                ICompanyService companyService
             )
         {
             this._curriculumVitaeViewModelFactory = curriculumVitaeViewModelFactory;
@@ -52,6 +57,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
             this._educationInstitutionService = educationInstitutionService;
             this._entityCRUDResponse = entityCRUDResponse;
             this._interestService = interestService;
+            this._companyService = companyService;
         }
         #endregion
 
@@ -79,7 +85,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
 
         public IActionResult NewPicture()
         {
-            var model = _curriculumVitaeViewModelFactory.PrepareEditCurriculumViteaPictures();
+            EditUserPictureViewModel model = _curriculumVitaeViewModelFactory.PrepareEditCurriculumViteaPictures();
             return View(model);
         }
         public IActionResult SetUserDefaultProfilePicture([FromBody] UserProifileImageUploadRequest request)
@@ -280,7 +286,8 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         [HttpGet]
         public IActionResult Awards()
         {
-            return View(_curriculumVitaeViewModelFactory.PrepareEditCurriculumVitaeAwards());
+            EditUserAwardViewModel model = _curriculumVitaeViewModelFactory.PrepareEditCurriculumVitaeAwards();
+            return View(model);
         }
         [HttpPost]
         public IActionResult Awards(UserAwardViewModel request)
@@ -344,7 +351,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         [HttpGet]
         public IActionResult Interests()
         {
-            var model = _curriculumVitaeViewModelFactory.prepareEditCurriculumVitaeInterests();
+            EditUserInterestViewModel model = _curriculumVitaeViewModelFactory.prepareEditCurriculumVitaeInterests();
             return View(model);
         }
 
@@ -388,6 +395,50 @@ namespace Integrator.Web.Areas.Individuals.Controllers
 
         #endregion
 
+        #endregion
+
+        #region Async Ajax Methods
+        #region Company Methods
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddCompanyToDatabase([FromBody] DropDownRequest model)
+        {
+            var _Entity = new Company()
+            {
+                CompanyName = model.TEXT
+            };
+            _companyService.AddCompany(_Entity);
+
+            // return Json(new SelectList(cboOptions, "CoreSkillCategoryID", "CoreSkillCategoryName"));
+            return Json(_Entity);
+        }
+        #endregion
+        #region Industry Mehtods
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult GetIndustryByCategroy([FromBody] DropDownRequest model)
+        //{
+        //    IEnumerable<object> cboOptions;
+        //    try
+        //    {
+        //        cboOptions = (from a in _coreKnowledgeBaseService.ListIndustriesByCategory(model.ID)
+        //                      select new
+        //                      {
+        //                          ID = a.Id,
+        //                          Options = "<div></div>",
+        //                          Skill = a.CoreKbIndustryName
+        //                      }).ToList();
+
+        //    }
+        //    catch (IntegratorException e)
+        //    {
+        //        throw e.InnerException;
+        //    }
+
+
+        //    return Json(cboOptions);
+        //}
+        #endregion
         #endregion
     }
 }

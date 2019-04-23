@@ -1,0 +1,450 @@
+﻿@model EditCoreKbSkillViewModel
+
+@{
+    ViewData["Title"] = "Skills";
+    Layout = "~/Areas/Agents/Views/Shared/_AgentPortalLayout.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Knowledge Base</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Dashboard", "Inidviduals")">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a>Edit</a>
+            </li>
+            <li class="active breadcrumb-item">
+                <strong>Skills</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Select Skill Category</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                Select Skill Type
+                                <select asp-for="CoreKbskillTypeID" asp-items="Model.ListOfSkillTypes" class="SkillTypesOptions form-control" placeholer="Select Interests" style="width:100%;"></select><br />
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-10"> Select Category</div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button class="ladda-button ladda-button-LoadingSkillCategories btn btn-sm btn-warning full-width" data-style="zoom-in">Loading Skill Categories, Please Wait...</button>
+                                        <label id="LoadingSkillCategories">Loading Skill Categories, Please Wait...</label>
+                                        <select asp-for="CoreSkillCategoryID" asp-items="Model.ListOfSkillCategories" class="SkillTypeCategoryOptions form-control" placeholer="Select Interests" style="width:100%;"></select><br />
+                                        <br />
+                                        <small class="text-info">*If Category is not listed add.</small>
+                                        <button type="button" class="btn btn-primary full-width" data-toggle="modal" onclick="resetAddCategoryForm();" data-target="#AddCategory">
+                                            <i class="fa fa-plus">&nbsp;Add Category</i>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>
+                        List of Selected Skills
+                    </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" onclick="resetAddSkillForm();" data-target="#AddSkill">
+                        <i class="fa fa-plus">&nbsp;Add Skill</i>
+                    </button>
+                    <hr />
+                    <div class="table-responsive">
+
+                        <table id="CoreSkillTable" class="table table-striped table-bordered table-hover  dataTables-Interests">
+                            <thead>
+                                <tr>
+                                    <th>Options</th>
+
+                                    <th>Skill</th>
+
+                                </tr>
+                            </thead>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Options</th>
+
+                                    <th>Skill</th>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Add Skill Category Skill Modal-->
+<div class="modal inmodal fade" id="AddCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Category</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+
+                    <label>Category</label>
+                    <input type="text" id="txtNewCategory" class="form-control full-width" />
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Canel</button>
+                <button type="button" class="btn btn-primary" onclick="AddCategory();"><i class="fa fa-plus">&nbsp;Add Category</i></button>
+            </div>
+        </div>
+    </div>
+</div><!--Add Skill Category Skill Modal-->
+<!--Add Skill Modal-->
+<div class="modal inmodal fade" id="AddSkill" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><i class="fa fa-cubes">&nbsp;Add Skill</i></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+
+                    Skill
+                    <input type="text" id="txtNewSkill" class="form-control full-width" />
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Canel</button>
+                <button type="button" class="btn btn-primary" onclick="AddSkill();"><i class="fa fa-plus">&nbsp;Add Skill</i></button>
+            </div>
+        </div>
+    </div>
+</div><!--Add Skill Modal-->
+
+
+@section Styles {
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/lib/ladda/dist/ladda-themeless.min.css" />
+        <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+        <link rel="stylesheet" href="~/lib/dataTables/datatables.min.css" />
+        <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
+    </environment>
+}
+
+@section Scripts {
+
+    <environment names="Development,Staging,Production">
+        <script src="~/lib/ladda/dist/spin.min.js"></script>
+        <script src="~/lib/ladda/dist/ladda.min.js"></script>
+        <script src="~/lib/ladda/dist/ladda.jquery.min.js"></script>
+        <script src="~/lib/select2/dist/js/select2.min.js"></script>
+        <script src="~/lib/dataTables/datatables.min.js"></script>
+        <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/toastr/toastr.min.js"></script>
+    </environment>
+
+    <script type="text/javascript">
+
+        var objSkillTable;
+        var l;
+
+        function resetAddCategoryForm() {
+
+            $("#txtNewCategory").val('');
+        }
+
+        function resetAddSkillForm(){
+            $("#txtNewSkill").val('');
+        }
+
+        function AddSkill() {
+             var _ViewModel = JSON.parse('{}');
+
+            if ($("#txtNewSkill").val().length > 0) {
+
+                _ViewModel.ID = $("#CoreSkillCategoryID").val();
+                _ViewModel.TEXT = $("#txtNewSkill").val();
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddSkill", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        //Add Skill to table
+
+                        LoadSkills(data.coreSkillCategoryID);
+
+                        //show success message
+
+                        toastr.success("Skill Succssfully Added.", 'Successfull');
+
+                        //Close the Modal.
+                        $('#AddSkill').modal('hide');
+
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Skill", 'Warning');
+            }
+        }
+
+        function AddCategory() {
+
+            var _ViewModel = JSON.parse('{}');
+
+            if ($("#txtNewCategory").val().length > 0) {
+
+                _ViewModel.ID = $("#CoreKbskillTypeID").val();
+                _ViewModel.TEXT = $("#txtNewCategory").val();
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddSkillCategory", "KnowledgeBase")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        //Add New category to list
+                        //Adds the new item to the drop down
+                        var newOption = new Option($("#txtNewCategory").val(), data.id, true, true);
+                        $('.SkillTypeCategoryOptions').append(newOption).trigger('change');
+
+                        //show success message
+
+                        toastr.success("Category Succssfully Added.", 'Successfull');
+
+                        //Close the Modal.
+                        $('#AddCategory').modal('hide');
+
+                    },
+                    error: function (data, textStatus, error) {
+                        toastr.success("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            } else {
+                toastr.warning("Please Enter Category", 'Warning');
+            }
+
+        }
+
+        function addSkillToTable(data) {
+
+            $.each(data, function (i, tblItem) {
+
+                var arrayItems = new Array();
+                $.each(tblItem, function (j, cellValue) {
+
+                    if (j != "id") {
+                        arrayItems.push(cellValue);
+                    }
+
+                });
+                objSkillTable.row.add(arrayItems);
+            });
+            objSkillTable.draw();
+        }
+
+        function LoadSkills(CoreSkillCategoryID) {
+            var _ViewModel = JSON.parse('{}');
+            $("#divMessage").html("Loading -" + CoreSkillCategoryID);
+
+            if (CoreSkillCategoryID != null) {
+
+                _ViewModel.ID = CoreSkillCategoryID;
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetSkillsByCategory", "KnowledgeBase")',
+                            data: JSON.stringify(_ViewModel),
+                            contentType: "application/json; charset=utf-8",
+                            beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                    dataType: "json",
+                     success: function (data) {
+                         ClearSkills();
+
+                         addSkillToTable(data);
+
+                    },
+                     error: function (data, textStatus, error) {
+                         alert("There IS error");
+                         ClearSkills();
+                    }
+                });
+
+            } else {
+
+                ClearSkills();
+
+            }
+
+
+        }
+
+        function ClearSkills() {
+
+            objSkillTable.clear().draw();
+
+        }
+
+
+
+        $(document).ready(function () {
+
+
+
+            objSkillTable = $('#CoreSkillTable').DataTable({
+                pageLength: 10,
+                "language": {
+                    "emptyTable": "No Skills Listed, Please Add!!"
+                }
+            });
+
+
+            l = $('.ladda-button-LoadingSkillCategories').ladda();
+
+            $(".ladda-button-LoadingSkillCategories").hide();
+            $("#LoadingSkillCategories").hide();
+
+            $(".SkillTypesOptions").select2({
+                placeholder: 'Select an option'
+            });
+            $(".SkillTypeCategoryOptions").select2({
+                placeholder: 'Select Skill Type, or Add Category.'
+            });
+
+            $("#CoreSkillCategoryID").change(function () {
+
+                LoadSkills($(this).val());
+            });
+
+
+
+
+
+            $("#CoreKbskillTypeID").change(function () {
+
+                var _ViewModel = JSON.parse('{}');
+                $(".ladda-button-LoadingSkillCategories").show();
+                $("#LoadingSkillCategories").show();
+
+                $("#CoreSkillCategoryID").hide();
+                l.ladda('start');
+
+                _ViewModel.ID = $(this).val();
+                 $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetSkillCategoryiesBySkillType", "KnowledgeBase")',
+                            data: JSON.stringify(_ViewModel),
+                            contentType: "application/json; charset=utf-8",
+                            beforeSend: function (xhr) {
+                            xhr.setRequestHeader("RequestVerificationToken",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                    dataType: "json",
+                     success: function (data) {
+                         $("#CoreSkillCategoryID").show();
+                        //Adds the new item to the drop down
+                        var items = "";
+                        $("#CoreSkillCategoryID").empty();
+                        if (data.length > 0) {
+                            $.each(data, function (i, skillcategory) {
+                                items += "<option value='" + skillcategory.value + "'>" + skillcategory.text + "</option>";
+                            });
+                            $("#CoreSkillCategoryID").html(items);
+
+                        } else {
+                            $("#CoreSkillCategoryID").html(items);
+                        }
+
+                         l.ladda('stop');
+                         $("#LoadingSkillCategories").hide();
+                         $(".ladda-button-LoadingSkillCategories").hide();
+                         LoadSkills($("#CoreSkillCategoryID").val());
+
+                    },
+                     error: function (data, textStatus, error) {
+                         $("#CoreSkillCategoryID").show();
+                         l.ladda('stop');
+                         $("#LoadingSkillCategories").hide();
+                         $(".ladda-button-LoadingSkillCategories").hide();
+                    }
+                });
+            });
+
+            $("#CoreKbskillTypeID").trigger("change");
+
+
+        });
+
+    </script>
+
+}
+
+

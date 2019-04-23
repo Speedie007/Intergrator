@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Integrator.Data.Interfaces;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.ViewModels.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Integrator.Services.Common
 {
@@ -29,7 +31,7 @@ namespace Integrator.Services.Common
         {
             var query = _qualificationLevelsRepository.Table;
 
-            return query.ToList();
+            return  query.ToList();
         }
     }
 }

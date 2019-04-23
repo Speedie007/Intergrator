@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Integrator.Data.Interfaces;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.ViewModels.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Integrator.Services.Common
 {
@@ -34,7 +36,7 @@ namespace Integrator.Services.Common
 
             try
             {
-                _eductaionalInstitutionsRepository.Insert(entity);
+                 _eductaionalInstitutionsRepository.Insert(entity);
                 _entityCRUDResponse.Success = true;
                 _entityCRUDResponse.Message = "Educational Institution Successfully Added";
                 _entityCRUDResponse.Returned_ID = entity.Id;
@@ -49,16 +51,30 @@ namespace Integrator.Services.Common
             return _entityCRUDResponse;
         }
 
-        public List<EductaionalInstitutions> ListEductaionalInstitutions()
+        public  List<EductaionalInstitutions> ListEductaionalInstitutions()
         {
             var query = _eductaionalInstitutionsRepository.Table;
 
-            return query.ToList();
+            return  query.ToList();
         }
 
-        public IEntityCRUDResponse UpdateEducationInstitution(EductaionalInstitutions entity)
+        public  IEntityCRUDResponse UpdateEducationInstitution(EductaionalInstitutions entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                 _eductaionalInstitutionsRepository.Update(entity);
+                _entityCRUDResponse.Success = true;
+                _entityCRUDResponse.Message = "Educational Institution Successfully Updated";
+                _entityCRUDResponse.Returned_ID = entity.Id;
+            }
+            catch (Exception e)
+            {
+                _entityCRUDResponse.Success = false;
+                _entityCRUDResponse.Message = "Educational Institution Was Not Successfully Updated";
+                _entityCRUDResponse.Returned_ID = 0;
+            }
+
+            return _entityCRUDResponse;
         }
 
     }
