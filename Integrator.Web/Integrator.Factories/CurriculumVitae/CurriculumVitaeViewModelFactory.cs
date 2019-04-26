@@ -80,18 +80,7 @@ namespace Integrator.Factories.CurriculumVitae
                 throw new ArgumentNullException(nameof(model));
 
             CurriculumVitea UserCurriculumVitae = _curriculumVitaeService.GetCurriculumVitea(_userService.GetUserID());
-            //If User Currently Does not have a CV Generated - first create CV for the current user.
-            if (UserCurriculumVitae == null)
-            {
-                CurriculumVitea NewCV = new CurriculumVitea()
-                {
-                    CareerSummary = "<h1>{Default Text REPLACE}</h1><br/><h1>Welcome</h1><br/><p> Your career summary is ing your creative and insightful completion.</p><br/>{ REMOVE THIS TEXT AND REPLACE WITH YOUR CAREER SUMMARY }",
-                    DateLastUpdated = DateTime.Now,
-                    IntegratorUserID = _userService.GetUserID()
-                };
-                UserCurriculumVitae = _curriculumVitaeService.AddCurriculumVitea(NewCV);
 
-            }
             //Load All CV Sections
             if (DisplayFullCurriculumVitae)
             {
@@ -169,16 +158,20 @@ namespace Integrator.Factories.CurriculumVitae
                         YearStarted = item.DateStarted.Year.ToString(),
                         YearEnded = item.DateEnded.Year.ToString()
                     };
-                    foreach (UserJobSkill InnerItem in item.UserJobSkills)
-                    {
-                        CVWEVM.SkillsEmployed.Add(new UserSkillViewModel()
-                        {
-                            Id = InnerItem.Id,
-                            JobSkill = InnerItem.CoreKbSkill.CoreSkill,
-                            SkillLevel = InnerItem.UserJobSkillLevel
-                        });
-                    }
 
+                    CVWEVM.ListOfHardSkillsEmployed = _userKnowledgeBaseService.ListUserHardSkillsPerUserJob(item.Id);
+                    CVWEVM.ListOfSoftSkillsEmployed = _userKnowledgeBaseService.ListUserSoftSkillsPerUserJob(item.Id);
+                    //foreach (UserJobSkill InnerItem in item.UserJobSkills)
+                    //{
+                    //    //var y = CVWEVM.Select(x => x.JobSkill).FirstOrDefault();
+                    //    CVWEVM.SkillsEmployed.Add(new UserSkillViewModel()
+                    //    {
+                    //        Id = InnerItem.Id,
+                    //        JobSkill = InnerItem.CoreKbSkill.CoreSkill,
+                    //        SkillLevel = InnerItem.UserJobSkillLevel
+                    //    });
+                    //}
+                    model.UserWorkExperiences.Add(CVWEVM);
                 }
             }
             else
@@ -389,6 +382,21 @@ namespace Integrator.Factories.CurriculumVitae
                 });
             }
 
+            //populates list of Curriculum Vitea Work Experience ITems
+            foreach (var item in _userService.ListUserJobs())
+            {
+                model.ListOfUserJobs.Add(new CurriculumViteaWorkExperienceViewModel()
+                {
+                    Id = item.Id,
+                    JobTitle = item.CoreKbJob.CoreKbJobTitle,
+                    Company = item.Company.CompanyName,
+                    YearStarted = item.DateStarted.Year.ToString(),
+                    YearEnded = item.DateEnded.Year.ToString()
+
+                });
+            }
+
+
 
             return model;
         }
@@ -414,6 +422,71 @@ namespace Integrator.Factories.CurriculumVitae
                     FileSize = item.IntegratorFile.FileSize,
                     DateCreated = item.IntegratorFile.DateCreated,
                     FileBytes = item.IntegratorFile.InegratorFileBlob.FileBlob
+                });
+            }
+
+            return model;
+        }
+
+        public EditUserCurriculumViteaWorkExperienceViewModel prepareEditSingleCurriuclumVitaeWorkExperiences(int UserJobID)
+        {
+            UserJob SelectedUserJob = _userKnowledgeBaseService.GetUserJob(UserJobID);
+
+            EditUserCurriculumViteaWorkExperienceViewModel model = new EditUserCurriculumViteaWorkExperienceViewModel()
+            {
+                CompanyID = SelectedUserJob.CompanyID.ToString(),
+                CoreKbJobID = SelectedUserJob.CoreKbJobID.ToString(),
+                YearStarted = SelectedUserJob.DateStarted.Year.ToString(),
+                YearEnded = SelectedUserJob.DateEnded.Year.ToString(),
+                Achievements = SelectedUserJob.Achievments,
+                WorkExperienceDescription = SelectedUserJob.WorkExperienceDescription
+            };
+
+            foreach (var item in _userKnowledgeBaseService.ListUserHardSkillsPerUserJob(UserJobID))
+            {
+                model.ListOfSelectedSkillAndIndustryForEntry.Add(new InternalWorkExperienceDataStructure()
+                {
+                    DataType = "HARDSKILL_TYPE",
+                    SelectedCategory = item.SkillCategoryName,
+                    SelectedCategoryID = item.SkillCategoryID,
+                    SelectedDataItem = new InternalReturnItem()
+                    {
+                        DataItemID = item.Id.ToString(),
+                        DataItemTEXT = item.JobSkill,
+                        DataItemLevel = item.SkillLevel.ToString()
+                    }
+                });
+            }
+
+            foreach (var item in _userKnowledgeBaseService.ListUserSoftSkillsPerUserJob(UserJobID))
+            {
+                model.ListOfSelectedSkillAndIndustryForEntry.Add(new InternalWorkExperienceDataStructure()
+                {
+                    DataType = "SOFTSKILL_TYPE",
+                    SelectedCategory = item.SkillCategoryName,
+                    SelectedCategoryID = item.SkillCategoryID,
+                    SelectedDataItem = new InternalReturnItem()
+                    {
+                        DataItemID = item.Id.ToString(),
+                        DataItemTEXT = item.JobSkill,
+                        DataItemLevel = item.SkillLevel.ToString()
+                    }
+                });
+            }
+
+            foreach (var item in _userKnowledgeBaseService.ListUserIndusrtyPerUserJob(UserJobID))
+            {
+                model.ListOfSelectedSkillAndIndustryForEntry.Add(new InternalWorkExperienceDataStructure()
+                {
+                    DataType = "INDUSTRY_TYPE",
+                    SelectedCategory = item.IndustryCategoryName,
+                    SelectedCategoryID = item.IndustryCategoryID,
+                    SelectedDataItem = new InternalReturnItem()
+                    {
+                        DataItemID = item.Id.ToString(),
+                        DataItemTEXT = item.JobIndustry,
+                        DataItemLevel = item.IndustryLevelInvolvement.ToString()
+                    }
                 });
             }
 

@@ -16,6 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Integrator.Models.Domain.Common;
 using Integrator.Models.Domain.Files;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
+using Integrator.Common;
+using Integrator.Models.Domain.KnowledgeBase.Core;
 
 namespace Integrator.Services.Users
 {
@@ -35,6 +38,11 @@ namespace Integrator.Services.Users
         private readonly IRepository<IntegratorFile> _commonIntegratorFileRepository;
         private readonly IRepository<UserPicture> _userProfilePictureRepository;
         private readonly IEntityCRUDResponse _entityCRUDResponse;
+        private readonly IRepository<UserJob> _userJobRepository;
+        private readonly IRepository<UserJobSkill> _userJobSkillRepository;
+        private readonly IRepository<UserJobRelatedIndustry> _userJobRelatedIndustryRepository;
+        private readonly IRepository<CoreKbJobSkill> _coreKbJobSkillRepository;
+        private readonly IRepository<CoreKbIndustryJob> _coreKbIndustryJobRepository;
 
 
 
@@ -52,7 +60,12 @@ namespace Integrator.Services.Users
             IRepository<IntegratorUserContactDetail> userContactDetailsRepository,
             IRepository<IntegratorFile> commonIntegratorFileRepository,
             IRepository<UserPicture> userProfilePictureRepository,
-            IEntityCRUDResponse entityCRUDResponse
+             IRepository<UserJob> userJobRepository,
+        IRepository<UserJobSkill> userJobSkillRepository,
+        IRepository<UserJobRelatedIndustry> userJobRelatedIndustryRepository,
+        IEntityCRUDResponse entityCRUDResponse,
+        IRepository<CoreKbJobSkill> coreKbJobSkillRepository,
+        IRepository<CoreKbIndustryJob> coreKbIndustryJobRepository
             )
         {
             this._userManager = userManager;
@@ -67,6 +80,11 @@ namespace Integrator.Services.Users
             this._entityCRUDResponse = entityCRUDResponse;
             this._commonIntegratorFileRepository = commonIntegratorFileRepository;
             this._userProfilePictureRepository = userProfilePictureRepository;
+            this._userJobRepository = userJobRepository;
+            this._userJobSkillRepository = userJobSkillRepository;
+            this._userJobRelatedIndustryRepository = userJobRelatedIndustryRepository;
+            this._coreKbJobSkillRepository = coreKbJobSkillRepository;
+            this._coreKbIndustryJobRepository = coreKbIndustryJobRepository;
         }
 
         //private > SetCurrentlyLoggedInUser()
@@ -605,6 +623,92 @@ namespace Integrator.Services.Users
                 item.IsCurrentProfilePicture = false;
             }
             _userProfilePictureRepository.Update(UP);
+        }
+
+        public List<UserJob> ListUserJobs()
+        {
+            var query = _userJobRepository.Table.Where(x => x.IntegratorUserID == GetUserID());
+
+            return query.ToList();
+        }
+
+        public UserJob GetUserJob(int UserJobID)
+        {
+            var query = _userJobRepository.Table
+                .Include(x => x.CoreKbJob)
+                .Include(x => x.Company)
+                .Include(x => x.UserJobSkills)
+                .Include(x => x.UserJobRelatedIndustries)
+                .Where(x => x.Id == UserJobID);
+
+            return query.FirstOrDefault();
+        }
+
+        public void AddUserJob(UserJob Entity)
+        {
+            try
+            {
+                _userJobRepository.Insert(Entity);
+                //Update the KB link this Skill with the Job if not linked
+                foreach (var item in Entity.UserJobSkills)
+                {
+                    var Rtn = _coreKbJobSkillRepository.Table
+                        .Where(x => x.CoreKbJobID == Entity.CoreKbJobID && x.CoreKbSkillID == item.CoreKbSkillID)
+                        .FirstOrDefault();
+                    if (Rtn == null)
+                    {
+                        _coreKbJobSkillRepository.Insert(new CoreKbJobSkill()
+                        {
+                            CoreKbJobID = Entity.CoreKbJobID,
+                            CoreKbSkillID = item.CoreKbSkillID
+                        });
+                    }
+                }
+                //Update the KB link this industry with the Job if not linked
+                foreach (var item in Entity.UserJobRelatedIndustries)
+                {
+                    var Rtn = _coreKbIndustryJobRepository.Table
+                        .Where(x => x.CoreKbJobID == Entity.CoreKbJobID && x.CoreKbIndustryID == item.CoreKbIndustryID)
+                        .FirstOrDefault();
+                    if (Rtn == null)
+                    {
+                        _coreKbIndustryJobRepository.Insert(new CoreKbIndustryJob()
+                        {
+                            CoreKbJobID = Entity.CoreKbJobID,
+                            CoreKbIndustryID = item.CoreKbIndustryID
+                        });
+                    }
+                }
+            }
+            catch (IntegratorException e)
+            {
+                throw e;
+            }
+
+        }
+
+        public void DeleteUserJob(UserJob Entity)
+        {
+            try
+            {
+                _userJobRepository.Delete(Entity);
+            }
+            catch (IntegratorException e)
+            {
+                throw e;
+            }
+        }
+
+        public void UpdateUserJob(UserJob Entity)
+        {
+            try
+            {
+                _userJobRepository.Update(Entity);
+            }
+            catch (IntegratorException e)
+            {
+                throw e;
+            }
         }
         #endregion
 

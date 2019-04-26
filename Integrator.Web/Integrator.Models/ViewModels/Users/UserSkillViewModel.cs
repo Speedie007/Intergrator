@@ -1,4 +1,5 @@
-﻿using Integrator.Models.ViewModels.ViewModelBaseComponents;
+﻿using Integrator.Models.Domain.EnumClasses;
+using Integrator.Models.ViewModels.ViewModelBaseComponents;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,12 @@ namespace Integrator.Models.ViewModels.Users
         [Display(Name = "Skill Level")]
         public int SkillLevel { get; set; }
 
-        [Display(Name = "Last Updated")]
-        DateTime DateLastUpdated { get; set; }
+        [Display(Name = "Skill Type")]
+        public EnumKbSkillType SkillType { get; set; }
+
+        [Display(Name = "Skill Category")]
+        public string SkillCategoryName { get; set; }
+
+        public int SkillCategoryID { get; set; }
     }
 }

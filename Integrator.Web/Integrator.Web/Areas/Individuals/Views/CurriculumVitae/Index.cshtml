@@ -113,13 +113,13 @@
                                                 </div><!--//resume-timeline-item-header-->
                                                 <div class="resume-timeline-item-desc">
                                                     <p>
-                                                        @ExpItem.WorkExperienceDescription
+                                                        @Html.Raw(@ExpItem.WorkExperienceDescription)
                                                     </p>
                                                     <h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
-                                                    @ExpItem.Achievements
+                                                    @Html.Raw(@ExpItem.Achievements)
                                                     <h4 class="resume-timeline-item-desc-heading font-weight-bold">Skils Employeed:</h4>
                                                     <ul class="list-inline">
-                                                        @foreach (var skillEmployed in ExpItem.SkillsEmployed)
+                                                        @foreach (var skillEmployed in ExpItem.ListOfHardSkillsEmployed)
                                                         {
                                                             <li class="list-inline-item"><span class="badge badge-primary badge-pill">@skillEmployed.JobSkill</span></li>
                                                         }
@@ -157,7 +157,10 @@
                                                 <li class="list-inline-item"><span class="badge badge-primary badge-pill">PostgresSQL</span></li>
                                             </ul>
                                         </div><!--//resume-timeline-item-desc-->
+
                                     </article><!--//resume-timeline-item-->
+
+
                                 </div><!--//resume-timeline-->
                             </div>
                         </section><!--//experience-section-->

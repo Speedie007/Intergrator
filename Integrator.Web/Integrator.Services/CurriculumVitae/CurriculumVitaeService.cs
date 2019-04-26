@@ -10,6 +10,7 @@ using Integrator.Services.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
+using System.Globalization;
 
 namespace Integrator.Services.CurriculumVitae
 {
@@ -40,12 +41,24 @@ namespace Integrator.Services.CurriculumVitae
         public CurriculumVitea GetCurriculumVitea(int UserID)
         {
 
-            var query = from CVR in _curriculumViteaRepository.Table
-                        where CVR.IntegratorUserID == UserID
-                       
-                        select CVR;
+            CurriculumVitea query = (from CVR in _curriculumViteaRepository.Table
+                                     where CVR.IntegratorUserID == UserID
 
-            return query.FirstOrDefault();
+                                     select CVR).FirstOrDefault();
+            //If User Currently Does not have a CV Generated - first create CV for the current user.
+            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+            if (query == null)
+            {
+                query = new CurriculumVitea();
+                query.CareerSummary = "<h1>{Welcome Please Update with your Career Summary}</h1>";
+                query.DateLastUpdated = DateTime.Now;
+                query.IntegratorUserID = _userService.GetUserID();
+
+                 AddCurriculumVitea(query);
+
+            }
+
+            return query;
 
         }
 
@@ -53,7 +66,7 @@ namespace Integrator.Services.CurriculumVitae
         {
             var query = from UJR in _userJobRepository.Table
                         .Include(a => a.Company)
-                      
+
                         where UJR.CurriculumViteaID == CurriculumViteaID
                         select UJR;
 
@@ -61,7 +74,7 @@ namespace Integrator.Services.CurriculumVitae
         }
 
 
-       
+
 
 
 

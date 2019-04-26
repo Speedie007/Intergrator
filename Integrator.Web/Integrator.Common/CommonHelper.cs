@@ -36,6 +36,21 @@ namespace Integrator.Common
 
         #region Methods
 
+
+        public static string CapitaliseAllWords(string _Values)
+        {
+            string Rtn = "";
+            
+            char[] CharSplit = { new char(), new char() , new char() };
+            string[] values = _Values.Split(String.Empty);
+
+            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+            foreach (var value in values)
+                Rtn = $"{ti.ToTitleCase(value)}" + " ";
+
+            return Rtn;
+        }
+
         public static string ToFileSize(double value)
         {
             string[] suffixes = { "bytes", "KB", "MB", "GB",

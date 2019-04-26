@@ -4,11 +4,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Integrator.Common;
 using Integrator.Factories.CurriculumVitae;
 using Integrator.Models.Domain.Common;
 using Integrator.Models.Domain.Companies;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.Domain.Files;
+using Integrator.Models.Domain.KnowledgeBase.Core;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Models.ViewModels.Common.DropDownList;
 using Integrator.Models.ViewModels.Common.Files;
@@ -21,6 +24,7 @@ using Integrator.Services.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Integrator.Web.Areas.Individuals.Controllers
 {
@@ -31,7 +35,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
 
         #region Fields
         private readonly ICurriculumVitaeViewModelFactory _curriculumVitaeViewModelFactory;
-        private readonly ICurriculumVitaeService _CurriculumVitaeService;
+        private readonly ICurriculumVitaeService _curriculumVitaeService;
         private readonly IUserService _userService;
         private readonly IEducationInstitutionService _educationInstitutionService;
         private IEntityCRUDResponse _entityCRUDResponse;
@@ -52,12 +56,13 @@ namespace Integrator.Web.Areas.Individuals.Controllers
             )
         {
             this._curriculumVitaeViewModelFactory = curriculumVitaeViewModelFactory;
-            this._CurriculumVitaeService = curriculumVitaeService;
+            this._curriculumVitaeService = curriculumVitaeService;
             this._userService = userService;
             this._educationInstitutionService = educationInstitutionService;
             this._entityCRUDResponse = entityCRUDResponse;
             this._interestService = interestService;
             this._companyService = companyService;
+
         }
         #endregion
 
@@ -194,7 +199,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         public IActionResult UpdateCareerSummary([FromBody] CurriculumVitaeViewModel request)
         {
 
-            var bSuccessfull = _CurriculumVitaeService.UpdateUserCurriculumVitea(new CurriculumVitea()
+            var bSuccessfull = _curriculumVitaeService.UpdateUserCurriculumVitea(new CurriculumVitea()
             {
                 Id = request.Id,
                 DateLastUpdated = DateTime.Now,
@@ -398,14 +403,90 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         #endregion
 
         #region Async Ajax Methods
+        #region Work Experince 
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveCurriculumVitaeWorkExperienceEntry([FromBody] DropDownRequest model)
+        {
+            var UserCurriculumVitae = _curriculumVitaeService.GetCurriculumVitea(_userService.GetUserID());
+
+            _curriculumVitaeServic
+
+            return Json("");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetCurriculumVitaeWorkExperienceEntry([FromBody] DropDownRequest model)
+        {
+            var Rtn = _curriculumVitaeViewModelFactory.prepareEditSingleCurriuclumVitaeWorkExperiences(model.ID);
+            return Json(Rtn);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddCurriculumVitaeWorkExperienceEntry([FromBody] EditUserCurriculumViteaWorkExperienceViewModel model)
+        {
+            var UserCurriculumVitae = _curriculumVitaeService.GetCurriculumVitea(_userService.GetUserID());
+            UserJob NewUserJob = new UserJob()
+            {
+                CompanyID = Convert.ToInt32(model.CompanyID),
+                CoreKbJobID = Convert.ToInt32(model.CoreKbJobID),
+                DateStarted = new DateTime(Convert.ToInt32(model.YearStarted), 1, 1),
+                DateEnded = new DateTime(Convert.ToInt32(model.YearEnded), 1, 1),
+                IntegratorUserID = _userService.GetUserID(),
+                CurriculumViteaID = UserCurriculumVitae.Id,
+                Achievments = model.Achievements,
+                WorkExperienceDescription = model.WorkExperienceDescription,
+                IsCurrentJob = false
+            };
+
+            //List<UserJobRelatedIndustry> LinkedUserJobRelatedIndustries = new List<UserJobRelatedIndustry>();
+            foreach (InternalReturnItem item in model.ListOfUserRelatedIndustries)
+            {
+
+                NewUserJob.UserJobRelatedIndustries.Add(new UserJobRelatedIndustry()
+                {
+                    CoreKbIndustryID = Convert.ToInt32(item.DataItemID),
+                    LevelOfIndustryInvolvement = Convert.ToInt32(item.DataItemLevel)
+
+                });
+            }
+            // List<UserJobSkill> LinkedUserJobskills = new List<UserJobSkill>();
+            foreach (InternalReturnItem item in model.ListOfUserSkills)
+            {
+
+                NewUserJob.UserJobSkills.Add(new UserJobSkill()
+                {
+
+                    CoreKbSkillID = Convert.ToInt32(item.DataItemID),
+                    UserJobSkillLevel = Convert.ToInt32(item.DataItemLevel)
+                });
+            }
+            _userService.AddUserJob(NewUserJob);
+
+            // return Json(new SelectList(cboOptions, "CoreSkillCategoryID", "CoreSkillCategoryName"));
+            var AddedUserJob = _userService.GetUserJob(NewUserJob.Id);
+
+            return Json(new
+            {
+                Id = AddedUserJob.Id,
+                CompanyName = AddedUserJob.Company.CompanyName,
+                JobTitle = AddedUserJob.CoreKbJob.CoreKbJobTitle,
+                YearStarted = AddedUserJob.DateStarted.Year,
+                YearEnded = AddedUserJob.DateEnded.Year
+            });
+        }
+        #endregion
         #region Company Methods
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddCompanyToDatabase([FromBody] DropDownRequest model)
         {
+
             var _Entity = new Company()
             {
-                CompanyName = model.TEXT
+                CompanyName = CommonHelper.CapitaliseAllWords(model.TEXT)
             };
             _companyService.AddCompany(_Entity);
 

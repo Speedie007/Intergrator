@@ -13,6 +13,10 @@ namespace Integrator.Factories.CurriculumVitae
 
         EditUserCurriculumViteaWorkExperienceViewModel prepareEditCurriuclumVitaeWorkExperiences();
 
+        EditUserCurriculumViteaWorkExperienceViewModel prepareEditSingleCurriuclumVitaeWorkExperiences(int UserJobID);
+
+        //EditUserCurriculumViteaWorkExperienceViewModel
+
         EditUserQualificationViewModel prepareEditCurriuclumVitaeQualifications();
 
         EditUserInterestViewModel prepareEditCurriculumVitaeInterests();

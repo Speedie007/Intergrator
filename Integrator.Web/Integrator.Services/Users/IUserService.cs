@@ -3,6 +3,7 @@ using Integrator.Models.Domain.Authentication;
 using Integrator.Models.Domain.Common;
 using Integrator.Models.Domain.CurriculumVitaes;
 using Integrator.Models.Domain.Files;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 using Integrator.Models.ViewModels.Common;
 using Integrator.Models.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +29,8 @@ namespace Integrator.Services.Users
         List<IntegratorUserLanguages> GetUserLanguages();
 
         List<IntegratorUserInterest> GetUserInterests();
-
+        List<UserJob> ListUserJobs();
+        UserJob GetUserJob(int UserJobID);
         Task<byte[]> GetUserProfilePictureAsync();
         #endregion
 
@@ -38,6 +40,7 @@ namespace Integrator.Services.Users
         IEntityCRUDResponse AddUserInterest(IntegratorUserInterest entity);
         IEntityCRUDResponse AddUserAward(IntegratorUserAwards entity);
         IEntityCRUDResponse AddUserProfilePicture(IntegratorFile entity);
+        void AddUserJob(UserJob Entity);
         #endregion
 
         #region DeleteMethods
@@ -47,11 +50,16 @@ namespace Integrator.Services.Users
         IEntityCRUDResponse DeleteUserInterest(IntegratorUserInterest entity);
         IEntityCRUDResponse DeleteUserAward(IntegratorUserAwards entity);
         IEntityCRUDResponse DeleteUserProfilePicture(IntegratorFile entity);
+        void DeleteUserJob(UserJob Entity);
         #endregion
 
         #region Update Methods
         IEntityCRUDResponse SetUserProfilePictureAsDefault(int FileID);
+        void UpdateUserJob(UserJob Entity);
         #endregion
+
+      
+
         #endregion
 
 

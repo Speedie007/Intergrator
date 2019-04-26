@@ -10,7 +10,7 @@
         <h2>Profile</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="@Url.Action("Dashboard", "Inidviduals")">Home</a>
+                <a href="@Url.Action(" Dashboard", "Inidviduals" )">Home</a>
             </li>
             <li class="breadcrumb-item">
                 <a>Curriculum Vitae</a>
@@ -25,9 +25,9 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row" style="display:none;" id="AddNewWorkExperienceWizard">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
+    <div class="row" style="        display: none;" id="AddNewWorkExperienceWizard">
+        @*<div class="col-lg-1"></div>*@
+        <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5>Add Work Expereince Wizard</h5>
@@ -39,9 +39,29 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-12 ">
-                            <button type="button" class="btn btn-secondary" onclick="showNewWorkExperienceSummary();"><i class="fa fa-plus"></i>&nbsp;Add Work-Experience Entry to your CV</button>
+                        <div class="col-lg-12 ">
+                            <div class="row">
+                                <div class="col-lg-12 text-left">
+
+                                    <i class="fa fa-id-card big-icon float-left p-xs"></i>
+                                    <h1 class="heading">Welcome</h1>
+                                    <p>
+                                        Below is the Work-Experience Wizard.
+                                        There are 7 sections required to be completed by the wizard to fully complete your Work-Experience Enrty.
+
+                                    </p>
+                                    <p>However the only <strong><u>mandatory</u></strong> sections that that are required to be completed before save this entry are the <u>Company</u> and <u>Job Title</u>. remaining sections can be edited/modified as need.</p>
+                                    <p>
+                                        Each step is self contained and will guide you through what is required.
+                                        <u>Click</u> on the heading section that you wish to configure.
+                                        Once all or at minimum the mandatory section completed, you can click save below to addd your entry.
+                                    </p>
+
+                                </div>
+                            </div>
+
                             <hr />
+
                             <div class="panel-group" id="accordion">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
@@ -54,15 +74,18 @@
                                             </h4>
                                         </a>
                                     </div>
-                                    <div id="collapseIndustrySelection" class="panel-collapse collapse in show" data-parent="#accordion">
+                                    <div id="collapseIndustrySelection" class="panel-collapse collapse " data-parent="#accordion">
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <p>To help match your profile with prosective employers, select the industry that your job/function relates to in relation to your job title/job function.</p>
+                                                    <p>
+                                                        <i class="fa fa-industry float-left p-m m-b" style="font-size: 30px;"></i>
+                                                        To help match your profile with prosective employers, select the industry that your job/function relates to or is asocciated with. This is relivant for the currnt entry be processes.
+                                                    </p>
                                                     <hr />
                                                     <h2>Selected Indusrties</h2>
                                                     <hr />
-                                                    <div class="panel panel-primary " style="padding-bottom:5px;" id="SelectedIndustrySummaryContainer">
+                                                    <div class="panel panel-primary " style="        padding-bottom: 5px;" id="SelectedIndustrySummaryContainer">
 
                                                         <div class="Selected-Industry-Container">
                                                             <div class="Industry-Item">
@@ -72,7 +95,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="button" style="margin-top:5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectIndustryModal" onclick="intialiseSelectIndustryForm();"><i class="fa fa-plus">&nbsp;Add/Edit Industry Selection</i></button>
+                                                    <button type="button" style="        margin-top: 5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectIndustryModal" onclick="intialiseSelectIndustryForm();"><i class="fa fa-plus">&nbsp;Add/Edit Industry Selection</i></button>
 
                                                 </div>
                                             </div>
@@ -84,7 +107,6 @@
                                         <a data-toggle="collapse" href="#collapseOne" class="text-white">
                                             <h5 class="panel-title">
                                                 Set Job Function/Title
-
                                                 <br />
                                                 Status - <span class="text-warning" id="Job-TitleFunction-GlobalStatus">Not Set</span>
                                             </h5>
@@ -96,22 +118,25 @@
                                             <div class="row">
                                                 <div class="col-lg-12" id="JobIndustryContainer">
                                                     <p>
-                                                        To Accurately match your entry with prosective employers, select the industry that you work in and provide your job title/job function.
+                                                        <i class="fa fa-language float-left p-m" style="        font-size: 75px;"></i> If you have already associated any Job-Related-Industies or configured any Skills Sets you can use the <u>Job Title Suggestion</u> tool.
+                                                        The tool will aid you by providing a list of known <u>Job Titles</u> based on your selections you have made, and determine matchs from its existing knowledge base.
+                                                        If you have not already yet assoicciated any indusrties or set skill sets, we susgest you do this first.
                                                     </p>
+                                                    <p>Alternitively you can use the drop down selection and filter tool to search for your Job Title. If you are not able to locate the Job Title form iether methods </p>
+                                                    <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="GenerateJobTitleSuggestions();">Job Title Suggestion Tool</button>
                                                     <hr />
                                                     <div class="form-group" id="JobTitleSelectionContainer">
                                                         <h2>Select Job Title/Function</h2>
-
-                                                        <select asp-for="CoreKbJobID" style="width: 200px;" asp-items="@Model.ListOfJobTitles"
-                                                                class="JobTitle-select full-width form-control"></select>
+                                                        <select asp-for="CoreKbJobID" asp-items="@Model.ListOfJobTitles" class="JobTitle-select full-width form-control p-sm"></select>
                                                         <span class="text-danger"></span>
-                                                        <input type="text" id="txtselectedJobTitle" class="form-control" readonly="readonly" />
+                                                        <input type="text" id="txtselectedJobTitle" class="form-control m-t-sm" readonly="readonly" />
                                                     </div>
                                                     <hr />
                                                     <h2> Add Job Title/Function.</h2>
+                                                    <p>*<strong>Please</strong> use the search tool to try locate your <u>Job Title </u> before simply Adding.</p>
                                                     <input type="text" class="form-control" placeholder="Add Job Title." />
 
-                                                    <button style="margin-top:5px;" type="button" class="btn btn-info full-width "><i class="fa fa-plus">&nbsp;Add Job Title</i></button>
+                                                    <button type="button" class="btn btn-info full-width m-t-sm "><i class="fa fa-plus">&nbsp;Add Job Title</i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +159,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <p>
-                                                    Search for your company from the drop down below. If you do not find your company listed within the system,
+                                                    <i class="fa fa-sheqel float-left p-m" style="        font-size: 45px;"></i>Search for your company from the drop down search function below. If you do not find your company listed within the system,
                                                     simply add the the company Name in the Section under the Company search drop down.
                                                 </p>
                                                 <p>*Indicate the period you where employed below.</p>
@@ -143,13 +168,13 @@
                                             <div class="form-group" id="CompanySelectionContainer">
                                                 <h2>Select Company</h2>
 
-                                                <select asp-for="CompanyID" style="width: 200px;" asp-items="@Model.ListOfCompanies"
+                                                <select asp-for="CompanyID" style="        width: 200px;" asp-items="@Model.ListOfCompanies"
                                                         class="company-select full-width form-control"></select>
                                                 <span class="text-danger"></span>
                                             </div>
                                             <hr />
                                             <input type="text" class="form-control" id="txtAddCompany" placeholder="Add Companay Here" />
-                                            <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="AddCompany();">
+                                            <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="AddCompany();">
                                                 <i class="fa fa-plus">&nbsp;Add Company Name</i>
                                             </button>
                                             <hr />
@@ -188,8 +213,9 @@
                                             <div class="form-group">
                                                 <h2>Work Experience</h2>
                                                 <hr />
-                                                <p>Add a description of your work experience in terms of your responsiblities and primary and secondary work functions performed over your working career.</p>
+                                                <p><i class="fa fa-compass float-left p-m" style="        font-size: 35px;"></i>Add a description of your work experience in terms of your responsiblities and primary and secondary work functions performed over your working career.</p>
                                                 <p>*Not that you can toggle(switch) to the full screen mode which could make make the porcess of editing easier.</p>
+
                                                 <hr />
                                                 <div class="click2edit_WorkExperience"></div>
 
@@ -211,10 +237,12 @@
                                         <div class="panel-body">
                                             <div class="form-group">
 
-                                                <h2>Achievements</h2>
-                                                <hr />
+
+                                                <i class="fa fa-handshake-o float-left p-m" style="        font-size: 35px;"></i>
                                                 <p>This is an optional item to complete, however if you have any notible acheivements that relate to this job that you are currently adding, and you would like to share with prospective employers you can add it here.</p>
                                                 <p>*Not that you can toggle(switch) to the full screen mode which could make make the porcess of editing easier.</p>
+                                                <hr />
+                                                <h2>Achievements</h2>
                                                 <hr />
                                                 <div class="click2edit_Achievements"></div>
 
@@ -237,6 +265,7 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-lg-12">
+                                                    <i class="fa fa-pencil-square float-left p-m" style="        font-size: 75px;"></i>
                                                     <p>Soft skills are interpersonal skills which are used to describe your approach to life, work, and relationships with other people. Unlike hard skills, these are <strong class="text-uppercase">not</strong> professional job-specific skills like accountancy, graphics designing, etc. Soft skills are your unique selling point which gives you a competitive edge over others in the workplace and in life.</p>
                                                     <p>
                                                         Some examples of soft skills are:
@@ -253,7 +282,7 @@
                                                     <hr />
                                                     <h2>Selected Soft Skill Set</h2>
                                                     <hr />
-                                                    <div class="panel panel-primary " style="padding-bottom:5px;" id="SelectedSoftSkillSummaryContainer">
+                                                    <div class="panel panel-primary " style="        padding-bottom: 5px;" id="SelectedSoftSkillSummaryContainer">
 
                                                         <div class="Selected-Industry-Container">
                                                             <div class="Industry-Item">
@@ -263,7 +292,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="button" style="margin-top:5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectSoftSkillModal" onclick="intialiseSelectSoftSkillForm();"><i class="fa fa-plus">&nbsp;Add/Edit Hard Skill Selection</i></button>
+                                                    <button type="button" style="        margin-top: 5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectSoftSkillModal" onclick="intialiseSelectSoftSkillForm();"><i class="fa fa-plus">&nbsp;Add/Edit Hard Skill Selection</i></button>
 
                                                 </div>
                                             </div>
@@ -283,12 +312,13 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-lg-12">
+                                                    <i class="fa fa-pencil-square-o float-left p-m" style="        font-size: 75px;"></i>
                                                     <p>Hard skills are job-specific skills and knowledge you need to perform a job.</p>
                                                     <p>Hard skills are skills you can gain through education, training programs, certifications, and on-the-job training. </p><p>These are typically quantifiable skills that can be easily defined and evaluated. For example, a hard skill for an IT professional might be computer programming such as JAVA, while a hard skill for a carpenter might be a knowledge of wood framing.</p>
                                                     <hr />
                                                     <h2>Selected Hard Skill Set</h2>
                                                     <hr />
-                                                    <div class="panel panel-primary " style="padding-bottom:5px;" id="SelectedHardSkillSummaryContainer">
+                                                    <div class="panel panel-primary " style="        padding-bottom: 5px;" id="SelectedHardSkillSummaryContainer">
 
                                                         <div class="Selected-Industry-Container">
                                                             <div class="Industry-Item">
@@ -298,7 +328,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="button" style="margin-top:5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectHardSkillModal" onclick="intialiseSelectHardSkillForm();"><i class="fa fa-plus">&nbsp;Add/Edit Hard Skill Selection</i></button>
+                                                    <button type="button" style="        margin-top: 5px;" class="btn btn-info full-width " data-toggle="modal" data-target="#SelectHardSkillModal" onclick="intialiseSelectHardSkillForm();"><i class="fa fa-plus">&nbsp;Add/Edit Hard Skill Selection</i></button>
 
                                                 </div>
                                             </div>
@@ -306,12 +336,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr />
+
+
+                        </div>
+                    </div>
+                    *Please note the saved entry can be edit later.
+                    <div class="row">
+                        <div class="col-lg-6  p-xs">
+
+                            <button type="button" id="btnAddNewWorkExperienceEntry" class="btn btn-warning full-width  p-sm" onclick="AddNewWorkExperienceEnrty();"><i class="fa fa-plus"></i>&nbsp;Add Work-Experience Entry to your CV</button>
+                            <button type="button" id="btnUpdateExistingWorkExperienceEntry" class="btn btn-warning full-width p-sm" onclick=""><i class="fa fa-edit"></i>&nbsp;Update Work-Experience Entry to your CV</button>
+                        </div>
+                        <div class="col-lg-6  p-xs">
+                            <button type="button" class="btn btn-info full-width p-sm" onclick="showNewWorkExperienceSummary();"><i class="fa fa-sign-in"></i>&nbsp;Back To Work Experience Enrty Summary </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3"></div>
+        @*<div class="col-lg-1"></div>*@
     </div>
     <div class="row" id="WorkExperienceSummary">
         <div class="col-lg-12">
@@ -325,27 +369,69 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <button type="button" class="btn btn-primary p-sm" onclick="showNewWorkExperienceWizard('ADD');"><i class="fa fa-plus"></i>&nbsp;Add New Work-Experience To Your CV</button>
                     <div class="table-responsive">
-                        <button type="button" class="btn btn-primary" onclick="showNewWorkExperienceWizard();"><i class="fa fa-plus"></i>&nbsp;Add New Work-Experience To Your CV</button>
+
                         <hr />
                         <table class="table table-striped table-bordered table-hover dataTables-WorkExperience">
                             <thead>
                                 <tr>
                                     <th>Options</th>
-                                    <th>Job Title</th>
+                                    <th class="text-nowrap">Job Title</th>
                                     <th>Company</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th class="text-nowrap">Start Date</th>
+                                    <th class="text-nowrap">End Date</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                @{
+                                    foreach (var item in @Model.ListOfUserJobs)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group full-width">
+                                                    <button data-toggle="dropdown" class="btn btn-info  full-width dropdown-toggle p-xs"><i style="font-size: 15px;" class="fa fa-gears"></i>&nbsp;Entry Options</button>
+                                                    <ul class="dropdown-menu    ">
+
+                                                        <li>
+
+                                                            <a class="dropdown-item btn btn-large btn-w-m btn-warning text-white text-center p-xs" href="#" onclick="EditSelectedEntry(@item.Id);">
+                                                                <i class="fa fa-edit" style="font-size: 15px;"></i>&nbsp;Edit Entry
+                                                            </a>
+                                                        </li>
+                                                        <li class="dropdown-divider"></li>
+                                                        <li>
+                                                            <a class="dropdown-item btn btn-w-m btn-danger text-white text-center p-xs" onclick="RemoveSelectedEntry(@item.Id);">
+                                                                <i class="fa fa-remove" style="font-size: 15px;"></i>&nbsp;Remove Entry
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @item.JobTitle
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @item.Company
+                                            </td>
+                                            <td>
+                                                @item.YearStarted
+                                            </td>
+                                            <td>
+                                                @item.YearEnded
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Options</th>
-                                    <th>Job Title</th>
+                                    <th class="text-nowrap">Job Title</th>
                                     <th>Company</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th class="text-nowrap">Start Date</th>
+                                    <th class="text-nowrap">End Date</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -377,20 +463,20 @@
                         <select asp-for="IndustryCategoryID" asp-items="@Model.ListOfIndustryCategories" class="full-width Industry-Category-Select"></select>
 
 
-                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddIndustryCategory();">
+                        <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddIndustryCategory();">
                             <i class="fa fa-plus">&nbsp;Add Category</i>
                         </button>
 
                     </div>
-                    <div class="col-lg-12 " style="display: none;" id="divAddIndustryCategoryContainer">
+                    <div class="col-lg-12 " style="        display: none;" id="divAddIndustryCategoryContainer">
                         <h2>Add Industry Category.</h2>
                         <small>*To revert back to the selection option select cancel or add new category.</small>
                         <input type="text" id="txtAddNewIndustryCategory" class="form-control" placeholder="Add New Category Here" />
                         <div class="pull-right">
-                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectIndustryCategory();">
+                            <button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="showSelectIndustryCategory();">
                                 <i class="fa fa-plus">&nbsp;Cancel</i>
                             </button>
-                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddNewIndustryCategory();">
+                            &nbsp;<button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="AddNewIndustryCategory();">
                                 <i class="fa fa-plus">&nbsp;Add Industry Category</i>
                             </button>
                         </div>
@@ -406,9 +492,9 @@
 
                         <select class="full-width Industry-Select"></select>
 
-                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddIndustry();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
+                        <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddIndustry();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
                     </div>
-                    <div class="col-lg-12" style="display:none;" id="divAddIndustryContainer">
+                    <div class="col-lg-12" style="        display: none;" id="divAddIndustryContainer">
 
                         <h2>Add Industry.</h2>
                         <small>*To revert back to the selection option select cancel or add new category.</small>
@@ -416,10 +502,10 @@
                         <input type="text" class="form-control" id="txtAddNewIndustry" placeholder="Add New Industry Here" />
 
                         <div class="pull-right">
-                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectIndustry();">
+                            <button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="showSelectIndustry();">
                                 <i class="fa fa-plus">&nbsp;Cancel</i>
                             </button>
-                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddIndustry();">
+                            &nbsp;<button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="AddIndustry();">
                                 <i class="fa fa-plus">&nbsp;Add Industry</i>
                             </button>
                         </div>
@@ -452,8 +538,8 @@
                                     <td id="AddIndustrySummary-Category"></td>
                                     <td id="AddIndustrySummary-Industry"> </td>
                                     <td id="AddIndustrySummary-InvolvementLevel">
-                                        <div class="progress" style="background-color:#ffffff;">
-                                            <div id="SelectedIndustryInvolvementLevelSummary" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
+                                        <div class="progress" style="        background-color: #ffffff;">
+                                            <div id="SelectedIndustryInvolvementLevelSummary" style="        width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
 
                                             </div>
                                         </div>
@@ -496,20 +582,20 @@
                         <select asp-for="HardSKillCategoryID" asp-items="@Model.ListOfHardSkillCategories" class="full-width HardSkill-Category-Select"></select>
 
 
-                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddHardSkillCategory();">
+                        <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddHardSkillCategory();">
                             <i class="fa fa-plus">&nbsp;Add Category</i>
                         </button>
 
                     </div>
-                    <div class="col-lg-12 " style="display: none;" id="divAddHardSkillCategoryContainer">
+                    <div class="col-lg-12 " style="        display: none;" id="divAddHardSkillCategoryContainer">
                         <h2>Add Skill Category</h2>
                         <small>*To revert back to the selection option select cancel or add new category.</small>
                         <input type="text" id="txtAddNewHardSkillCategory" class="form-control" placeholder="Add New Category Here" />
                         <div class="pull-right">
-                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectHardSkillCategory();">
+                            <button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="showSelectHardSkillCategory();">
                                 Cancel
                             </button>
-                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddNewHardSkillCategory();">
+                            &nbsp;<button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="AddNewHardSkillCategory();">
                                 <i class="fa fa-plus">&nbsp;Add Hard kill Category</i>
                             </button>
                         </div>
@@ -526,9 +612,9 @@
                         <select class="full-width HardSkill-Select"></select>
 
 
-                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddHardSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
+                        <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddHardSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
                     </div>
-                    <div class="col-lg-12" style="display:none;" id="divAddHardSkillContainer">
+                    <div class="col-lg-12" style="        display: none;" id="divAddHardSkillContainer">
 
                         <h2>Add Hard Skill.</h2>
                         <small>*To revert back to the selection option select cancel or add new Skill.</small>
@@ -536,10 +622,10 @@
                         <input type="text" class="form-control" id="txtAddNewHardSkill" placeholder="Add New Skill Here" />
 
                         <div class="pull-right">
-                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectHardSkill();">
+                            <button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="showSelectHardSkill();">
                                 Cancel
                             </button>
-                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddHardSkill();">
+                            &nbsp;<button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="AddHardSkill();">
                                 <i class="fa fa-plus">&nbsp;Add Skill</i>
                             </button>
                         </div>
@@ -573,8 +659,8 @@
                                     <td id="AddHardSkillSummary-Category"></td>
                                     <td id="AddHardSkillSummary-Industry"> </td>
                                     <td id="AddHardSkillSummary-CompetencyLevel">
-                                        <div class="progress" style="background-color:#ffffff;">
-                                            <div id="HardSkillCompetencyLevelSummary" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
+                                        <div class="progress" style="        background-color: #ffffff;">
+                                            <div id="HardSkillCompetencyLevelSummary" style="        width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
 
                                             </div>
                                         </div>
@@ -619,20 +705,20 @@
                         <select asp-for="SoftSKillCategoryID" asp-items="@Model.ListOfSoftSkillCategories" class="full-width SoftSkill-Category-Select"></select>
 
 
-                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkillCategory();">
+                        <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkillCategory();">
                             <i class="fa fa-plus">&nbsp;Add Category</i>
                         </button>
 
                     </div>
-                    <div class="col-lg-12 " style="display: none;" id="divAddSoftSkillCategoryContainer">
+                    <div class="col-lg-12 " style="        display: none;" id="divAddSoftSkillCategoryContainer">
                         <h2>Add Skill Category</h2>
                         <small>*To revert back to the selection option select cancel or add new category.</small>
                         <input type="text" id="txtAddNewSoftSkillCategory" class="form-control" placeholder="Add New Category Here" />
                         <div class="pull-right">
-                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectSoftSkillCategory();">
+                            <button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="showSelectSoftSkillCategory();">
                                 Cancel
                             </button>
-                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddNewSoftSkillCategory();">
+                            &nbsp;<button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="AddNewSoftSkillCategory();">
                                 <i class="fa fa-plus">&nbsp;Add Soft kill Category</i>
                             </button>
                         </div>
@@ -649,9 +735,9 @@
                         <select class="full-width SoftSkill-Select"></select>
 
 
-                        <button style="margin-top:5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
+                        <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
                     </div>
-                    <div class="col-lg-12" style="display:none;" id="divAddSoftSkillContainer">
+                    <div class="col-lg-12" style="        display: none;" id="divAddSoftSkillContainer">
 
                         <h2>Add Soft Skill.</h2>
                         <small>*To revert back to the selection option select cancel or add new Skill.</small>
@@ -659,10 +745,10 @@
                         <input type="text" class="form-control" id="txtAddNewSoftSkill" placeholder="Add New Skill Here" />
 
                         <div class="pull-right">
-                            <button style="margin-top:5px;" type="button" class="btn btn-info" onclick="showSelectSoftSkill();">
+                            <button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="showSelectSoftSkill();">
                                 Cancel
                             </button>
-                            &nbsp;<button style="margin-top:5px;" type="button" class="btn btn-info" onclick="AddSoftSkill();">
+                            &nbsp;<button style="        margin-top: 5px;" type="button" class="btn btn-info" onclick="AddSoftSkill();">
                                 <i class="fa fa-plus">&nbsp;Add Skill</i>
                             </button>
                         </div>
@@ -696,8 +782,8 @@
                                     <td id="AddSoftSkillSummary-Category"></td>
                                     <td id="AddSoftSkillSummary-Industry"> </td>
                                     <td id="AddSoftSkillSummary-CompetencyLevel">
-                                        <div class="progress" style="background-color:#ffffff;">
-                                            <div id="SoftSkillCompetencyLevelSummary" style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
+                                        <div class="progress" style="        background-color: #ffffff;">
+                                            <div id="SoftSkillCompetencyLevelSummary" style="        width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
 
                                             </div>
                                         </div>
@@ -755,20 +841,146 @@
         <script src="~/lib/dataTables/dataTables.bootstrap4.min.js"></script>
         <script src="~/lib/select2/dist/js/select2.min.js"></script>
         <script src="~/lib/dualListbox/jquery.bootstrap-duallistbox.js"></script>
-
         <script src="~/lib/ionRangeSlider/ion.rangeSlider.min.js"></script>
     </environment>
 
     <script type="text/javascript">
 
+        //Initilise Form ITems
+    function FormInti() {
+        //reset the LocalDataStructure
+        LocalDataStructure.length = 0;
+        //resets the Summary Blocks to default empty after clearing the array()
+        BuildselectedDataItemSummary(EnumDataType.SoftSkill);
+        BuildselectedDataItemSummary(EnumDataType.Industry);
+        BuildselectedDataItemSummary(EnumDataType.HardSkill);
+
+        //reset company selection
+        cboObjCompany.val(null).trigger('change');
+        //reset the select Job Title
+        cboObjJobTitle.val(null).trigger('change');
+        //clear the Editor checks
+        hidObjWorkExperienceText.val('');
+        hidObjAchienvementText.val('');
+
+        $('.click2edit_Achievements').summernote('code', '');
+        $('.click2edit_WorkExperience').summernote('code', '');
+
+    }
+
+    function EditSelectedEntry(UserJobID) {
+
+        showNewWorkExperienceWizard("Edit");
+       //Load Entry
+        var _ViewModel = JSON.parse('{}');
+        _ViewModel.ID = UserJobID;
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetCurriculumVitaeWorkExperienceEntry", "CurriculumVitae")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        cboObjCompany.val(data.companyID).trigger('change');
+                        cboObjJobTitle.val(data.coreKbJobID).trigger('change');
+                        $.each(data.listOfSelectedSkillAndIndustryForEntry, function (i,DataItem) {
+                            var _SelectedDataObj = JSON.parse('{}');
+
+                            _SelectedDataObj.DataType = DataItem.dataType; // Type is Industry from the Local ENUM
+                            _SelectedDataObj.SelectedCategory = DataItem.selectedCategory;
+                            _SelectedDataObj.SelectedCategoryID = DataItem.selectedCategoryID;
+
+                            _SelectedDataObj.SelectedDataItems = [
+                                {
+                                    DataItemID: DataItem.selectedDataItem.dataItemID,
+                                    DataItemTEXT: DataItem.selectedDataItem.dataItemTEXT,
+                                    DataItemLevel: DataItem.selectedDataItem.dataItemLevel
+                                }
+                            ];
+                            //Add Newy Created DataItem to the LocalDataStore
+                            addDataItemToLocalDataStore(_SelectedDataObj, DataItem.dataType);
+                        });
+
+                        BuildselectedDataItemSummary(EnumDataType.Industry);
+                        BuildselectedDataItemSummary(EnumDataType.HardSkill);
+                        BuildselectedDataItemSummary(EnumDataType.SoftSkill);
+
+
+                        UpdateGlobalStatus();
+                        //show success message
+                        toastr.success("Successfull Loaded your Entry for editing.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+
+                        toastr.error("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+    }
+    function RemoveSelectedEntry(UserJobID) {
+
+        var _ViewModel = JSON.parse('{}');
+        _ViewModel.ID = UserJobID;
+
+         swal({
+                title: "Are you sure you wish to remove?",
+                text: "Removing this entry will remove all assossiated deatils with this entry?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Remove CV Entry!",
+                closeOnConfirm: true
+            }, function () {
+                  $.ajax({
+                    type: "post",
+                    url: '@Url.Action("RemoveCurriculumVitaeWorkExperienceEntry", "CurriculumVitae")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        toastr.success("Curriculum Vitae Entry has been successfully removed!", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+
+                        toastr.error("Something went wrong!" + error, 'Error');
+
+                    }
+                });
+                //swal("Removed!", "Your Curriculam Entry has been removed.", "success");
+                
+            });
+        var _ViewModel = "";
+
+      
+    }
+
+
+
         var _ViewModel = JSON.parse('{}');
         /*Global Variables
          * ****************/
+
+        //Current Editing Mode
+        var EditingMode;
 
         //MainForm Variables
         var divObjWorkExperienceSummary;
         var divObjAddNewWorkExperienceWizard;
         //END Main from Variables
+
+    //dataTable Variables
+
+    var dataTablesWorkExperience;
+    //END Datatable VAraiables
 
         //Editor Variables
         var hidObjAchienvementText;
@@ -842,6 +1054,7 @@
         /*Object Structure Example
          [
             {
+                CurrentState = "{EditState}" SEE EDIT STATE REFERENCE
                 DataType: "{EnumDataType}" SEE DATA TYPE REFERENCE
                 SelectedCategory: {Indusrty Category} OR {Hard SKill Category} OR { Soft Skill Category},
                 SelectedCategoryID: 0,
@@ -853,11 +1066,18 @@
                     }]
             }]
             **************************/
-        //Enum used to determine the type of datastored in the Main Data structure.
+        //Enum used to determine the type of STATE in the Main Data structure.
+    //THE STATE  determines idf the item must be updated or inserted.
         var EnumDataType = JSON.parse('{}');
         EnumDataType.Industry = "INDUSTRY_TYPE";
         EnumDataType.SoftSkill = "SOFTSKILL_TYPE";
         EnumDataType.HardSkill = "HARDSKILL_TYPE";
+
+    //Enum used to determine the type of datastored in the Main Data structure.
+        var EnumEditState = JSON.parse('{}');
+        EnumEditState.Update = "UPDATE";
+        EnumEditState.Insert = "INSERT";
+
 
         var LocalDataStructure = new Array();
         /*Local Data Store Methods
@@ -958,6 +1178,7 @@
                 spanObjWorkExperienceGlobalStatus.html("Not Yet Edited.");
             }
 
+            //Set Status for the Job Title
             if (txtObjselectedJobTitle.val().length > 0) {
                 spanObjJobTitleGlobalStatus.html("Title: " + txtObjselectedJobTitle.val());
                 spanObjJobTitleGlobalStatus.removeClass("text-warning");
@@ -972,6 +1193,145 @@
         }
         /*End Global Status Update
          * *********************/
+
+
+        /*Final  Submit
+         * ***********/
+        function AddNewWorkExperienceEnrty() {
+            // Collapse all panels
+
+             $(".panel-collapse").removeClass('show');
+            //TODO: cheack that the minimum items been completed.
+            if (DetermineIfMinimumRequirementsHaveBeenCompleted()) {
+               // var _ViewModel = JSON.parse('{}');
+
+                var _ViewModel = BuildReturnData();
+                alert(JSON.stringify(_ViewModel));
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("AddCurriculumVitaeWorkExperienceEntry", "CurriculumVitae")',
+                    data: JSON.stringify(_ViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("RequestVerificationToken",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    dataType: "json",
+                    success: function (data) {
+
+                        //Add industry to select list
+                        //var newOption = new Option(data.companyName, data.id, true, true);
+                        //cboObjCompany.append(newOption).trigger('change');
+                        //txtObjAddCompany.val('');
+                        //UpdateGlobalStatus();
+                        //show success message
+                        //Add To List Of User Interests
+                    dataTablesWorkExperience.row.add([
+                        ' <div class="btn-group full-width">' +
+                            '<button data-toggle="dropdown" class="btn btn-info  full-width dropdown-toggle p-xs"><i style="font-size: 15px;" class="fa fa-gears"></i>&nbsp;Entry Options</button>' +
+                            '<ul class="dropdown-menu    ">' +
+                                '<li>' +
+                                    '<a class="dropdown-item btn btn-large btn-w-m btn-warning text-white text-center p-xs" href="#" onclick="EditSelectedEntry(' + data.id + ');">' +
+                                        '<i class="fa fa-edit" style="font-size: 15px;" ></i>&nbsp;Edit Entry' +
+                                    '</a>' +
+                                '</li>' +
+                                '<li class="dropdown-divider"></li>' +
+                                '<li>' +
+                                    '<a class="dropdown-item btn btn-w-m btn-danger text-white text-center p-xs" onclick="RemoveSelectedEntry(' + data.id + ');">' +
+                                        '<i class="fa fa-remove" style="font-size: 15px;" ></i>&nbsp;Remove Entry' +
+                                    '</a>' +
+                                '</li>' +
+                            '</ul>' +
+                        '</div>',//Adding buttons
+                        cboObjJobTitle.find('option:selected').text(),//Adding Interest TExt
+                        cboObjCompany.find('option:selected').text(),// adding percentage of interest
+                        $(YearStartEmployment).datepicker('getFormattedDate'),//Adding Year Started
+                        $(YearEndedEmployment).datepicker('getFormattedDate')//Adding Year Ended
+                        ]).draw();
+                        showNewWorkExperienceSummary();
+                        toastr.success("Company Successfully Added.", 'Successfull');
+                    },
+                    error: function (data, textStatus, error) {
+
+                        toastr.error("Something went wrong - " + error, 'Error');
+
+                    }
+                });
+            }
+            else {
+                toastr.warning("Please select Company and Job Title for this entry, before adding this entry!", 'Warning');
+            }
+        }
+
+
+
+    function BuildReturnData() {
+        var _ViewModel = JSON.parse('{}');
+
+        _ViewModel.CompanyID = cboObjCompany.val();
+        _ViewModel.CoreKbJobID = cboObjJobTitle.val();
+        _ViewModel.YearStarted = $(YearStartEmployment).datepicker('getFormattedDate');
+        _ViewModel.YearEnded = $(YearEndedEmployment).datepicker('getFormattedDate');
+        _ViewModel.Achievements = $('.click2edit_Achievements').summernote('code');
+        _ViewModel.WorkExperienceDescription = $('.click2edit_WorkExperience').summernote('code');
+        var TempIndusrtyItems = new Array();
+        var TempSkillItems = new Array();
+
+        $.each(LocalDataStructure, function (i, LocalDataItem) {
+            if (LocalDataItem.DataType == EnumDataType.Industry) {
+                 $.merge(TempIndusrtyItems, LocalDataItem.SelectedDataItems);
+            }
+            if (LocalDataItem.DataType == EnumDataType.HardSkill || LocalDataItem.DataType == EnumDataType.SoftSkill) {
+                 $.merge(TempSkillItems, LocalDataItem.SelectedDataItems);
+            }
+        });
+        _ViewModel.ListOfUserRelatedIndustries = TempIndusrtyItems;
+        _ViewModel.ListOfUserSkills = TempSkillItems
+        return _ViewModel;
+    }
+
+        function DetermineIfMinimumRequirementsHaveBeenCompleted() {
+            var Rtn = true;// default retrun value;
+            //Has Company Been selected?
+            if (cboObjCompany.val() == null) {
+                Rtn = false;
+            }
+            if (txtObjselectedJobTitle.val().length == 0) {
+                Rtn = false;
+            }
+            return Rtn;
+        }
+
+    function showNewWorkExperienceWizard(AddEditStatus) {
+        if (AddEditStatus == "ADD") {
+            $("#btnAddNewWorkExperienceEntry").show();
+            $("#btnUpdateExistingWorkExperienceEntry").hide();
+        } else {
+             $("#btnAddNewWorkExperienceEntry").hide();
+            $("#btnUpdateExistingWorkExperienceEntry").show();
+        }
+
+            EditingMode = AddEditStatus;
+            FormInti();
+            divObjWorkExperienceSummary.hide();
+            divObjAddNewWorkExperienceWizard.show();
+
+        }
+
+        function showNewWorkExperienceSummary() {
+            divObjWorkExperienceSummary.show();
+            divObjAddNewWorkExperienceWizard.hide();
+        }
+
+        /*END Final Submit
+         * ***************/
+        /*Job Title Suggestion Tool
+         * *************************/
+        function GenerateJobTitleSuggestions() {
+            toastr.warning("I still working on this section Rudi, Will keep you posted as soon as its done. USE the drop down search function in the mean time. :)", 'Warning');
+
+        }
 
         /*Company Methods
          * ****************/
@@ -1225,6 +1585,7 @@
                 //create new object and initilise it with the values selected.
                 var _SelectedSoftSkillDataObj = JSON.parse('{}');
 
+                _SelectedSoftSkillDataObj.CurrentState = EnumEditState.Insert;
                 _SelectedSoftSkillDataObj.DataType = EnumDataType.SoftSkill; // Type is Industry from the Local ENUM
                 _SelectedSoftSkillDataObj.SelectedCategory = cboObjSelectSoftSkillCategory.find('option:selected').text();
                 _SelectedSoftSkillDataObj.SelectedCategoryID = cboObjSelectSoftSkillCategory.val();
@@ -1462,12 +1823,15 @@
 
         function addSelectedHardSkillDataItemToLocalDataStore() {
             //Test to ensure a selection has been made by the user
+          
             if (cboObjSelectHardSkillCategory.val() != null
                 && cboObjSelectHardSkill.val() !== null
                 && hidCurrentValueOfHardSkillInvolvementObj.val() != 0) {
+                 
                 //create new object and initilise it with the values selected.
                 var _SelectedHardSkillDataObj = JSON.parse('{}');
-
+                
+                _SelectedHardSkillDataObj.CurrentState = EnumEditState.Insert;
                 _SelectedHardSkillDataObj.DataType = EnumDataType.HardSkill; // Type is Industry from the Local ENUM
                 _SelectedHardSkillDataObj.SelectedCategory = cboObjSelectHardSkillCategory.find('option:selected').text();
                 _SelectedHardSkillDataObj.SelectedCategoryID = cboObjSelectHardSkillCategory.val();
@@ -1478,6 +1842,7 @@
                         DataItemLevel: hidCurrentValueOfHardSkillInvolvementObj.val()
                     }
                 ];
+                
                 //Add Newy Created DataItem to the LocalDataStore
                 addDataItemToLocalDataStore(_SelectedHardSkillDataObj, EnumDataType.HardSkill);
                 intialiseSelectHardSkillForm();
@@ -1688,6 +2053,7 @@
                 //create new object and initilise it with the values selected.
                 var _SelectedIndustryDataObj = JSON.parse('{}');
 
+                _SelectedIndustryDataObj.CurrentState = EnumEditState.Insert;
                 _SelectedIndustryDataObj.DataType = EnumDataType.Industry; // Type is Industry from the Local ENUM
                 _SelectedIndustryDataObj.SelectedCategory = cboObjSelectIndustryCategory.find('option:selected').text();
                 _SelectedIndustryDataObj.SelectedCategoryID = cboObjSelectIndustryCategory.val();
@@ -1959,15 +2325,7 @@
         }
         /*END Select Industry Methods
          * ***********************/
-        function showNewWorkExperienceWizard() {
-            divObjWorkExperienceSummary.hide();
-            divObjAddNewWorkExperienceWizard.show();
-        }
 
-        function showNewWorkExperienceSummary() {
-            divObjWorkExperienceSummary.show();
-            divObjAddNewWorkExperienceWizard.hide();
-        }
 
 
 
@@ -2141,7 +2499,10 @@
                 dialogsInBody: true,
                 callbacks: {
                     onChange: function (contents, $editable) {
-                        hidObjWorkExperienceText.val(contents);
+                        if (hidObjWorkExperienceText.val().length < 25) {
+                            hidObjWorkExperienceText.val(contents);
+                        }
+
                         UpdateGlobalStatus();
                     }
                 }
@@ -2163,7 +2524,9 @@
                 dialogsInBody: true,
                 callbacks: {
                     onChange: function (contents, $editable) {
-                        hidObjAchienvementText.val(contents);
+                        if (hidObjAchienvementText.val().length < 25) {
+                            hidObjAchienvementText.val(contents);
+                        }
                         UpdateGlobalStatus();
                     }
                 }
@@ -2327,7 +2690,7 @@
             //cboObjSelectIndustry.val(null).trigger('change');
 
 
-            $('.dataTables-WorkExperience').DataTable({
+            dataTablesWorkExperience = $('.dataTables-WorkExperience').DataTable({
                 pageLength: 10
             });
         });

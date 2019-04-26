@@ -1,5 +1,6 @@
 ﻿using Integrator.Models.Domain.KnowledgeBase.Core;
 using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
+using Integrator.Models.ViewModels.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,10 +23,15 @@ namespace Integrator.Services.KnowledgeBase.Users
 
         void GetUserJobRelatedIndusty(UserJobRelatedIndustry Entity);
         void GetUserJobByCurriculumVitae(int CurriculumVitaeID);
-        void GetUserJobByUser(int UserID);
+        
+        UserJob GetUserJob(int UserJobID);
         List<UserJob> ListUserJobByUser(int UserID);
         List<UserJob> ListUserJobByCurriculumVitae(int CurriculumVitaeID);
         void GetUserJobSkills(UserJobSkill Entity);
+
+        List<UserIndustryViewModel> ListUserIndusrtyPerUserJob(int _UserJobID);
+        List<UserSkillViewModel> ListUserHardSkillsPerUserJob(int _UserJobID);
+        List<UserSkillViewModel> ListUserSoftSkillsPerUserJob(int _UserJobID);
         #endregion
 
         #region Insert Section

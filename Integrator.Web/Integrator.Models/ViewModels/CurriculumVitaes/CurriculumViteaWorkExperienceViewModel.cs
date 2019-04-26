@@ -12,7 +12,8 @@ namespace Integrator.Models.ViewModels.CurriculumVitaes
     {
         public CurriculumViteaWorkExperienceViewModel()
         {
-            SkillsEmployed = new List<UserSkillViewModel>();
+            ListOfHardSkillsEmployed = new List<UserSkillViewModel>();
+            ListOfSoftSkillsEmployed = new List<UserSkillViewModel>();
 
         }
 
@@ -23,6 +24,7 @@ namespace Integrator.Models.ViewModels.CurriculumVitaes
         public string Achievements { get; set; }
         public string WorkExperienceDescription { get; set; }
 
-        public ICollection<UserSkillViewModel> SkillsEmployed { get; set; }
+        public ICollection<UserSkillViewModel> ListOfHardSkillsEmployed { get; set; }
+        public ICollection<UserSkillViewModel> ListOfSoftSkillsEmployed { get; set; }
     }
 }

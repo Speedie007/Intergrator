@@ -9,8 +9,9 @@ namespace Integrator.Models.Domain.KnowledgeBase.IndividualUsers
         
         public int UserJobID { get; set; }
         public int CoreKbIndustryID { get; set; }
-        public int LevelOfIndustInvolvement { get; set; }
-
+        public int LevelOfIndustryInvolvement { get; set; }
+        //LevelOfIndustryInvolvement
+        
         public virtual CoreKbIndustry CoreKbIndustry { get; set; }
         public virtual UserJob UserJob { get; set; }
     }

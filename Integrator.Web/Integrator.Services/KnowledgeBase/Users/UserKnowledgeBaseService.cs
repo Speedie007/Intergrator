@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Integrator.Common;
 using Integrator.Data.Interfaces;
+using Integrator.Models.Domain.EnumClasses;
 using Integrator.Models.Domain.KnowledgeBase.Core;
 using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
+using Integrator.Models.ViewModels.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Integrator.Services.KnowledgeBase.Users
 {
-    
+
     public partial class UserKnowledgeBaseService : IUserKnowledgeBaseService
     {
         #region Fields
@@ -57,9 +59,12 @@ namespace Integrator.Services.KnowledgeBase.Users
             throw new NotImplementedException();
         }
 
-        public void GetUserJob(UserJob Entity)
+
+        public UserJob GetUserJob(int UserJobID)
         {
-            throw new NotImplementedException();
+            var query = _userJobRepository.Table.Where(x => x.Id == UserJobID);
+
+            return query.FirstOrDefault();
         }
 
         public void GetUserJobByCurriculumVitae(int CurriculumVitaeID)
@@ -72,10 +77,7 @@ namespace Integrator.Services.KnowledgeBase.Users
             throw new NotImplementedException();
         }
 
-        public void GetUserJobByUser(int UserID)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public void GetUserJobRelatedIndusty(UserJobRelatedIndustry Entity)
         {
@@ -85,6 +87,43 @@ namespace Integrator.Services.KnowledgeBase.Users
         public void GetUserJobSkills(UserJobSkill Entity)
         {
             throw new NotImplementedException();
+        }
+
+        public List<UserSkillViewModel> ListUserHardSkillsPerUserJob(int _UserJobID)
+        {
+            return (from a in _userJobSkillRepository.Table
+             .Include(x => x.CoreKbSkill)
+             .Include(x => x.CoreKbSkill.CoreSkillCategory)
+             .Include(x => x.CoreKbSkill.CoreSkillCategory.CoreKbSkillType)
+                    where a.CoreKbSkill.CoreSkillCategory.CoreKbSkillType.Id == (int)EnumKbSkillType.HardSkill &&
+                     a.UserJobID == _UserJobID
+                    select
+                     new UserSkillViewModel()
+                     {
+                         Id = a.CoreKbSkillID,
+                         JobSkill = a.CoreKbSkill.CoreSkill,
+                         SkillType = EnumKbSkillType.HardSkill,
+                         SkillLevel = a.UserJobSkillLevel,
+                         SkillCategoryName = a.CoreKbSkill.CoreSkillCategory.CoreSkillCategoryName,
+                         SkillCategoryID = a.CoreKbSkill.CoreSkillCategoryID
+                     }).ToList();
+        }
+
+        public List<UserIndustryViewModel> ListUserIndusrtyPerUserJob(int _UserJobID)
+        {
+            return (from a in _userJobRelatedIndustryRepository.Table
+             .Include(x => x.CoreKbIndustry)
+             .Include(x => x.CoreKbIndustry.CoreKbIndustryCategory)
+                    where a.UserJobID == _UserJobID
+                    select
+                     new UserIndustryViewModel()
+                     {
+                         Id = a.CoreKbIndustryID,
+                         JobIndustry = a.CoreKbIndustry.CoreKbIndustryName,
+                         IndustryLevelInvolvement = a.LevelOfIndustryInvolvement,
+                         IndustryCategoryName = a.CoreKbIndustry.CoreKbIndustryCategory.CoreKbIndustryCategoryName,
+                         IndustryCategoryID = a.CoreKbIndustry.CoreKbIndustryCategoryID
+                     }).ToList();
         }
 
         public List<UserJob> ListUserJobByCurriculumVitae(int CurriculumVitaeID)
@@ -97,12 +136,32 @@ namespace Integrator.Services.KnowledgeBase.Users
 
             query = query.OrderByDescending(x => x.DateStarted).ThenByDescending(x => x.DateEnded);
 
-            return  query.ToList();
+            return query.ToList();
         }
 
         public List<UserJob> ListUserJobByUser(int UserID)
         {
             throw new NotImplementedException();
+        }
+
+        public List<UserSkillViewModel> ListUserSoftSkillsPerUserJob(int _UserJobID)
+        {
+            return (from a in _userJobSkillRepository.Table
+            .Include(x => x.CoreKbSkill)
+            .Include(x => x.CoreKbSkill.CoreSkillCategory)
+            .Include(x => x.CoreKbSkill.CoreSkillCategory.CoreKbSkillType)
+                    where a.CoreKbSkill.CoreSkillCategory.CoreKbSkillType.Id == (int)EnumKbSkillType.SoftSkill &&
+                     a.UserJobID == _UserJobID
+                    select
+                     new UserSkillViewModel()
+                     {
+                         Id = a.CoreKbSkillID,
+                         JobSkill = a.CoreKbSkill.CoreSkill,
+                         SkillType = EnumKbSkillType.SoftSkill,
+                         SkillLevel = a.UserJobSkillLevel,
+                         SkillCategoryName = a.CoreKbSkill.CoreSkillCategory.CoreSkillCategoryName,
+                         SkillCategoryID = a.CoreKbSkill.CoreSkillCategoryID
+                     }).ToList();
         }
 
         public void RemoveUserJob(UserJob Entity)

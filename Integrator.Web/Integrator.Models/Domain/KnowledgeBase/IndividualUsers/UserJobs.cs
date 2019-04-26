@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Integrator.Models.Domain.KnowledgeBase.IndividualUsers
 {
+    [Serializable]
     public partial class UserJob : BaseEntity
     {
         public UserJob()
