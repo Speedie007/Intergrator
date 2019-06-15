@@ -41,7 +41,7 @@ namespace Integrator.Common
         {
             string Rtn = "";
             
-            char[] CharSplit = { new char(), new char() , new char() };
+            
             string[] values = _Values.Split(String.Empty);
 
             TextInfo ti = CultureInfo.CurrentCulture.TextInfo;

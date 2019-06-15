@@ -4,12 +4,12 @@
     [ContactFirstName]                         VARCHAR (100) NOT NULL,
     [ContactLastName]                          VARCHAR (100) NOT NULL,
     [HasBeenVerified]                          BIT           NOT NULL,
-    CONSTRAINT [PK_CurriculumVitaeWorkExperienceReferences] PRIMARY KEY CLUSTERED ([CurriculumVitaeWorkExperienceReferenceID] ASC),
-    CONSTRAINT [FK_CurriculumVitaeWorkExperienceReferences_CurriculumViteaWorkExperiences] FOREIGN KEY ([CurriculumViteaWorkExperienceID]) REFERENCES [dbo].[CurriculumViteaWorkExperiences] ([CurriculumViteaWorkExperienceID])
+    CONSTRAINT [PK_CurriculumVitaeWorkExperienceReferences] PRIMARY KEY CLUSTERED ([CurriculumVitaeWorkExperienceReferenceID] ASC)
 );
 
 
+
+
 GO
-CREATE NONCLUSTERED INDEX [IX_CurriculumVitaeWorkExperienceReferences_CurriculumViteaWorkExperienceID]
-    ON [dbo].[CurriculumVitaeWorkExperienceReferences]([CurriculumViteaWorkExperienceID] ASC);
+
 

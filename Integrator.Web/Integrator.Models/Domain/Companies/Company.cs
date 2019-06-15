@@ -12,9 +12,12 @@ namespace Integrator.Models.Domain.Companies
 {
     public partial class Company : BaseEntity
     {
-
+       
         public Company()
         {
+            CompanyRepresentatives = new HashSet<CompanyRepresentative>();
+            CompanyAddresses = new HashSet<CompanyAddress>();
+            CompanyContactDetails = new HashSet<CompanyContactDetail>();
             CompanyJobs = new HashSet<CompanyJob>();
             CompanyRelatedIndustries = new HashSet<CompanyRelatedIndustry>();
             #region CV
@@ -31,6 +34,10 @@ namespace Integrator.Models.Domain.Companies
 
         public virtual ICollection<UserJob> UserJobs { get; set; }
         //public virtual ICollection<CurriculumViteaWorkExperiences> CurriculumViteaWorkExperiences { get; set; }
+
+        public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
+        public virtual ICollection<CompanyContactDetail> CompanyContactDetails { get; set; }
+        public virtual ICollection<CompanyRepresentative> CompanyRepresentatives { get; set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace Integrator.Services.KnowledgeBase.Users
         #region Delete Section
 
         void RemoveUserJobRelatedIndusty(UserJobRelatedIndustry Entity);
-        void RemoveUserJob(UserJob Entity);
+        void RemoveUserJob(int UserJobID);
         void RemoveUserJobSkills(UserJobSkill Entity);
 
         #endregion

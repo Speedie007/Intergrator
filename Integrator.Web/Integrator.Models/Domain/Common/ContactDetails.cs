@@ -1,4 +1,5 @@
-﻿using Integrator.Models.Domain.CurriculumVitaes;
+﻿using Integrator.Models.Domain.Companies;
+using Integrator.Models.Domain.CurriculumVitaes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,10 +9,12 @@ namespace Integrator.Models.Domain.Common
 {
     public partial class ContactDetail : BaseEntity
     {
+        
         public ContactDetail()
         {
             IntegratorUserContactDetails = new HashSet<IntegratorUserContactDetail>();
             WorkExperienceReferenceContactDetails = new HashSet<WorkExperienceReferenceContactDetail>();
+            CompanyContactDetails = new HashSet<CompanyContactDetail>();
         }
 
         
@@ -23,5 +26,6 @@ namespace Integrator.Models.Domain.Common
         public virtual ContactDetailType ContactDetailType { get; set; }
         public virtual ICollection<IntegratorUserContactDetail> IntegratorUserContactDetails { get; set; }
         public virtual ICollection<WorkExperienceReferenceContactDetail> WorkExperienceReferenceContactDetails { get; set; }
+        public virtual ICollection<CompanyContactDetail> CompanyContactDetails { get; set; }
     }
 }

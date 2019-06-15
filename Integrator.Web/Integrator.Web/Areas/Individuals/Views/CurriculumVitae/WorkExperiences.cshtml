@@ -174,7 +174,7 @@
                                             </div>
                                             <hr />
                                             <input type="text" class="form-control" id="txtAddCompany" placeholder="Add Companay Here" />
-                                            <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="AddCompany();">
+                                            <button style="margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="AddCompany();">
                                                 <i class="fa fa-plus">&nbsp;Add Company Name</i>
                                             </button>
                                             <hr />
@@ -401,7 +401,7 @@
                                                         </li>
                                                         <li class="dropdown-divider"></li>
                                                         <li>
-                                                            <a class="dropdown-item btn btn-w-m btn-danger text-white text-center p-xs" onclick="RemoveSelectedEntry(@item.Id);">
+                                                            <a class="dropdown-item btn btn-w-m btn-danger text-white text-center p-xs datatable-RemoveItem" onclick="RemoveSelectedEntry(@item.Id,this);">
                                                                 <i class="fa fa-remove" style="font-size: 15px;"></i>&nbsp;Remove Entry
                                                             </a>
                                                         </li>
@@ -737,7 +737,7 @@
 
                         <button style="        margin-top: 5px;" type="button" class="btn btn-info full-width" onclick="showAddSoftSkill();"><i class="fa fa-plus">&nbsp;Add Industry</i></button>
                     </div>
-                    <div class="col-lg-12" style="        display: none;" id="divAddSoftSkillContainer">
+                    <div class="col-lg-12" style="display: none;" id="divAddSoftSkillContainer">
 
                         <h2>Add Soft Skill.</h2>
                         <small>*To revert back to the selection option select cancel or add new Skill.</small>
@@ -782,7 +782,7 @@
                                     <td id="AddSoftSkillSummary-Category"></td>
                                     <td id="AddSoftSkillSummary-Industry"> </td>
                                     <td id="AddSoftSkillSummary-CompetencyLevel">
-                                        <div class="progress" style="        background-color: #ffffff;">
+                                        <div class="progress" style="background-color: #ffffff;">
                                             <div id="SoftSkillCompetencyLevelSummary" style="        width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar bg-success">
 
                                             </div>
@@ -922,10 +922,9 @@
                     }
                 });
     }
-    function RemoveSelectedEntry(UserJobID) {
+    function RemoveSelectedEntry(UserJobID,RemoveItemObj) {
 
-        var _ViewModel = JSON.parse('{}');
-        _ViewModel.ID = UserJobID;
+
 
          swal({
                 title: "Are you sure you wish to remove?",
@@ -935,7 +934,10 @@
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes, Remove CV Entry!",
                 closeOnConfirm: true
-            }, function () {
+         }, function () {
+              var _ViewModel = JSON.parse('{}');
+                _ViewModel.ID = UserJobID;
+                alert(JSON.stringify(_ViewModel));
                   $.ajax({
                     type: "post",
                     url: '@Url.Action("RemoveCurriculumVitaeWorkExperienceEntry", "CurriculumVitae")',
@@ -946,7 +948,13 @@
                             $('input:hidden[name="__RequestVerificationToken"]').val());
                     },
                     dataType: "json",
-                    success: function (data) {
+                      success: function (data) {
+
+
+                         dataTablesWorkExperience
+                                .row( $(RemoveItemObj).parents('tr') )
+                                .remove()
+                                .draw();
                         toastr.success("Curriculum Vitae Entry has been successfully removed!", 'Successfull');
                     },
                     error: function (data, textStatus, error) {
@@ -956,12 +964,14 @@
                     }
                 });
                 //swal("Removed!", "Your Curriculam Entry has been removed.", "success");
-                
+
             });
         var _ViewModel = "";
 
-      
+
     }
+
+
 
 
 
@@ -1238,7 +1248,7 @@
                                 '</li>' +
                                 '<li class="dropdown-divider"></li>' +
                                 '<li>' +
-                                    '<a class="dropdown-item btn btn-w-m btn-danger text-white text-center p-xs" onclick="RemoveSelectedEntry(' + data.id + ');">' +
+                                    '<a  class="dropdown-item btn btn-w-m btn-danger text-white text-center p-xs datatable-RemoveItem" onclick="RemoveSelectedEntry(' + data.id + ',this);">' +
                                         '<i class="fa fa-remove" style="font-size: 15px;" ></i>&nbsp;Remove Entry' +
                                     '</a>' +
                                 '</li>' +
@@ -1529,7 +1539,7 @@
             if (CoreCategoryID != null) {
 
                 _ViewModel.ID = CoreCategoryID;
-
+                debugger;
                 $.ajax({
                     type: "post",
                     url: '@Url.Action("GetSkillsByCategory", "KnowledgeBase")',
@@ -1823,14 +1833,14 @@
 
         function addSelectedHardSkillDataItemToLocalDataStore() {
             //Test to ensure a selection has been made by the user
-          
+
             if (cboObjSelectHardSkillCategory.val() != null
                 && cboObjSelectHardSkill.val() !== null
                 && hidCurrentValueOfHardSkillInvolvementObj.val() != 0) {
-                 
+
                 //create new object and initilise it with the values selected.
                 var _SelectedHardSkillDataObj = JSON.parse('{}');
-                
+
                 _SelectedHardSkillDataObj.CurrentState = EnumEditState.Insert;
                 _SelectedHardSkillDataObj.DataType = EnumDataType.HardSkill; // Type is Industry from the Local ENUM
                 _SelectedHardSkillDataObj.SelectedCategory = cboObjSelectHardSkillCategory.find('option:selected').text();
@@ -1842,7 +1852,7 @@
                         DataItemLevel: hidCurrentValueOfHardSkillInvolvementObj.val()
                     }
                 ];
-                
+
                 //Add Newy Created DataItem to the LocalDataStore
                 addDataItemToLocalDataStore(_SelectedHardSkillDataObj, EnumDataType.HardSkill);
                 intialiseSelectHardSkillForm();
@@ -2659,6 +2669,8 @@
                 LoadSoftSkills($(this).val());
                 setSoftSkillSelectionSummary();
             });
+
+
             cboObjSelectSoftSkill.change(function () {
                 setSoftSkillSelectionSummary();
             });

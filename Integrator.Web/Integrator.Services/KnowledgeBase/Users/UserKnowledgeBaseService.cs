@@ -164,9 +164,21 @@ namespace Integrator.Services.KnowledgeBase.Users
                      }).ToList();
         }
 
-        public void RemoveUserJob(UserJob Entity)
+        public void RemoveUserJob(int UserJobID)
         {
-            throw new NotImplementedException();
+            var USerJobToDelete = _userJobRepository.GetById(UserJobID);
+
+            try
+            {
+                if (USerJobToDelete != null)
+                {
+                    _userJobRepository.Delete(USerJobToDelete);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public void RemoveUserJobRelatedIndusty(UserJobRelatedIndustry Entity)

@@ -23,20 +23,17 @@ namespace Integrator.Data.Mapping.KnownledgeBase.IndividualUser
             builder.Property(e => e.Id)
                 .HasColumnName("UserJobSkillID");
 
-
-
             builder.HasOne(d => d.CoreKbSkill)
                       .WithMany(x => x.UserJobSkills)
                       .HasForeignKey(d => d.CoreKbSkillID)
-                      .OnDelete(DeleteBehavior.Restrict)
+                      .OnDelete(DeleteBehavior.Cascade)
                       .HasConstraintName("FK_UserJobSkills_CoreKBSkills");
 
             builder.HasOne(d => d.UserJob)
                 .WithMany(p => p.UserJobSkills)
                 .HasForeignKey(d => d.UserJobID)
-                .OnDelete(DeleteBehavior.Restrict)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_UserJobSkills_UserJobs");
-
 
             base.Configure(builder);
         }

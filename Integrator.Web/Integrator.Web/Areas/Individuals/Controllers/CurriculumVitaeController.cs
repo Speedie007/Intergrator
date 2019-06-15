@@ -25,7 +25,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
+using Integrator.Services.KnowledgeBase.Users;
 namespace Integrator.Web.Areas.Individuals.Controllers
 {
     [Area("Individuals")]
@@ -41,6 +41,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         private IEntityCRUDResponse _entityCRUDResponse;
         private readonly IInterestService _interestService;
         private readonly ICompanyService _companyService;
+        private readonly IUserKnowledgeBaseService _userKnowledgeBaseService;
 
         #endregion
 
@@ -52,7 +53,8 @@ namespace Integrator.Web.Areas.Individuals.Controllers
                 IEducationInstitutionService educationInstitutionService,
                 IEntityCRUDResponse entityCRUDResponse,
                 IInterestService interestService,
-                ICompanyService companyService
+                ICompanyService companyService,
+                IUserKnowledgeBaseService userKnowledgeBaseService
             )
         {
             this._curriculumVitaeViewModelFactory = curriculumVitaeViewModelFactory;
@@ -62,7 +64,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
             this._entityCRUDResponse = entityCRUDResponse;
             this._interestService = interestService;
             this._companyService = companyService;
-
+            this._userKnowledgeBaseService = userKnowledgeBaseService;
         }
         #endregion
 
@@ -410,11 +412,9 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RemoveCurriculumVitaeWorkExperienceEntry([FromBody] DropDownRequest model)
         {
-            var UserCurriculumVitae = _curriculumVitaeService.GetCurriculumVitea(_userService.GetUserID());
+            _userKnowledgeBaseService.RemoveUserJob(model.ID);
 
-            _curriculumVitaeServic
-
-            return Json("");
+            return Json("Success");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -484,7 +484,7 @@ namespace Integrator.Web.Areas.Individuals.Controllers
         public IActionResult AddCompanyToDatabase([FromBody] DropDownRequest model)
         {
 
-            var _Entity = new Company()
+            var _Entity = new Integrator.Models.Domain.Companies.Company()
             {
                 CompanyName = CommonHelper.CapitaliseAllWords(model.TEXT)
             };

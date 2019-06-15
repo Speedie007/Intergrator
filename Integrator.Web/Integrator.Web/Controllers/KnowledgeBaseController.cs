@@ -17,7 +17,7 @@ namespace Integrator.Web.Controllers
 
         #region Fields
 
-        
+
         private readonly ICoreKnowledgeBaseService _coreKnowledgeBaseService;
         #endregion
 
@@ -26,7 +26,7 @@ namespace Integrator.Web.Controllers
         public KnowledgeBaseController(
             ICoreKnowledgeBaseService coreKnowledgeBaseService)
         {
-            
+
             this._coreKnowledgeBaseService = coreKnowledgeBaseService;
         }
         #endregion
@@ -57,9 +57,9 @@ namespace Integrator.Web.Controllers
                               select new
                               {
                                   ID = a.Id,
-                                 // Options = "<div></div>",
+                                  // Options = "<div></div>",
 
-                                  Skill = a.CoreSkill,
+                                  Skill = CommonHelper.CapitaliseAllWords(a.CoreSkill),
                                   SkillCategoryID = a.CoreSkillCategoryID
                               }).ToList();
 
@@ -73,7 +73,7 @@ namespace Integrator.Web.Controllers
             var _Entity = new CoreSkillCategory()
             {
                 CoreKbSkillTypeID = model.ID,
-                CoreSkillCategoryName = model.TEXT
+                CoreSkillCategoryName = CommonHelper.CapitaliseAllWords(model.TEXT)
             };
             _coreKnowledgeBaseService.AddSkillCategory(_Entity);
 
@@ -87,7 +87,7 @@ namespace Integrator.Web.Controllers
             var _Entity = new CoreKbSkill()
             {
                 CoreSkillCategoryID = model.ID,
-                CoreSkill = model.TEXT
+                CoreSkill = CommonHelper.CapitaliseAllWords(model.TEXT)
             };
             _coreKnowledgeBaseService.AddSkill(_Entity);
 
@@ -103,7 +103,7 @@ namespace Integrator.Web.Controllers
         {
             var entity = new CoreKbIndustry()
             {
-                CoreKbIndustryName = model.TEXT,
+                CoreKbIndustryName = CommonHelper.CapitaliseAllWords(model.TEXT),
                 CoreKbIndustryCategoryID = model.ID
             };
             try
@@ -124,7 +124,7 @@ namespace Integrator.Web.Controllers
         {
             var entity = new CoreKbIndustryCategory()
             {
-                CoreKbIndustryCategoryName = model.TEXT
+                CoreKbIndustryCategoryName = CommonHelper.CapitaliseAllWords(model.TEXT)
             };
             try
             {
@@ -151,7 +151,7 @@ namespace Integrator.Web.Controllers
                               {
                                   ID = a.Id,
                                   //Options = "<div></div>",
-                                  Industry = a.CoreKbIndustryName,
+                                  Industry = CommonHelper.CapitaliseAllWords(a.CoreKbIndustryName),
                                   IndustryCategoryID = a.CoreKbIndustryCategoryID
                               }).ToList();
 

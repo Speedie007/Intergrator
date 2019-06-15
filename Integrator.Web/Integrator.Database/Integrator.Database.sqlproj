@@ -72,20 +72,8 @@
     <Build Include="dbo\Tables\IntegratorRoleClaims.sql" />
     <Build Include="dbo\Tables\UserPictures.sql" />
     <Build Include="dbo\Tables\UserFiles.sql" />
-    <Build Include="dbo\Tables\IntegratorUserIndustryCategoryJobSkillSets.sql" />
-    <Build Include="dbo\Tables\IntegratorUserIndustryCategoryJobs.sql" />
-    <Build Include="dbo\Tables\IntegratorUserIndustryCategories.sql" />
-    <Build Include="dbo\Tables\IntegratorUserIndustries.sql" />
     <Build Include="dbo\Tables\IntegratorFiles.sql" />
-    <Build Include="dbo\Tables\CoreKBIndustryTypes.sql" />
-    <Build Include="dbo\Tables\CoreKBIndustryCategoryJobSkillSets.sql" />
-    <Build Include="dbo\Tables\CoreKBIndustryCategoryJobs.sql" />
     <Build Include="dbo\Tables\CoreKBIndustryCategories.sql" />
-    <Build Include="dbo\Tables\CompanyIndustryCategoryJobSkillSets.sql" />
-    <Build Include="dbo\Tables\CompanyIndustryCategoryJobs.sql" />
-    <Build Include="dbo\Tables\CompanyIndustryCategories.sql" />
-    <Build Include="dbo\Tables\CompanyIndustries.sql" />
-    <Build Include="dbo\Tables\Company.sql" />
     <Build Include="dbo\Tables\Addresses.sql" />
     <Build Include="dbo\Tables\__EFMigrationsHistory.sql" />
     <Build Include="dbo\Tables\InegratorFileBlobs.sql" />
@@ -96,8 +84,6 @@
     <Build Include="dbo\Tables\IntegratorUserInterests.sql" />
     <Build Include="dbo\Tables\IntegratorUserAwards.sql" />
     <Build Include="dbo\Tables\EductaionalInstitutions.sql" />
-    <Build Include="dbo\Tables\CurriculumViteaWorkExperienceSkillSets.sql" />
-    <Build Include="dbo\Tables\CurriculumViteaWorkExperiences.sql" />
     <Build Include="dbo\Tables\CurriculumViteas.sql" />
     <Build Include="dbo\Tables\IntegratorUserContactDetails.sql" />
     <Build Include="dbo\Tables\ContactDetailTypes.sql" />
@@ -105,5 +91,23 @@
     <Build Include="dbo\Tables\WorkExperienceReferenceContactDetails.sql" />
     <Build Include="dbo\Tables\Interests.sql" />
     <Build Include="dbo\Tables\CurriculumVitaeWorkExperienceReferences.sql" />
+    <Build Include="dbo\Tables\UserJobSkills.sql" />
+    <Build Include="dbo\Tables\UserJobs.sql" />
+    <Build Include="dbo\Tables\UserJobRelatedIndustries.sql" />
+    <Build Include="dbo\Tables\CoreSkillCategories.sql" />
+    <Build Include="dbo\Tables\CoreKbSkillTypes.sql" />
+    <Build Include="dbo\Tables\CoreKbSkills.sql" />
+    <Build Include="dbo\Tables\CoreKbJobSkills.sql" />
+    <Build Include="dbo\Tables\CoreKbJobs.sql" />
+    <Build Include="dbo\Tables\CoreKbIndustryJobs.sql" />
+    <Build Include="dbo\Tables\CoreKbIndustries.sql" />
+    <Build Include="dbo\Tables\CompanyRepresentatives.sql" />
+    <Build Include="dbo\Tables\CompanyRelatedIndustries.sql" />
+    <Build Include="dbo\Tables\CompanyJobSkills.sql" />
+    <Build Include="dbo\Tables\CompanyJobs.sql" />
+    <Build Include="dbo\Tables\CompanyJobRelatedIndustries.sql" />
+    <Build Include="dbo\Tables\CompanyJobListings.sql" />
+    <Build Include="dbo\Tables\CompanyAddresses.sql" />
+    <Build Include="dbo\Tables\Companies.sql" />
   </ItemGroup>
 </Project>

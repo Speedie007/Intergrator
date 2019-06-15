@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Integrator.Models.Interfaces;
+using Integrator.Models.Domain.Companies;
 
 namespace Integrator.Models.Domain.Addresses
 {
     public abstract partial class Address : BaseEntity, IAddress
     {
-
+        public Address()
+        {
+            CompanyAddresses = new HashSet<CompanyAddress>();
+        }
         public virtual string City { get; set; }
         public virtual string Suburb { get; set; }
         public virtual string AreaCode { get; set; }
@@ -19,6 +23,8 @@ namespace Integrator.Models.Domain.Addresses
 
         public virtual string Country { get; set; }
         public virtual IntegratorUser IntegratorUser { get; set; }
+
+        public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
     }
 
     public partial class POBoxAddress : Address
