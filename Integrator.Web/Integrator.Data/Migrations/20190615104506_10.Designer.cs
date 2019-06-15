@@ -5,14 +5,16 @@ using Integrator.Models.Domain.Addresses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Integrator.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190615104506_10")]
+    partial class _10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -524,26 +526,6 @@ namespace Integrator.Data.Migrations
                     b.ToTable("CompanyJobListings");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobRepresentitive", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyJobRepresentitiveID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyJobID");
-
-                    b.Property<int>("CompanyRepresentativeID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyJobID");
-
-                    b.HasIndex("CompanyRepresentativeID");
-
-                    b.ToTable("CompanyJobRepresentitives");
-                });
-
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", b =>
                 {
                     b.Property<int>("Id")
@@ -562,31 +544,6 @@ namespace Integrator.Data.Migrations
                     b.HasIndex("CoreKbIndustryID");
 
                     b.ToTable("CompanyRelatedIndustries");
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustryRepresentive", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyRelatedIndustryRepresentiveID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyRelatedIndustryID");
-
-                    b.Property<int>("CompanyRepresentativeID");
-
-                    b.Property<DateTime>("DateAssigned")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyRelatedIndustryID");
-
-                    b.HasIndex("CompanyRepresentativeID");
-
-                    b.ToTable("CompanyRelatedIndustryRepresentives");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRepresentative", b =>
@@ -1635,21 +1592,6 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobRepresentitive", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
-                        .WithMany("CompanyJobRepresentitives")
-                        .HasForeignKey("CompanyJobID")
-                        .HasConstraintName("FK_CompanyJobRepresentitives_CompanyJobs")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRepresentative", "CompanyRepresentative")
-                        .WithMany("CompanyJobRepresentitives")
-                        .HasForeignKey("CompanyRepresentativeID")
-                        .HasConstraintName("FK_CompanyJobRepresentitives_CompanyRepresentatives")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", b =>
                 {
                     b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
@@ -1662,21 +1604,6 @@ namespace Integrator.Data.Migrations
                         .WithMany("CompanyRelatedIndustries")
                         .HasForeignKey("CoreKbIndustryID")
                         .HasConstraintName("FK_CompanyRelatedIndustries_CoreKbIndustries")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustryRepresentive", b =>
-                {
-                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", "CompanyRelatedIndustry")
-                        .WithMany("CompanyRelatedIndustryRepresentives")
-                        .HasForeignKey("CompanyRelatedIndustryID")
-                        .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRelatedIndustries")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRepresentative", "CompanyRepresentative")
-                        .WithMany("CompanyRelatedIndustryRepresentives")
-                        .HasForeignKey("CompanyRepresentativeID")
-                        .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRepresentatives")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

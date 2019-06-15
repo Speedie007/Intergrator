@@ -7,3 +7,15 @@
     CONSTRAINT [FK_CompanyAddresses_Companies] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Companies] ([CompanyID])
 );
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_CompanyAddresses_CompanyID]
+    ON [dbo].[CompanyAddresses]([CompanyID] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_CompanyAddresses_AddressID]
+    ON [dbo].[CompanyAddresses]([AddressID] ASC);
+

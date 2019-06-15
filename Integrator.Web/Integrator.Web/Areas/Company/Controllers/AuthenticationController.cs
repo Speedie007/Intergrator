@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Integrator.Web.Areas.Company.Controllers
 {
+    [Area("Company")]
     public class AuthenticationController : Controller
     {
         #region Fields

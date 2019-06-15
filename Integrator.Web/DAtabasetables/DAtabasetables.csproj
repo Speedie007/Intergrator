@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Addresses.cs" />
     <Compile Remove="Companies.cs" />
     <Compile Remove="CurriculumViteaWorkExperiences.cs" />
     <Compile Remove="Entities\Custom\Company.cs" />

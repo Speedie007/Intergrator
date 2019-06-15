@@ -15,20 +15,18 @@ namespace DAtabasetables
         {
         }
 
-        public virtual DbSet<Addresses> Addresses { get; set; }
-        public virtual DbSet<Companies> Companies { get; set; }
-        public virtual DbSet<CompanyAddresses> CompanyAddresses { get; set; }
-        public virtual DbSet<CompanyContactDetails> CompanyContactDetails { get; set; }
+        public virtual DbSet<CompanyJobRepresentitives> CompanyJobRepresentitives { get; set; }
+        public virtual DbSet<CompanyJobs> CompanyJobs { get; set; }
+        public virtual DbSet<CompanyRelatedIndustries> CompanyRelatedIndustries { get; set; }
+        public virtual DbSet<CompanyRelatedIndustryRepresentives> CompanyRelatedIndustryRepresentives { get; set; }
         public virtual DbSet<CompanyRepresentatives> CompanyRepresentatives { get; set; }
-        public virtual DbSet<ContactDetails> ContactDetails { get; set; }
-        public virtual DbSet<IntegratorUsers> IntegratorUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-BLJSHVF;Initial Catalog=IntegratorTableDesgin;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=IntegratorTableDesgin;Integrated Security=True");
             }
         }
 
@@ -36,140 +34,105 @@ namespace DAtabasetables
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
-            modelBuilder.Entity<Addresses>(entity =>
+            modelBuilder.Entity<CompanyJobRepresentitives>(entity =>
             {
-                entity.HasKey(e => e.AddressId);
+                entity.HasKey(e => e.CompanyJobRepresentitiveId);
 
-                entity.HasIndex(e => e.IntegratorUserId);
+                entity.Property(e => e.CompanyJobRepresentitiveId).HasColumnName("CompanyJobRepresentitiveID");
 
-                entity.Property(e => e.AddressId).HasColumnName("AddressID");
+                entity.Property(e => e.CompanyJobId).HasColumnName("CompanyJobID");
 
-                entity.Property(e => e.CountryId).HasColumnName("CountryID");
+                entity.Property(e => e.CompanyRepresentativeId).HasColumnName("CompanyRepresentativeID");
 
-                entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
+                entity.HasOne(d => d.CompanyJob)
+                    .WithMany(p => p.CompanyJobRepresentitives)
+                    .HasForeignKey(d => d.CompanyJobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CompanyJobRepresentitives_CompanyJobs");
 
-                entity.Property(e => e.PoboxNumber).HasColumnName("POBoxNumber");
-
-                entity.HasOne(d => d.IntegratorUser)
-                    .WithMany(p => p.Addresses)
-                    .HasForeignKey(d => d.IntegratorUserId);
+                entity.HasOne(d => d.CompanyRepresentative)
+                    .WithMany(p => p.CompanyJobRepresentitives)
+                    .HasForeignKey(d => d.CompanyRepresentativeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CompanyJobRepresentitives_CompanyRepresentatives");
             });
 
-            modelBuilder.Entity<Companies>(entity =>
+            modelBuilder.Entity<CompanyJobs>(entity =>
             {
-                entity.HasKey(e => e.CompanyId);
+                entity.HasKey(e => e.CompanyJobId);
+
+                entity.HasIndex(e => e.CompanyId);
+
+                entity.HasIndex(e => e.CoreKbjobId)
+                    .HasName("IX_CompanyJobs_CoreKbJobID");
+
+                entity.Property(e => e.CompanyJobId).HasColumnName("CompanyJobID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
 
-                entity.Property(e => e.CompanyName).HasMaxLength(150);
+                entity.Property(e => e.CoreKbjobId).HasColumnName("CoreKBJobID");
+
+                entity.Property(e => e.JobDescription)
+                    .IsRequired()
+                    .IsUnicode(false);
             });
 
-            modelBuilder.Entity<CompanyAddresses>(entity =>
+            modelBuilder.Entity<CompanyRelatedIndustries>(entity =>
             {
-                entity.HasKey(e => e.CompanyAddressId);
+                entity.HasKey(e => e.CompanyRelatedIndustryId);
 
-                entity.Property(e => e.CompanyAddressId).HasColumnName("CompanyAddressID");
+                entity.HasIndex(e => e.CompanyId);
 
-                entity.Property(e => e.AddressId).HasColumnName("AddressID");
+                entity.HasIndex(e => e.CoreKbindustryId)
+                    .HasName("IX_CompanyRelatedIndustries_CoreKbIndustryID");
+
+                entity.Property(e => e.CompanyRelatedIndustryId).HasColumnName("CompanyRelatedIndustryID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
 
-                entity.HasOne(d => d.Address)
-                    .WithMany(p => p.CompanyAddresses)
-                    .HasForeignKey(d => d.AddressId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyAddresses_Addresses");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.CompanyAddresses)
-                    .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyAddresses_Companies");
+                entity.Property(e => e.CoreKbindustryId).HasColumnName("CoreKBIndustryID");
             });
 
-            modelBuilder.Entity<CompanyContactDetails>(entity =>
+            modelBuilder.Entity<CompanyRelatedIndustryRepresentives>(entity =>
             {
-                entity.HasKey(e => e.CompanyContactDetailId);
+                entity.HasKey(e => e.CompanyRelatedIndustryRepresentiveId);
 
-                entity.Property(e => e.CompanyContactDetailId).HasColumnName("CompanyContactDetailID");
+                entity.Property(e => e.CompanyRelatedIndustryRepresentiveId).HasColumnName("CompanyRelatedIndustryRepresentiveID");
 
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
+                entity.Property(e => e.CompanyRelatedIndustryId).HasColumnName("CompanyRelatedIndustryID");
 
-                entity.Property(e => e.ContactDetailId).HasColumnName("ContactDetailID");
+                entity.Property(e => e.CompanyRepresentativeId).HasColumnName("CompanyRepresentativeID");
 
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.CompanyContactDetails)
-                    .HasForeignKey(d => d.CompanyId)
+                entity.Property(e => e.DateAssigned)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.CompanyRelatedIndustry)
+                    .WithMany(p => p.CompanyRelatedIndustryRepresentives)
+                    .HasForeignKey(d => d.CompanyRelatedIndustryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyContactDetails_Companies");
+                    .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRelatedIndustries");
 
-                entity.HasOne(d => d.ContactDetail)
-                    .WithMany(p => p.CompanyContactDetails)
-                    .HasForeignKey(d => d.ContactDetailId)
+                entity.HasOne(d => d.CompanyRepresentative)
+                    .WithMany(p => p.CompanyRelatedIndustryRepresentives)
+                    .HasForeignKey(d => d.CompanyRepresentativeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyContactDetails_ContactDetails");
+                    .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRepresentatives");
             });
 
             modelBuilder.Entity<CompanyRepresentatives>(entity =>
             {
                 entity.HasKey(e => e.CompanyRepresentativeId);
 
+                entity.HasIndex(e => e.CompanyId);
+
+                entity.HasIndex(e => e.IntegratorUserId);
+
                 entity.Property(e => e.CompanyRepresentativeId).HasColumnName("CompanyRepresentativeID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
 
                 entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.CompanyRepresentatives)
-                    .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyRepresentatives_Companies");
-
-                entity.HasOne(d => d.IntegratorUser)
-                    .WithMany(p => p.CompanyRepresentatives)
-                    .HasForeignKey(d => d.IntegratorUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyRepresentatives_IntegratorUsers");
-            });
-
-            modelBuilder.Entity<ContactDetails>(entity =>
-            {
-                entity.HasKey(e => e.ContactDetailId);
-
-                entity.HasIndex(e => e.ContactDetailTypeId);
-
-                entity.Property(e => e.ContactDetailId).HasColumnName("ContactDetailID");
-
-                entity.Property(e => e.ContactDetailTypeId).HasColumnName("ContactDetailTypeID");
-
-                entity.Property(e => e.ContactItem)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<IntegratorUsers>(entity =>
-            {
-                entity.HasKey(e => e.IntegratorUserId);
-
-                entity.HasIndex(e => e.NormalizedEmail)
-                    .HasName("EmailIndex");
-
-                entity.HasIndex(e => e.NormalizedUserName)
-                    .HasName("UserNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-                entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
-
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
             OnModelCreatingPartial(modelBuilder);

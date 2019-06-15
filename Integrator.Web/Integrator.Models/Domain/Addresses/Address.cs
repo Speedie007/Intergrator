@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Integrator.Models.Interfaces;
 using Integrator.Models.Domain.Companies;
+using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
 
 namespace Integrator.Models.Domain.Addresses
 {
@@ -13,18 +14,22 @@ namespace Integrator.Models.Domain.Addresses
         public Address()
         {
             CompanyAddresses = new HashSet<CompanyAddress>();
+            CustomerAddresses = new HashSet<IndividualAddress>();
         }
-        public virtual string City { get; set; }
-        public virtual string Suburb { get; set; }
+        public virtual int CountryID { get; set; }
+        public int CityID { get; set; }
+        public int SuburbID { get; set; }
         public virtual string AreaCode { get; set; }
 
-        public virtual int IntegratorUserID { get; set; }
-        public virtual int CountryID { get; set; }
 
-        public virtual string Country { get; set; }
-        public virtual IntegratorUser IntegratorUser { get; set; }
+        public virtual City City { get; set; }
+        public virtual Country Country { get; set; }
+        public virtual Suburb Suburb { get; set; }
+
 
         public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
+
+        public virtual ICollection<IndividualAddress> CustomerAddresses { get; set; }
     }
 
     public partial class POBoxAddress : Address

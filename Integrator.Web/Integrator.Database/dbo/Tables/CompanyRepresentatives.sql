@@ -7,3 +7,15 @@
     CONSTRAINT [FK_CompanyRepresentatives_IntegratorUsers] FOREIGN KEY ([IntegratorUserID]) REFERENCES [dbo].[IntegratorUsers] ([IntegratorUserID])
 );
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_CompanyRepresentatives_IntegratorUserID]
+    ON [dbo].[CompanyRepresentatives]([IntegratorUserID] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_CompanyRepresentatives_CompanyID]
+    ON [dbo].[CompanyRepresentatives]([CompanyID] ASC);
+

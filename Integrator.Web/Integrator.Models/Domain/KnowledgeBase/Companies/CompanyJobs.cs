@@ -12,6 +12,7 @@ namespace Integrator.Models.Domain.KnowledgeBase.Companies
             CompanyJobRelatedIndustries = new HashSet<CompanyJobRelatedIndustry>();
             CompanyJobListings = new HashSet<CompanyJobListing>();
             CompanyJobSkills = new HashSet<CompanyJobSkill>();
+            CompanyJobRepresentitives = new HashSet<CompanyJobRepresentitive>();
         }
 
         
@@ -24,5 +25,6 @@ namespace Integrator.Models.Domain.KnowledgeBase.Companies
         public virtual ICollection<CompanyJobRelatedIndustry> CompanyJobRelatedIndustries { get; set; }
         public virtual ICollection<CompanyJobListing> CompanyJobListings { get; set; }
         public virtual ICollection<CompanyJobSkill> CompanyJobSkills { get; set; }
+        public virtual ICollection<CompanyJobRepresentitive> CompanyJobRepresentitives { get; set; }
     }
 }

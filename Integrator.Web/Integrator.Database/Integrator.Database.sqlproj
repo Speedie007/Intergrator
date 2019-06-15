@@ -109,5 +109,9 @@
     <Build Include="dbo\Tables\CompanyJobListings.sql" />
     <Build Include="dbo\Tables\CompanyAddresses.sql" />
     <Build Include="dbo\Tables\Companies.sql" />
+    <Build Include="dbo\Tables\Suburbs.sql" />
+    <Build Include="dbo\Tables\Countries.sql" />
+    <Build Include="dbo\Tables\CompanyContactDetails.sql" />
+    <Build Include="dbo\Tables\Cities.sql" />
   </ItemGroup>
 </Project>

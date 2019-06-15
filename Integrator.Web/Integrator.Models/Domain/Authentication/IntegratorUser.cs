@@ -1,5 +1,6 @@
 ﻿
 //using Integrator.Models.Domain.KnowledgeBase.IndividualUsers;
+using Integrator.Models.Domain.Agents;
 using Integrator.Models.Domain.Common;
 using Integrator.Models.Domain.Companies;
 using Integrator.Models.Domain.CurriculumVitaes;
@@ -43,6 +44,9 @@ namespace Integrator.Models.Domain.Authentication
             #endregion
 
             CompanyRepresentatives = new HashSet<CompanyRepresentative>();
+
+            AgentAreas = new HashSet<AgentArea>();
+            CustomerAddresses = new HashSet<IndividualAddress>();
         }
 
         public virtual string FirstName { get; set; }
@@ -87,6 +91,9 @@ namespace Integrator.Models.Domain.Authentication
         #region Company Representitives
         public virtual ICollection<CompanyRepresentative> CompanyRepresentatives { get; set; }
         #endregion
+
+        public virtual ICollection<AgentArea> AgentAreas { get; set; }
+        public virtual ICollection<IndividualAddress> CustomerAddresses { get; set; }
 
 
     }

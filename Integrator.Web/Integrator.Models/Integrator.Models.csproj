@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Domain\KnowledgeBase\IndividualUsers\IndividualAddresses.cs" />
     <Compile Include="Domain\KnowledgeBase\IndividualUsers\UserJobRelatedIndustries.cs" />
     <Compile Include="Domain\KnowledgeBase\IndividualUsers\UserJobs.cs" />
     <Compile Include="Domain\KnowledgeBase\IndividualUsers\UserJobSkills.cs" />
