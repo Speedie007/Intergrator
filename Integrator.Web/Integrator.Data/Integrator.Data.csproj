@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Remove="Mapping\Common\InterestLevelDbMapping.cs" />
+    <Compile Remove="Mapping\Companies\CompanyRelatedIndustryRepresentiveDbMapping.cs" />
   </ItemGroup>
 
   <ItemGroup>

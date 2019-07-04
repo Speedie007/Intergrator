@@ -235,10 +235,10 @@ namespace Integrator.Web.Controllers
                     RedirectNextPage = RedirectToAction("Index", "DashBoard", new { area = "Individuals" });
                     break;
                 case "company":
-                    RedirectNextPage = RedirectToAction("Home", "Company");
+                    RedirectNextPage = RedirectToAction("Index", "DashBoard", new { area = "Company" });
                     break;
                 default:
-                    RedirectNextPage = RedirectToAction("Register", "User");
+                    RedirectNextPage = RedirectToAction("Login", "Authentication");
                     break;
             }
             return RedirectNextPage;

@@ -11,7 +11,8 @@ namespace Integrator.Models.Domain.Companies
         public CompanyRepresentative()
         {
             CompanyJobRepresentitives = new HashSet<CompanyJobRepresentitive>();
-            CompanyRelatedIndustryRepresentives = new HashSet<CompanyRelatedIndustryRepresentive>();
+            //CompanyRelatedIndustryRepresentives = new HashSet<CompanyRelatedIndustryRepresentive>();
+            CompanyRepresentiveBranches = new HashSet<CompanyRepresentiveBranch>();
         }
         public int IntegratorUserID { get; set; }
         public int CompanyID { get; set; }
@@ -19,6 +20,8 @@ namespace Integrator.Models.Domain.Companies
         public virtual Company Company { get; set; }
         public virtual IntegratorUser IntegratorUser { get; set; }
         public virtual ICollection<CompanyJobRepresentitive> CompanyJobRepresentitives { get; set; }
-        public virtual ICollection<CompanyRelatedIndustryRepresentive> CompanyRelatedIndustryRepresentives { get; set; }
+        //public virtual ICollection<CompanyRelatedIndustryRepresentive> CompanyRelatedIndustryRepresentives { get; set; }
+        public virtual ICollection<CompanyRepresentiveBranch> CompanyRepresentiveBranches { get; set; }
+
     }
 }

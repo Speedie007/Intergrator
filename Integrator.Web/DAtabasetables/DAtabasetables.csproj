@@ -5,32 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Companies.cs" />
+    <Compile Remove="CompanyJobRepresentitives.cs" />
     <Compile Remove="CurriculumViteaWorkExperiences.cs" />
-    <Compile Remove="Entities\Custom\Company.cs" />
-    <Compile Remove="Entities\Custom\CompanyIndustry.cs" />
-    <Compile Remove="Entities\Custom\CompanyIndustryCategory.cs" />
-    <Compile Remove="Entities\Custom\CompanyIndustryCategoryJob.cs" />
-    <Compile Remove="Entities\Custom\CompanyIndustryCategoryJobSkillSet.cs" />
-    <Compile Remove="Entities\Custom\IntegratortabledesginContext.cs" />
-    <Compile Remove="Entities\Custom\IntegratorUserIndustry.cs" />
-    <Compile Remove="Entities\Custom\IntegratorUserIndustryCategory.cs" />
-    <Compile Remove="Entities\Custom\IntegratorUserIndustryCategoryJob.cs" />
-    <Compile Remove="Entities\Custom\IntegratorUserIndustryCategoryJobSkillSet.cs" />
-    <Compile Remove="Entities\Custom\LookupTableIndustryCategory.cs" />
-    <Compile Remove="Entities\Custom\LookupTableIndustryCategoryJob.cs" />
-    <Compile Remove="Entities\Custom\LookupTableIndustryCategoryJobSkillSet.cs" />
-    <Compile Remove="Entities\Custom\LookupTableIndustryType.cs" />
-    <Compile Remove="Entities\Custom\User.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Context\Custom\" />
-    <Folder Include="Context\Generated\" />
-    <Folder Include="Entities\Custom\" />
-    <Folder Include="Entities\Generated\" />
-    <Folder Include="Enum\Custom\" />
-    <Folder Include="Enum\Generated\" />
   </ItemGroup>
 
   <ItemGroup>

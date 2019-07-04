@@ -1,6 +1,8 @@
 ﻿using Integrator.Common;
 using Integrator.Models.Domain.Authentication;
+using Integrator.Models.Domain.Companies;
 using Integrator.Models.ViewModels.Users;
+using Integrator.Services.Companies;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -8,19 +10,33 @@ using System.Text;
 
 namespace Integrator.Services.Users
 {
+
+    public interface IUserRegistrationService
+    {
+
+        /// <summary>
+        /// Register User
+        /// </summary>
+        /// <param name="request">Request</param>
+        /// <returns>Result</returns>
+        UserRegistrationResult RegisterUser(RegisterViewModel request);
+    }
     public partial class UserRegistrationService : IUserRegistrationService
     {
 
         #region Fields
         private readonly IUserService _userService;
+        private readonly ICompanyService _companyService;
 
         #endregion
 
         #region Ctor
 
-        public UserRegistrationService(IUserService userService)
+        public UserRegistrationService(IUserService userService,
+            ICompanyService companyService)
         {
             this._userService = userService;
+            this._companyService = companyService;
         }
 
         #endregion
@@ -30,7 +46,7 @@ namespace Integrator.Services.Users
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-           
+
 
             var result = new UserRegistrationResult();
 
@@ -76,6 +92,16 @@ namespace Integrator.Services.Users
                 result.NewlyRegistredUser = NewUser;
                 //if user is created link the role that the user has been assigned.
                 _userService.InsertUserRoleAsync(request.UserRole, request.UserEmail);
+
+                if (request.UserRole.Equals("Company"))
+                {
+                    _companyService.AddCompanyRepresentitive(new CompanyRepresentative()
+                    {
+                        IntegratorUserID = result.NewlyRegistredUser.Id,
+                        CompanyID = Convert.ToInt32(request.CompanyID)
+
+                    });
+                }
             }
 
             return result;

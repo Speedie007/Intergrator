@@ -14,6 +14,7 @@ using Integrator.Services.Common;
 using Integrator.Services.Common.Files;
 using Integrator.Services.Companies;
 using Integrator.Services.CurriculumVitae;
+using Integrator.Services.EmailSending;
 using Integrator.Services.KnowledgeBase.Core;
 using Integrator.Services.KnowledgeBase.Users;
 using Integrator.Services.Users;
@@ -52,6 +53,7 @@ namespace Integrator.Web.Services
             builder.RegisterType<QualificationService>().As<IQualificationService>().InstancePerLifetimeScope();
             builder.RegisterType<CoreKnowledgeBaseService>().As<ICoreKnowledgeBaseService>().InstancePerLifetimeScope();
             builder.RegisterType<CompanyService>().As<ICompanyService>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomEmailSender>().As<ICustomEmailSender>().InstancePerLifetimeScope();
             
 
 

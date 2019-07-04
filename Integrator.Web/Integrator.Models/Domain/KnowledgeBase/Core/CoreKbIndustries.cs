@@ -10,10 +10,11 @@ namespace Integrator.Models.Domain.KnowledgeBase.Core
     {
         public CoreKbIndustry()
         {
-            ComanyJobRelatedIndustries = new HashSet<CompanyJobRelatedIndustry>();
+            
             CompanyRelatedIndustries = new HashSet<CompanyRelatedIndustry>();
             CoreKbIndustryJobs = new HashSet<CoreKbIndustryJob>();
             UserJobRelatedIndustries = new HashSet<UserJobRelatedIndustry>();
+            CoreKbIndustrySectors = new HashSet<CoreKbIndustrySector>();
         }
 
         
@@ -21,9 +22,10 @@ namespace Integrator.Models.Domain.KnowledgeBase.Core
         public string CoreKbIndustryName { get; set; }
 
         public virtual CoreKbIndustryCategory CoreKbIndustryCategory { get; set; }
-        public virtual ICollection<CompanyJobRelatedIndustry> ComanyJobRelatedIndustries { get; set; }
+        
         public virtual ICollection<CompanyRelatedIndustry> CompanyRelatedIndustries { get; set; }
         public virtual ICollection<CoreKbIndustryJob> CoreKbIndustryJobs { get; set; }
         public virtual ICollection<UserJobRelatedIndustry> UserJobRelatedIndustries { get; set; }
+        public virtual ICollection<CoreKbIndustrySector> CoreKbIndustrySectors { get; set; }
     }
 }

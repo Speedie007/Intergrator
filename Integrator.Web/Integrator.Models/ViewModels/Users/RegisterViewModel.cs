@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+
 
 namespace Integrator.Models.ViewModels.Users
 {
@@ -14,9 +14,18 @@ namespace Integrator.Models.ViewModels.Users
         #region Cstor
         public RegisterViewModel()
         {
-
+            ListOfCompanies = new List<SelectListItem>();
         }
         #endregion
+
+        public Boolean RegistrationConfirmationSent { get; set; }
+        public string CompanyID { get; set; }
+
+        public List<SelectListItem> ListOfCompanies { get; set; }
+
+        [Required]
+        [Display(Name = "Company")]
+        public string CompanyName { get; set; }
 
         [EmailAddress]
         [Display(Name = "Email")]

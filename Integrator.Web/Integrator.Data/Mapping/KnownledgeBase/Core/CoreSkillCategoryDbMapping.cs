@@ -73,7 +73,7 @@ namespace Integrator.Data.Mapping.KnownledgeBase.Core
             new CoreSkillCategory()
             {
                 Id = 7,
-                 CoreKbSkillTypeID = 2,
+                CoreKbSkillTypeID = 2,
                 CoreSkillCategoryName = "Personal"
             });
 

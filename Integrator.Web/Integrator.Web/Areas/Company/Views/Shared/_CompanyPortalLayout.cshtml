@@ -38,13 +38,13 @@
     <div id="wrapper" class="@Html.PageClass()">
 
         <!-- Navigation -->
-        <partial name="_IndividualPortalNavigation.cshtml" />
+        <partial name="_CompanyPortalNavigation.cshtml" />
 
         <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
 
             <!-- Top Navbar -->
-            <partial name="_IndividualPortalTopNavbar.cshtml" />
+            <partial name="_CompanyPortalTopNavbar.cshtml" />
 
             <!-- Main view  -->
             @RenderBody()
@@ -55,7 +55,7 @@
         </div>
         <!-- End page wrapper-->
         <!-- Right Sidebar -->
-        <partial name="_IndividualPortalRightSidebar" />
+        <partial name="_CompanyPortalRightSidebar" />
 
     </div>
     <!-- End wrapper-->

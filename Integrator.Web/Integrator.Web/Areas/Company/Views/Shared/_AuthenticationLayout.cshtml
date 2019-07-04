@@ -6,15 +6,11 @@
     <title>Integrator - Individual Regisration</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/fontawesome/css/all.css" />
-        <link rel="stylesheet" href="~/css/animate.css" />
-        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-    </environment>
-    <environment names="Staging,Production">
+   
+    <environment names="Staging,Production, Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+        @*<link href="~/fontawesome/css/fontawesome.css" rel="stylesheet" />*@
         <link rel="stylesheet" href="~/css/animate.css" />
         <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     </environment>
@@ -68,7 +64,8 @@
         <script src="~/lib/pace/pace.min.js"></script>
         <script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
         <script src="~/js/script.min.js" asp-append-version="true"></script>
-        <script src="~/fontawesome/js/all.min.js"></script>
+        @*<script src="~/fontawesome/js/all.min.js"></script>
+        <script src="~/fontawesome/js/fontawesome.js"></script>*@
     </environment>
 
     @RenderSection("scripts", required: false)

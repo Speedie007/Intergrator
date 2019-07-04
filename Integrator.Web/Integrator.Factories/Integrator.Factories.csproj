@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -20,6 +20,7 @@
   <ItemGroup>
     <Folder Include="KnowledgeBase\Companies\" />
     <Folder Include="KnowledgeBase\Users\" />
+    <Folder Include="Company\" />
   </ItemGroup>
 
 </Project>

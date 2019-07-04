@@ -15,18 +15,17 @@ namespace DAtabasetables
         {
         }
 
-        public virtual DbSet<CompanyJobRepresentitives> CompanyJobRepresentitives { get; set; }
         public virtual DbSet<CompanyJobs> CompanyJobs { get; set; }
         public virtual DbSet<CompanyRelatedIndustries> CompanyRelatedIndustries { get; set; }
-        public virtual DbSet<CompanyRelatedIndustryRepresentives> CompanyRelatedIndustryRepresentives { get; set; }
-        public virtual DbSet<CompanyRepresentatives> CompanyRepresentatives { get; set; }
+        public virtual DbSet<CompanyRelatedIndustrySectors> CompanyRelatedIndustrySectors { get; set; }
+        public virtual DbSet<CompnayJobRelatedIndustrySectors> CompnayJobRelatedIndustrySectors { get; set; }
+        public virtual DbSet<CoreKbIndustries> CoreKbIndustries { get; set; }
+        public virtual DbSet<CoreKbIndustrySectors> CoreKbIndustrySectors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=IntegratorTableDesgin;Integrated Security=True");
             }
         }
 
@@ -34,43 +33,17 @@ namespace DAtabasetables
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
-            modelBuilder.Entity<CompanyJobRepresentitives>(entity =>
-            {
-                entity.HasKey(e => e.CompanyJobRepresentitiveId);
-
-                entity.Property(e => e.CompanyJobRepresentitiveId).HasColumnName("CompanyJobRepresentitiveID");
-
-                entity.Property(e => e.CompanyJobId).HasColumnName("CompanyJobID");
-
-                entity.Property(e => e.CompanyRepresentativeId).HasColumnName("CompanyRepresentativeID");
-
-                entity.HasOne(d => d.CompanyJob)
-                    .WithMany(p => p.CompanyJobRepresentitives)
-                    .HasForeignKey(d => d.CompanyJobId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyJobRepresentitives_CompanyJobs");
-
-                entity.HasOne(d => d.CompanyRepresentative)
-                    .WithMany(p => p.CompanyJobRepresentitives)
-                    .HasForeignKey(d => d.CompanyRepresentativeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyJobRepresentitives_CompanyRepresentatives");
-            });
-
             modelBuilder.Entity<CompanyJobs>(entity =>
             {
                 entity.HasKey(e => e.CompanyJobId);
 
-                entity.HasIndex(e => e.CompanyId);
-
-                entity.HasIndex(e => e.CoreKbjobId)
-                    .HasName("IX_CompanyJobs_CoreKbJobID");
+                entity.HasIndex(e => e.CoreKbJobId);
 
                 entity.Property(e => e.CompanyJobId).HasColumnName("CompanyJobID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
 
-                entity.Property(e => e.CoreKbjobId).HasColumnName("CoreKBJobID");
+                entity.Property(e => e.CoreKbJobId).HasColumnName("CoreKbJobID");
 
                 entity.Property(e => e.JobDescription)
                     .IsRequired()
@@ -81,58 +54,102 @@ namespace DAtabasetables
             {
                 entity.HasKey(e => e.CompanyRelatedIndustryId);
 
-                entity.HasIndex(e => e.CompanyId);
-
-                entity.HasIndex(e => e.CoreKbindustryId)
-                    .HasName("IX_CompanyRelatedIndustries_CoreKbIndustryID");
+                entity.HasIndex(e => e.CoreKbIndustryId);
 
                 entity.Property(e => e.CompanyRelatedIndustryId).HasColumnName("CompanyRelatedIndustryID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
 
-                entity.Property(e => e.CoreKbindustryId).HasColumnName("CoreKBIndustryID");
+                entity.Property(e => e.CoreKbIndustryId).HasColumnName("CoreKbIndustryID");
+
+                entity.HasOne(d => d.CoreKbIndustry)
+                    .WithMany(p => p.CompanyRelatedIndustries)
+                    .HasForeignKey(d => d.CoreKbIndustryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CompanyRelatedIndustries_CoreKbIndustries");
             });
 
-            modelBuilder.Entity<CompanyRelatedIndustryRepresentives>(entity =>
+            modelBuilder.Entity<CompanyRelatedIndustrySectors>(entity =>
             {
-                entity.HasKey(e => e.CompanyRelatedIndustryRepresentiveId);
+                entity.HasKey(e => e.CompanyRelatedIndustrySectorId);
 
-                entity.Property(e => e.CompanyRelatedIndustryRepresentiveId).HasColumnName("CompanyRelatedIndustryRepresentiveID");
+                entity.Property(e => e.CompanyRelatedIndustrySectorId).HasColumnName("CompanyRelatedIndustrySectorID");
 
                 entity.Property(e => e.CompanyRelatedIndustryId).HasColumnName("CompanyRelatedIndustryID");
 
-                entity.Property(e => e.CompanyRepresentativeId).HasColumnName("CompanyRepresentativeID");
-
-                entity.Property(e => e.DateAssigned)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.CoreKbIndustrySectorId).HasColumnName("CoreKbIndustrySectorID");
 
                 entity.HasOne(d => d.CompanyRelatedIndustry)
-                    .WithMany(p => p.CompanyRelatedIndustryRepresentives)
+                    .WithMany(p => p.CompanyRelatedIndustrySectors)
                     .HasForeignKey(d => d.CompanyRelatedIndustryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRelatedIndustries");
+                    .HasConstraintName("FK_CompanyRelatedIndustrySectors_CompanyRelatedIndustries");
 
-                entity.HasOne(d => d.CompanyRepresentative)
-                    .WithMany(p => p.CompanyRelatedIndustryRepresentives)
-                    .HasForeignKey(d => d.CompanyRepresentativeId)
+                entity.HasOne(d => d.CoreKbIndustrySector)
+                    .WithMany(p => p.CompanyRelatedIndustrySectors)
+                    .HasForeignKey(d => d.CoreKbIndustrySectorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRepresentatives");
+                    .HasConstraintName("FK_CompanyRelatedIndustrySectors_CoreKbIndustrySectors");
             });
 
-            modelBuilder.Entity<CompanyRepresentatives>(entity =>
+            modelBuilder.Entity<CompnayJobRelatedIndustrySectors>(entity =>
             {
-                entity.HasKey(e => e.CompanyRepresentativeId);
+                entity.HasKey(e => e.CompnayJobRelatedIndustrySectorId);
 
-                entity.HasIndex(e => e.CompanyId);
+                entity.Property(e => e.CompnayJobRelatedIndustrySectorId).HasColumnName("CompnayJobRelatedIndustrySectorID");
 
-                entity.HasIndex(e => e.IntegratorUserId);
+                entity.Property(e => e.CompanyJobId).HasColumnName("CompanyJobID");
 
-                entity.Property(e => e.CompanyRepresentativeId).HasColumnName("CompanyRepresentativeID");
+                entity.Property(e => e.CompanyRelatedIndustrySectorId).HasColumnName("CompanyRelatedIndustrySectorID");
 
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
+                entity.HasOne(d => d.CompanyJob)
+                    .WithMany(p => p.CompnayJobRelatedIndustrySectors)
+                    .HasForeignKey(d => d.CompanyJobId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CompnayJobRelatedIndustrySectors_CompanyJobs");
 
-                entity.Property(e => e.IntegratorUserId).HasColumnName("IntegratorUserID");
+                entity.HasOne(d => d.CompanyRelatedIndustrySector)
+                    .WithMany(p => p.CompnayJobRelatedIndustrySectors)
+                    .HasForeignKey(d => d.CompanyRelatedIndustrySectorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CompnayJobRelatedIndustrySectors_CompanyRelatedIndustrySectors");
+            });
+
+            modelBuilder.Entity<CoreKbIndustries>(entity =>
+            {
+                entity.HasKey(e => e.CoreKbIndustryId);
+
+                entity.HasIndex(e => e.CoreKbIndustryCategoryId);
+
+                entity.Property(e => e.CoreKbIndustryId).HasColumnName("CoreKbIndustryID");
+
+                entity.Property(e => e.CoreKbIndustryCategoryId).HasColumnName("CoreKbIndustryCategoryID");
+
+                entity.Property(e => e.CoreKbindustryName)
+                    .IsRequired()
+                    .HasColumnName("CoreKBIndustryName")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CoreKbIndustrySectors>(entity =>
+            {
+                entity.HasKey(e => e.CoreKbIndustrySectorId);
+
+                entity.Property(e => e.CoreKbIndustrySectorId).HasColumnName("CoreKbIndustrySectorID");
+
+                entity.Property(e => e.CoreKbIndustryId).HasColumnName("CoreKbIndustryID");
+
+                entity.Property(e => e.IndustrySectorName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.CoreKbIndustry)
+                    .WithMany(p => p.CoreKbIndustrySectors)
+                    .HasForeignKey(d => d.CoreKbIndustryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CoreKbIndustrySectors_CoreKbIndustries");
             });
 
             OnModelCreatingPartial(modelBuilder);

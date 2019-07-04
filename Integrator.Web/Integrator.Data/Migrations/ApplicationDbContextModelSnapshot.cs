@@ -456,24 +456,42 @@ namespace Integrator.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyAddress", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyBranch", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyAddressID")
+                        .HasColumnName("CompanyBranchID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressID");
+                    b.Property<string>("BranchDescription");
 
                     b.Property<int>("CompanyID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressID");
-
                     b.HasIndex("CompanyID");
 
-                    b.ToTable("CompanyAddresses");
+                    b.ToTable("CompanyBranches");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyBranchAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyBranchAddressID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressID");
+
+                    b.Property<int>("CompanyBranchID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressID");
+
+                    b.HasIndex("CompanyBranchID");
+
+                    b.ToTable("CompanyBranchAddresses");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyContactDetail", b =>
@@ -483,17 +501,37 @@ namespace Integrator.Data.Migrations
                         .HasColumnName("CompanyContactDetailID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyID");
+                    b.Property<int>("CompanyBranchID");
 
                     b.Property<int>("ContactDetailID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyID");
+                    b.HasIndex("CompanyBranchID");
 
                     b.HasIndex("ContactDetailID");
 
                     b.ToTable("CompanyContactDetails");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobAssociatedBranch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyJobAssociatedBranchID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyBranchID");
+
+                    b.Property<int>("CompanyJobID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyBranchID");
+
+                    b.HasIndex("CompanyJobID");
+
+                    b.ToTable("CompanyJobAssociatedBranches");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobListing", b =>
@@ -522,6 +560,26 @@ namespace Integrator.Data.Migrations
                     b.HasIndex("CompanyJobID");
 
                     b.ToTable("CompanyJobListings");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobRelatedIndustrySector", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyJobRelatedIndustrySectorID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyJobID");
+
+                    b.Property<int>("CompanyRelatedIndustrySectorID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyJobID");
+
+                    b.HasIndex("CompanyRelatedIndustrySectorID");
+
+                    b.ToTable("CompanyJobRelatedIndustrySectors");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobRepresentitive", b =>
@@ -555,6 +613,8 @@ namespace Integrator.Data.Migrations
 
                     b.Property<int>("CoreKbIndustryID");
 
+                    b.Property<int>("LevelOfCompanyInvolvement");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyID");
@@ -564,29 +624,24 @@ namespace Integrator.Data.Migrations
                     b.ToTable("CompanyRelatedIndustries");
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustryRepresentive", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustrySector", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyRelatedIndustryRepresentiveID")
+                        .HasColumnName("CompanyRelatedIndustrySectorID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyRelatedIndustryID");
 
-                    b.Property<int>("CompanyRepresentativeID");
-
-                    b.Property<DateTime>("DateAssigned")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<int>("CoreKbIndustrySectorID");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyRelatedIndustryID");
 
-                    b.HasIndex("CompanyRepresentativeID");
+                    b.HasIndex("CoreKbIndustrySectorID");
 
-                    b.ToTable("CompanyRelatedIndustryRepresentives");
+                    b.ToTable("CompanyRelatedIndustrySectors");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRepresentative", b =>
@@ -607,6 +662,26 @@ namespace Integrator.Data.Migrations
                     b.HasIndex("IntegratorUserID");
 
                     b.ToTable("CompanyRepresentatives");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRepresentiveBranch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CompanyRepresentiveBranchID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyBranchID");
+
+                    b.Property<int>("CompanyRepresentativeID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyBranchID");
+
+                    b.HasIndex("CompanyRepresentativeID");
+
+                    b.ToTable("CompanyRepresentiveBranches");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumVitaeWorkExperienceReferences", b =>
@@ -1012,7 +1087,7 @@ namespace Integrator.Data.Migrations
 
                     b.Property<int>("CompanyJobID");
 
-                    b.Property<int>("CoreKbIndustryID");
+                    b.Property<int>("CompanyRelatedIndustryID");
 
                     b.Property<bool>("LevelOfCompanyInvolvement");
 
@@ -1020,7 +1095,7 @@ namespace Integrator.Data.Migrations
 
                     b.HasIndex("CompanyJobID");
 
-                    b.HasIndex("CoreKbIndustryID");
+                    b.HasIndex("CompanyRelatedIndustryID");
 
                     b.ToTable("CompanyJobRelatedIndustries");
                 });
@@ -1073,31 +1148,679 @@ namespace Integrator.Data.Migrations
                         {
                             Id = 1,
                             CoreKbIndustryCategoryID = 1,
-                            CoreKbIndustryName = "Farming and Ranching"
+                            CoreKbIndustryName = "Crop Production"
                         },
                         new
                         {
                             Id = 2,
                             CoreKbIndustryCategoryID = 1,
-                            CoreKbIndustryName = "Fishing"
+                            CoreKbIndustryName = "Animal Production and Aquaculture"
                         },
                         new
                         {
                             Id = 3,
                             CoreKbIndustryCategoryID = 1,
-                            CoreKbIndustryName = "Hunting "
+                            CoreKbIndustryName = "Forestry and Logging"
                         },
                         new
                         {
                             Id = 4,
                             CoreKbIndustryCategoryID = 1,
-                            CoreKbIndustryName = "Forestry"
+                            CoreKbIndustryName = "Fishing, Hunting and Trapping"
                         },
                         new
                         {
                             Id = 5,
                             CoreKbIndustryCategoryID = 1,
-                            CoreKbIndustryName = "Mining and Quarrying"
+                            CoreKbIndustryName = "Support Activities for Agriculture and Forestry"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CoreKbIndustryCategoryID = 2,
+                            CoreKbIndustryName = "Oil and Gas Extraction"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CoreKbIndustryCategoryID = 2,
+                            CoreKbIndustryName = "Mining (except Oil and Gas)"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CoreKbIndustryCategoryID = 2,
+                            CoreKbIndustryName = "Support Activities for Mining"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CoreKbIndustryCategoryID = 3,
+                            CoreKbIndustryName = "Electric Power Generation, Transmission and Distribution"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CoreKbIndustryCategoryID = 3,
+                            CoreKbIndustryName = "Natural Gas Distribution"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CoreKbIndustryCategoryID = 3,
+                            CoreKbIndustryName = "Water, Sewage and Other Systems"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CoreKbIndustryCategoryID = 4,
+                            CoreKbIndustryName = "Construction of Buildings"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CoreKbIndustryCategoryID = 4,
+                            CoreKbIndustryName = "Heavy and Civil Engineering Construction"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CoreKbIndustryCategoryID = 4,
+                            CoreKbIndustryName = "Specialty Trade Contractors"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Food Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Beverage and Tobacco Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Textile Mills"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Apparel Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Leather and Allied Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Wood Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Paper Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Printing and Related Support Activities"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Petroleum and Coal Products Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Chemical Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Plastics and Rubber Products Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Nonmetallic Mineral Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Primary Metal Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Fabricated Metal Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Machinery Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Computer and Electronic Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Electrical Equipment, Appliance, and Component Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Transportation Equipment Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Furniture and Related Product Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CoreKbIndustryCategoryID = 5,
+                            CoreKbIndustryName = "Miscellaneous Manufacturing"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CoreKbIndustryCategoryID = 6,
+                            CoreKbIndustryName = "Merchant Wholesalers, Durable Goods"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CoreKbIndustryCategoryID = 6,
+                            CoreKbIndustryName = "Merchant Wholesalers, Non-Durable Goods"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CoreKbIndustryCategoryID = 6,
+                            CoreKbIndustryName = "Wholesale Electronic Markets and Agents and Brokers"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Motor Vehicle and Parts Dealers"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Furniture and Home Furnishings Stores"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Electronics and Appliance Stores"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Building Material, Garden Equipment and Supplies Dealers"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Food and Beverage Stores"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Health and Personal Care Stores"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Gasoline Stations"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Clothing and Clothing Accessories Stores"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Sporting Goods, Hobby, Musical Instrument, and Book Stores"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "General Merchandise Stores"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Miscellaneous Store Retailers"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            CoreKbIndustryCategoryID = 7,
+                            CoreKbIndustryName = "Nonstore Retailers"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Air Transportation"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Rail Transportation"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Water Transportation"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Truck Transportation"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Pipeline Transportation"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Scenic and Sightseeing Transportation"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Support Activities for Transportation"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Postal Service"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Couriers and Messengers"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            CoreKbIndustryCategoryID = 8,
+                            CoreKbIndustryName = "Warehousing and Storage"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            CoreKbIndustryCategoryID = 9,
+                            CoreKbIndustryName = "Publishing Industries (Except Internet)"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            CoreKbIndustryCategoryID = 9,
+                            CoreKbIndustryName = "Motion Picture and Sound Recording Industries"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            CoreKbIndustryCategoryID = 9,
+                            CoreKbIndustryName = "Broadcasting (except Internet)"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            CoreKbIndustryCategoryID = 9,
+                            CoreKbIndustryName = "Data Processing, Hosting, and Related Services"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            CoreKbIndustryCategoryID = 9,
+                            CoreKbIndustryName = "Other Information Services"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            CoreKbIndustryCategoryID = 9,
+                            CoreKbIndustryName = "Telecommunications"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            CoreKbIndustryCategoryID = 10,
+                            CoreKbIndustryName = "Monetary Authorities-Central Bank"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            CoreKbIndustryCategoryID = 10,
+                            CoreKbIndustryName = "Credit Intermediation and Related Activities"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            CoreKbIndustryCategoryID = 10,
+                            CoreKbIndustryName = "Securities, Commodity Contracts, and Other Financial Investments"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            CoreKbIndustryCategoryID = 10,
+                            CoreKbIndustryName = "Insurance Carriers and Related Activities"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            CoreKbIndustryCategoryID = 10,
+                            CoreKbIndustryName = "Funds, Trusts, and Other Financial Vehicles"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CoreKbIndustryCategoryID = 11,
+                            CoreKbIndustryName = "Real Estate"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CoreKbIndustryCategoryID = 11,
+                            CoreKbIndustryName = "Rental and Leasing Services"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CoreKbIndustryCategoryID = 11,
+                            CoreKbIndustryName = "Lessors of Nonfinancial Intangible Assets"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Legal Services"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Accounting, Tax Preparation, Bookkeeping, and Payroll Services"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Lessors of Nonfinancial Intangible Assets"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Architectural, Engineering, and Related Services"
+                        },
+                        new
+                        {
+                            Id = 78,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Specialized Design Services"
+                        },
+                        new
+                        {
+                            Id = 79,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Management, Scientific, and Technical Consulting Services"
+                        },
+                        new
+                        {
+                            Id = 80,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Scientific Research and Development Services"
+                        },
+                        new
+                        {
+                            Id = 81,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Advertising, Public Relations, and Related Services"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            CoreKbIndustryCategoryID = 12,
+                            CoreKbIndustryName = "Other Professional, Scientific, and Technical Services"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            CoreKbIndustryCategoryID = 13,
+                            CoreKbIndustryName = "Management of Companies and Enterprises"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            CoreKbIndustryCategoryID = 14,
+                            CoreKbIndustryName = "Administrative and Support Services"
+                        },
+                        new
+                        {
+                            Id = 85,
+                            CoreKbIndustryCategoryID = 14,
+                            CoreKbIndustryName = "Waste Management and Remediation Services"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Elementary and Secondary Schools"
+                        },
+                        new
+                        {
+                            Id = 87,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Junior Colleges"
+                        },
+                        new
+                        {
+                            Id = 88,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Colleges, Universities, and Professional Schools"
+                        },
+                        new
+                        {
+                            Id = 89,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Business Schools and Computer and Management Training"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Technical and Trade Schools"
+                        },
+                        new
+                        {
+                            Id = 91,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Other Schools and Instruction"
+                        },
+                        new
+                        {
+                            Id = 92,
+                            CoreKbIndustryCategoryID = 15,
+                            CoreKbIndustryName = "Educational Support Services"
+                        },
+                        new
+                        {
+                            Id = 93,
+                            CoreKbIndustryCategoryID = 16,
+                            CoreKbIndustryName = "Ambulatory Health Care Services"
+                        },
+                        new
+                        {
+                            Id = 94,
+                            CoreKbIndustryCategoryID = 16,
+                            CoreKbIndustryName = "Hospitals"
+                        },
+                        new
+                        {
+                            Id = 95,
+                            CoreKbIndustryCategoryID = 16,
+                            CoreKbIndustryName = "Nursing and Residential Care Facilities"
+                        },
+                        new
+                        {
+                            Id = 96,
+                            CoreKbIndustryCategoryID = 16,
+                            CoreKbIndustryName = "Social Assistance"
+                        },
+                        new
+                        {
+                            Id = 97,
+                            CoreKbIndustryCategoryID = 17,
+                            CoreKbIndustryName = "Performing Arts, Spectator Sports, and Related Industries"
+                        },
+                        new
+                        {
+                            Id = 98,
+                            CoreKbIndustryCategoryID = 17,
+                            CoreKbIndustryName = "Museums, Historical Sites, and Similar Institutions"
+                        },
+                        new
+                        {
+                            Id = 99,
+                            CoreKbIndustryCategoryID = 17,
+                            CoreKbIndustryName = "Amusement, Gambling, and Recreation Industries"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            CoreKbIndustryCategoryID = 18,
+                            CoreKbIndustryName = "Accommodation"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            CoreKbIndustryCategoryID = 18,
+                            CoreKbIndustryName = "Food Services and Drinking Places"
+                        },
+                        new
+                        {
+                            Id = 102,
+                            CoreKbIndustryCategoryID = 19,
+                            CoreKbIndustryName = "Repair and Maintenances"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            CoreKbIndustryCategoryID = 19,
+                            CoreKbIndustryName = "Personal and Laundry Services"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            CoreKbIndustryCategoryID = 19,
+                            CoreKbIndustryName = "Religious, Grantmaking, Civic, Professional, and Similar Organizations"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            CoreKbIndustryCategoryID = 19,
+                            CoreKbIndustryName = "Private Households"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Executive, Legislative, and Other General Government Support"
+                        },
+                        new
+                        {
+                            Id = 107,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Justice, Public Order, and Safety Activities"
+                        },
+                        new
+                        {
+                            Id = 108,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Administration of Human Resource Programs"
+                        },
+                        new
+                        {
+                            Id = 109,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Administration of Environmental Quality Programs"
+                        },
+                        new
+                        {
+                            Id = 110,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Administration of Housing Programs, Urban Planning, and Community Development "
+                        },
+                        new
+                        {
+                            Id = 111,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Administration of Economic Programs "
+                        },
+                        new
+                        {
+                            Id = 112,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "Space Research and Technology"
+                        },
+                        new
+                        {
+                            Id = 113,
+                            CoreKbIndustryCategoryID = 20,
+                            CoreKbIndustryName = "National Security and International Affairs"
                         });
                 });
 
@@ -1120,32 +1843,102 @@ namespace Integrator.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CoreKbIndustryCategoryName = "Agriculture and Mining"
+                            CoreKbIndustryCategoryName = "Agriculture, Forestry, Fishing and Hunting"
                         },
                         new
                         {
                             Id = 2,
-                            CoreKbIndustryCategoryName = "Business Services"
+                            CoreKbIndustryCategoryName = "Mining, Quarrying, and Oil and Gas Extraction"
                         },
                         new
                         {
                             Id = 3,
-                            CoreKbIndustryCategoryName = "Education"
+                            CoreKbIndustryCategoryName = "Utilities"
                         },
                         new
                         {
                             Id = 4,
-                            CoreKbIndustryCategoryName = "Consumer Services"
+                            CoreKbIndustryCategoryName = "Construction"
                         },
                         new
                         {
                             Id = 5,
-                            CoreKbIndustryCategoryName = "Education"
+                            CoreKbIndustryCategoryName = "Manufacturing"
                         },
                         new
                         {
                             Id = 6,
-                            CoreKbIndustryCategoryName = "Energy and Utilities"
+                            CoreKbIndustryCategoryName = "Wholesale Trade"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CoreKbIndustryCategoryName = "Retail Trade"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CoreKbIndustryCategoryName = "Transportation and Warehousing"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CoreKbIndustryCategoryName = "Information"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CoreKbIndustryCategoryName = "Finance and Insurance"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CoreKbIndustryCategoryName = "Real Estate and Rental and Leasing"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CoreKbIndustryCategoryName = "Professional, Scientific, and Technical Services"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CoreKbIndustryCategoryName = "Management of Companies and Enterprises"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CoreKbIndustryCategoryName = "Administrative, Support, Waste Management and Remediation Services"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CoreKbIndustryCategoryName = "Educational Services"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CoreKbIndustryCategoryName = "Health Care and Social Assistance"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CoreKbIndustryCategoryName = "Arts, Entertainment, and Recreation"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CoreKbIndustryCategoryName = "Accommodation and Food Services"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CoreKbIndustryCategoryName = "Other Services (Except Public Administration)"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CoreKbIndustryCategoryName = "Public Administration"
                         });
                 });
 
@@ -1167,6 +1960,27 @@ namespace Integrator.Data.Migrations
                     b.HasIndex("CoreKbJobID");
 
                     b.ToTable("CoreKbIndustryJobs");
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustrySector", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CoreKbIndustrySectorID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoreKbIndustryID");
+
+                    b.Property<string>("IndustrySectorName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoreKbIndustryID");
+
+                    b.ToTable("CoreKbIndustrySectors");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", b =>
@@ -1226,6 +2040,536 @@ namespace Integrator.Data.Migrations
                     b.HasIndex("CoreSkillCategoryID");
 
                     b.ToTable("CoreKbSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CoreSkill = "Verbal Communication",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CoreSkill = "Body Language",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CoreSkill = "Physical Communication",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CoreSkill = "Writing ",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CoreSkill = "Storytelling ",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CoreSkill = "Visual Communication",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CoreSkill = "Humor ",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CoreSkill = "Quick-wittedness ",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CoreSkill = "Listening ",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CoreSkill = "Presentation",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CoreSkill = "Public Speaking",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CoreSkill = "Interviewing ",
+                            CoreSkillCategoryID = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CoreSkill = "Team Building ",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CoreSkill = "Talent Management",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CoreSkill = "Performance Management",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CoreSkill = "Dispute Resolution",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CoreSkill = "Strategic Planning",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CoreSkill = "Coaching",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CoreSkill = "Mentoring",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CoreSkill = "Delegation",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CoreSkill = "Diplomacy",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CoreSkill = "Giving Feedback",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CoreSkill = "Managing Difficult Conversations",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CoreSkill = "Decision Making",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CoreSkill = "Supervising",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CoreSkill = "Managing",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CoreSkill = "Manager Management",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CoreSkill = "Managing Remote Teams",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CoreSkill = "Managing Virtual Teams",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CoreSkill = "Crisis Management",
+                            CoreSkillCategoryID = 2
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CoreSkill = "Facilitation",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CoreSkill = "Selling",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CoreSkill = "Inspiring",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CoreSkill = "Persuasion",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CoreSkill = "Negotiation",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CoreSkill = "Motivating",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CoreSkill = "Collaborating",
+                            CoreSkillCategoryID = 3
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CoreSkill = "Networking",
+                            CoreSkillCategoryID = 4
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CoreSkill = "Interpersonal Relationships",
+                            CoreSkillCategoryID = 4
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CoreSkill = "Dealing with Difficult People",
+                            CoreSkillCategoryID = 4
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CoreSkill = "Conflict Resolution",
+                            CoreSkillCategoryID = 4
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CoreSkill = "Personal Branding",
+                            CoreSkillCategoryID = 4
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CoreSkill = "Office Politics",
+                            CoreSkillCategoryID = 4
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CoreSkill = "Emotional Intelligence",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CoreSkill = "Office Politics",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CoreSkill = "Self Awareness",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CoreSkill = "Emotion Management",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 48,
+                            CoreSkill = "Stress Management",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 49,
+                            CoreSkill = "Tolerance of Change and Uncertainty",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 50,
+                            CoreSkill = "Taking Criticism",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 51,
+                            CoreSkill = "Self Confidence",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 52,
+                            CoreSkill = "Adaptability",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 53,
+                            CoreSkill = "Resilience",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 54,
+                            CoreSkill = "Assertiveness",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 55,
+                            CoreSkill = "Competitiveness",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 56,
+                            CoreSkill = "Self Leadership",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 57,
+                            CoreSkill = "Self Assessment",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 58,
+                            CoreSkill = "Work-Life Balance",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 59,
+                            CoreSkill = "Friendliness",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 60,
+                            CoreSkill = "Enthusiasm",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 61,
+                            CoreSkill = "Empathy",
+                            CoreSkillCategoryID = 5
+                        },
+                        new
+                        {
+                            Id = 62,
+                            CoreSkill = "Problem Solving",
+                            CoreSkillCategoryID = 6
+                        },
+                        new
+                        {
+                            Id = 63,
+                            CoreSkill = "Critical Thinking",
+                            CoreSkillCategoryID = 6
+                        },
+                        new
+                        {
+                            Id = 64,
+                            CoreSkill = "Innovation",
+                            CoreSkillCategoryID = 6
+                        },
+                        new
+                        {
+                            Id = 65,
+                            CoreSkill = "Troubleshooting",
+                            CoreSkillCategoryID = 6
+                        },
+                        new
+                        {
+                            Id = 66,
+                            CoreSkill = "Design Sense",
+                            CoreSkillCategoryID = 6
+                        },
+                        new
+                        {
+                            Id = 67,
+                            CoreSkill = "Artistic Sense",
+                            CoreSkillCategoryID = 6
+                        },
+                        new
+                        {
+                            Id = 68,
+                            CoreSkill = "Organization",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 69,
+                            CoreSkill = "Planning",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 70,
+                            CoreSkill = "Scheduling",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CoreSkill = "Time Management",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CoreSkill = "Meeting Management",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CoreSkill = "Technology Savvy",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CoreSkill = "Technology Trend Awareness",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CoreSkill = "Business Trend Awareness",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CoreSkill = "Research",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CoreSkill = "Business Etiquette",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 78,
+                            CoreSkill = "Business Ethics",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 79,
+                            CoreSkill = "Diversity Awareness",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 80,
+                            CoreSkill = "Disability Awareness",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 81,
+                            CoreSkill = "Intercultural Competence",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 82,
+                            CoreSkill = "Training",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 83,
+                            CoreSkill = "Train the Trainer",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 84,
+                            CoreSkill = "Process Improvement",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 85,
+                            CoreSkill = "Knowledge Management",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 86,
+                            CoreSkill = "Writing Reports and Proposals",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 87,
+                            CoreSkill = "Customer Service",
+                            CoreSkillCategoryID = 7
+                        },
+                        new
+                        {
+                            Id = 88,
+                            CoreSkill = "Entrepreneurial Thinking",
+                            CoreSkillCategoryID = 7
+                        });
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbSkillType", b =>
@@ -1596,27 +2940,36 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyAddress", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyBranch", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Addresses.Address", "Address")
-                        .WithMany("CompanyAddresses")
-                        .HasForeignKey("AddressID")
-                        .HasConstraintName("FK_CompanyAddresses_Addresses")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
-                        .WithMany("CompanyAddresses")
+                        .WithMany("CompanyBranches")
                         .HasForeignKey("CompanyID")
                         .HasConstraintName("FK_CompanyAddresses_Companies")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyBranchAddress", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.Addresses.Address", "Address")
+                        .WithMany("CompanyBranchAddresses")
+                        .HasForeignKey("AddressID")
+                        .HasConstraintName("FK_CompanyBranchAddresses_Addresses")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyBranch", "CompanyBranch")
+                        .WithMany("CompanyBranchAddresses")
+                        .HasForeignKey("CompanyBranchID")
+                        .HasConstraintName("FK_CompanyBranchAddresses_CompanyBranches")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyContactDetail", b =>
                 {
-                    b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyBranch", "CompanyBranch")
                         .WithMany("CompanyContactDetails")
-                        .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyContactDetails_Companies")
+                        .HasForeignKey("CompanyBranchID")
+                        .HasConstraintName("FK_CompanyContactDetails_CompanyBranches")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Integrator.Models.Domain.Common.ContactDetail", "ContactDetail")
@@ -1626,6 +2979,21 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobAssociatedBranch", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyBranch", "CompanyBranch")
+                        .WithMany("CompanyJobAssociatedBranches")
+                        .HasForeignKey("CompanyBranchID")
+                        .HasConstraintName("FK_CompanyJobAssociatedBranches_CompanyBranches")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
+                        .WithMany("CompanyJobAssociatedBranches")
+                        .HasForeignKey("CompanyJobID")
+                        .HasConstraintName("FK_CompanyJobAssociatedBranches_CompanyJobs")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobListing", b =>
                 {
                     b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
@@ -1633,6 +3001,20 @@ namespace Integrator.Data.Migrations
                         .HasForeignKey("CompanyJobID")
                         .HasConstraintName("FK_CompanyJobListings_CompanyJobs")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobRelatedIndustrySector", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Companies.CompanyJob", "CompanyJob")
+                        .WithMany("CompanyJobRelatedIndustrySectors")
+                        .HasForeignKey("CompanyJobID")
+                        .HasConstraintName("FK_CompnayJobRelatedIndustrySectors_CompanyJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRelatedIndustrySector", "CompanyRelatedIndustrySector")
+                        .WithMany("CompanyJobRelatedIndustrySectors")
+                        .HasForeignKey("CompanyRelatedIndustrySectorID")
+                        .HasConstraintName("FK_CompnayJobRelatedIndustrySectors_CompanyRelatedIndustrySectors");
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyJobRepresentitive", b =>
@@ -1655,7 +3037,7 @@ namespace Integrator.Data.Migrations
                     b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
                         .WithMany("CompanyRelatedIndustries")
                         .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyRelatedIndustries_Company")
+                        .HasConstraintName("FK_CompanyRelatedIndustries_Companies")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
@@ -1665,18 +3047,18 @@ namespace Integrator.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustryRepresentive", b =>
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRelatedIndustrySector", b =>
                 {
                     b.HasOne("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", "CompanyRelatedIndustry")
-                        .WithMany("CompanyRelatedIndustryRepresentives")
+                        .WithMany("CompanyRelatedIndustrySectors")
                         .HasForeignKey("CompanyRelatedIndustryID")
-                        .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRelatedIndustries")
+                        .HasConstraintName("FK_CompanyRelatedIndustrySectors_CompanyRelatedIndustries")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRepresentative", "CompanyRepresentative")
-                        .WithMany("CompanyRelatedIndustryRepresentives")
-                        .HasForeignKey("CompanyRepresentativeID")
-                        .HasConstraintName("FK_CompanyRelatedIndustryRepresentives_CompanyRepresentatives")
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustrySector", "CoreKbIndustrySector")
+                        .WithMany("CompanyRelatedIndustrySectors")
+                        .HasForeignKey("CoreKbIndustrySectorID")
+                        .HasConstraintName("FK_CompanyRelatedIndustrySectors_CoreKbIndustrySectors")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -1693,6 +3075,21 @@ namespace Integrator.Data.Migrations
                         .HasForeignKey("IntegratorUserID")
                         .HasConstraintName("FK_CompanyRepresentatives_IntegratorUsers")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.Companies.CompanyRepresentiveBranch", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyBranch", "CompanyBranch")
+                        .WithMany("CompanyRepresentiveBranches")
+                        .HasForeignKey("CompanyBranchID")
+                        .HasConstraintName("FK_CompnayRepresentiveBanches_CompanyBranches")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRepresentative", "CompanyRepresentative")
+                        .WithMany("CompanyRepresentiveBranches")
+                        .HasForeignKey("CompanyRepresentativeID")
+                        .HasConstraintName("FK_CompnayRepresentiveBanches_CompanyRepresentatives")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Integrator.Models.Domain.CurriculumVitaes.CurriculumVitea", b =>
@@ -1823,7 +3220,7 @@ namespace Integrator.Data.Migrations
                     b.HasOne("Integrator.Models.Domain.Companies.Company", "Company")
                         .WithMany("CompanyJobs")
                         .HasForeignKey("CompanyID")
-                        .HasConstraintName("FK_CompanyJobs_Company")
+                        .HasConstraintName("FK_CompanyJobs_Companies")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbJob", "CoreKbJob")
@@ -1841,10 +3238,10 @@ namespace Integrator.Data.Migrations
                         .HasConstraintName("FK_ComanyJobRelatedIndustries_CompanyJobs")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
-                        .WithMany("ComanyJobRelatedIndustries")
-                        .HasForeignKey("CoreKbIndustryID")
-                        .HasConstraintName("FK_ComanyJobRelatedIndustries_CoreKbIndustries")
+                    b.HasOne("Integrator.Models.Domain.Companies.CompanyRelatedIndustry", "CompanyRelatedIndustry")
+                        .WithMany("CompanyJobRelatedIndustries")
+                        .HasForeignKey("CompanyRelatedIndustryID")
+                        .HasConstraintName("FK_CompanyJobRelatedIndustries_CompanyRelatedIndustries")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -1884,6 +3281,15 @@ namespace Integrator.Data.Migrations
                         .WithMany("CoreKbIndustryJobs")
                         .HasForeignKey("CoreKbJobID")
                         .HasConstraintName("FK_CoreKBIndustrySectorJobs_CoreKBJobs")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustrySector", b =>
+                {
+                    b.HasOne("Integrator.Models.Domain.KnowledgeBase.Core.CoreKbIndustry", "CoreKbIndustry")
+                        .WithMany("CoreKbIndustrySectors")
+                        .HasForeignKey("CoreKbIndustryID")
+                        .HasConstraintName("FK_CoreKbIndustrySectors_CoreKbIndustries")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

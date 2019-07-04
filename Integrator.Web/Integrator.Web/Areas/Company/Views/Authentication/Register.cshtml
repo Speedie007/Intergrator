@@ -1,8 +1,183 @@
-﻿
+﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Areas/Company/Views/Shared/_AuthenticationLayout.cshtml";
 }
 
-<h1>Register</h1>
+<div class="middle-box loginscreen   animated fadeInDown">
+
+    <div>
+
+        <h3>Register with Integrator</h3>
+        <p>Create account to start your journey today!</p>
+        @{
+            if (Model.RegistrationConfirmationSent)
+            {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2><strong>Thank You.</strong></h2>
+                        <p>
+                            Your Email was successfuly registered, please check your email, you will recieve a confirmation email.
+                        </p>
+                        <p>
+                            Please click on the confirmation link in the email. You will be redirected to a confirmation page were your email will be verified and you can complete the second stage of the registration process.
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <form class="m-t" id="fromRegisterCompanyUser" role="form" asp-action="Register" asp-area="Company" asp-controller="Authentication">
+                    <hr />
+                    <div class="form-group d-flex flex-row">
+                        <select asp-for="CompanyID" asp-items="Model.ListOfCompanies" class="Select-Company"></select>
+
+                        <button type="button"
+                                class="btn btn-outline-primary "
+                                data-toggle="modal"
+                                data-target="#AddCompanyModal">
+                            <i class="fa fa-plus fa-1x no-padding no-margins "></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+
+                        <input asp-for="CompanyName" class="form-control" placeholder="Select Company Name" />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex flex-row">
+                            @*<i class="fa fa-search bg-primary rounded fa-3x p-1 mr-1"></i>*@
+                            <button type="button" class="btn btn-outline-primary"><i class="fa fa-search fa-1x no-padding no-margins "></i></button>
+                            <input class="form-control" placeholder="Select Company Name" />
+                        </div>
+
+
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="FirstName" class=""></label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Add First Name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class=""></label>
+                        <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UserEmail" class=""></label>
+                        <input asp-for="UserEmail" class="form-control" placeholder="Email Address" />
+                        <span asp-validation-for="UserEmail" class="text-danger"></span>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="UserPassword" class=""></label>
+                        <input asp-for="UserPassword" class="form-control" placeholder="Add Password" />
+                        <span asp-validation-for="UserPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmUserPassword" class=""></label>
+                        <input asp-for="ConfirmUserPassword" class="form-control" placeholder="Add Confirm Password Confirmation" />
+                        <span asp-validation-for="ConfirmUserPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class=""> <input asp-for="TermsAndConditions" class="checkbox " /> Agree the terms and policy </div>
+                        <span asp-validation-for="TermsAndConditions" class="text-danger"></span>
+                    </div>
+                    @Html.HiddenFor(x => x.UserRole)
+                    <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+
+                </form>
+            }
+        }
+
+        <p class="m-t"> <small>Integrator &copy; @DateTime.Now.Year</small> </p>
+    </div>
+</div>
+<!--Add Company Modal-->
+<div class="modal inmodal fade"
+     id="AddCompanyModal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"> <i class="fa fa-compress-arrows-alt"></i>&nbsp;Add Company</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="txtNewCompany" class="form-control" />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="AddNewCompany();">Add Company</button>
+            </div>
+        </div>
+    </div>
+</div><!--Add Skill Category Skill Modal-->
+
+@section Styles {
+
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+
+    </environment>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <environment names="Development,Staging,Production">
+
+        <script src="~/lib/select2/dist/js/select2.min.js"></script>
+
+        <script src="~/js/CompanyTestingJavaScript.js"></script>
+
+    </environment>
+    <script>
+
+        /*Global Variables
+         * ******************/
+        var cboObjSelectCompany;
+        var txtCompanyName;
+
+        /*Functions
+         * **************/
+        function AddNewCompany() {
+
+            alert();
+        }
+
+        //function TestFunction() {
+        //    alert();
+        //}
+
+        /*END Functions
+         * ************/
+
+        $(document).ready(function () {
+
+            txtCompanyName = $("#CompanyName");
+            cboObjSelectCompany = $(".Select-Company").select2({
+                placeholder: "Select Company",
+                allowClear: true,
+                //dropdownParent: $("#fromRegisterCompanyUser"),
+                dropdownAutoWidth: true,
+                width: '100%'
+            });
+            cboObjSelectCompany.change(function () {
+
+                txtCompanyName.val($(this).find('option:selected').text());
+            });
+            cboObjSelectCompany.val(null).trigger('change');
+        });
+
+
+    </script>
+}
 

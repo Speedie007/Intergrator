@@ -16,8 +16,7 @@ namespace Integrator.Models.Domain.Companies
         public Company()
         {
             CompanyRepresentatives = new HashSet<CompanyRepresentative>();
-            CompanyAddresses = new HashSet<CompanyAddress>();
-            CompanyContactDetails = new HashSet<CompanyContactDetail>();
+            CompanyBranches = new HashSet<CompanyBranch>();
             CompanyJobs = new HashSet<CompanyJob>();
             CompanyRelatedIndustries = new HashSet<CompanyRelatedIndustry>();
             #region CV
@@ -29,14 +28,15 @@ namespace Integrator.Models.Domain.Companies
         
         public string CompanyName { get; set; }
 
+        
         public virtual ICollection<CompanyJob> CompanyJobs { get; set; }
         public virtual ICollection<CompanyRelatedIndustry> CompanyRelatedIndustries { get; set; }
 
         public virtual ICollection<UserJob> UserJobs { get; set; }
         //public virtual ICollection<CurriculumViteaWorkExperiences> CurriculumViteaWorkExperiences { get; set; }
 
-        public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
-        public virtual ICollection<CompanyContactDetail> CompanyContactDetails { get; set; }
+        public virtual ICollection<CompanyBranch> CompanyBranches { get; set; }
+       
         public virtual ICollection<CompanyRepresentative> CompanyRepresentatives { get; set; }
 
     }

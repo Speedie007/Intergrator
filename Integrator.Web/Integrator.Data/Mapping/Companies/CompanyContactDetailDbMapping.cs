@@ -21,11 +21,11 @@ namespace Integrator.Data.Mapping.Companies
             builder.HasKey(e => e.Id);
 
 
-            builder.HasOne(d => d.Company)
-                    .WithMany(p => p.CompanyContactDetails)
-                    .HasForeignKey(d => d.CompanyID)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_CompanyContactDetails_Companies");
+            builder.HasOne(d => d.CompanyBranch)
+                     .WithMany(p => p.CompanyContactDetails)
+                     .HasForeignKey(d => d.CompanyBranchID)
+                     .OnDelete(DeleteBehavior.Restrict)
+                     .HasConstraintName("FK_CompanyContactDetails_CompanyBranches");
 
             builder.HasOne(d => d.ContactDetail)
                 .WithMany(p => p.CompanyContactDetails)

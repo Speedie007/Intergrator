@@ -27,10 +27,10 @@ namespace Integrator.Data.Mapping.KnownledgeBase.Company
                    .IsUnicode(false);
 
             builder.HasOne(d => d.Company)
-                .WithMany(p => p.CompanyJobs)
-                .HasForeignKey(d => d.CompanyID)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_CompanyJobs_Company");
+                     .WithMany(p => p.CompanyJobs)
+                     .HasForeignKey(d => d.CompanyID)
+                     .OnDelete(DeleteBehavior.Restrict)
+                     .HasConstraintName("FK_CompanyJobs_Companies");
 
             builder.HasOne(d => d.CoreKbJob)
                 .WithMany(p => p.CompanyJobs)

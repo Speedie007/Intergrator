@@ -7,14 +7,14 @@ namespace DAtabasetables
     {
         public CompanyJobs()
         {
-            CompanyJobRepresentitives = new HashSet<CompanyJobRepresentitives>();
+            CompnayJobRelatedIndustrySectors = new HashSet<CompnayJobRelatedIndustrySectors>();
         }
 
         public int CompanyJobId { get; set; }
         public int CompanyId { get; set; }
-        public int CoreKbjobId { get; set; }
+        public int CoreKbJobId { get; set; }
         public string JobDescription { get; set; }
 
-        public virtual ICollection<CompanyJobRepresentitives> CompanyJobRepresentitives { get; set; }
+        public virtual ICollection<CompnayJobRelatedIndustrySectors> CompnayJobRelatedIndustrySectors { get; set; }
     }
 }

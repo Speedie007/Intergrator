@@ -28,11 +28,11 @@ namespace Integrator.Data.Mapping.KnownledgeBase.Company
                    .OnDelete(DeleteBehavior.Restrict)
                    .HasConstraintName("FK_ComanyJobRelatedIndustries_CompanyJobs");
 
-            builder.HasOne(d => d.CoreKbIndustry)
-                .WithMany(p => p.ComanyJobRelatedIndustries)
-                .HasForeignKey(d => d.CoreKbIndustryID)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_ComanyJobRelatedIndustries_CoreKbIndustries");
+            builder.HasOne(d => d.CompanyRelatedIndustry)
+                   .WithMany(p => p.CompanyJobRelatedIndustries)
+                   .HasForeignKey(d => d.CompanyRelatedIndustryID)
+                   .OnDelete(DeleteBehavior.Restrict)
+                   .HasConstraintName("FK_CompanyJobRelatedIndustries_CompanyRelatedIndustries");
 
             base.Configure(builder);
         }

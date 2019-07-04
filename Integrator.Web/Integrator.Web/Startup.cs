@@ -17,6 +17,7 @@ using Integrator.Models.Domain.Authentication;
 using Integrator.Web.Services;
 using Integrator.Data.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Integrator.Models.ViewModels.EmailSending;
 
 namespace Integrator.Web
 {
@@ -32,15 +33,21 @@ namespace Integrator.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                                      options.UseSqlServer(
                                          Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddIdentity<IntegratorUser, IntegratorRole>()
-                                     // .AddDefaultUI(UIFramework.Bootstrap4)
-                                      .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IntegratorUser, IntegratorRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+                //options.Tokens.ProviderMap.Add("Default", new TokenProviderDescriptor(typeof(IUserTwoFactorTokenProvider<BeachClubMember>)));
+            })
+            // .AddDefaultUI(UIFramework.Bootstrap4)
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders(); ;
 
            
 
@@ -53,7 +60,8 @@ namespace Integrator.Web
 
             services.Configure<IdentityOptions>(options =>
             {
-                
+                options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+
                 // Password settings.
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
@@ -103,8 +111,12 @@ namespace Integrator.Web
                 options.SlidingExpiration = true;
                 //options.ForwardSignIn = "/Users/Login";
             });
-            
 
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+            {
+                //o.Name = "Default";
+                o.TokenLifespan = TimeSpan.FromHours(24);
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

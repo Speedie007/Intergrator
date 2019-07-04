@@ -13,8 +13,9 @@ namespace Integrator.Models.Domain.Addresses
     {
         public Address()
         {
-            CompanyAddresses = new HashSet<CompanyAddress>();
+            //CompanyBranches = new HashSet<CompanyBranch>();
             CustomerAddresses = new HashSet<IndividualAddress>();
+            CompanyBranchAddresses = new HashSet<CompanyBranchAddress>();
         }
         public virtual int CountryID { get; set; }
         public int CityID { get; set; }
@@ -27,7 +28,7 @@ namespace Integrator.Models.Domain.Addresses
         public virtual Suburb Suburb { get; set; }
 
 
-        public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
+        public virtual ICollection<CompanyBranchAddress> CompanyBranchAddresses { get; set; }
 
         public virtual ICollection<IndividualAddress> CustomerAddresses { get; set; }
     }

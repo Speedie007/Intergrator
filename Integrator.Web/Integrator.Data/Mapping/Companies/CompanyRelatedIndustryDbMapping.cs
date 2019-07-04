@@ -28,7 +28,7 @@ namespace Integrator.Data.Mapping.Companies
                      .WithMany(p => p.CompanyRelatedIndustries)
                      .HasForeignKey(d => d.CompanyID)
                      .OnDelete(DeleteBehavior.Restrict)
-                     .HasConstraintName("FK_CompanyRelatedIndustries_Company");
+                     .HasConstraintName("FK_CompanyRelatedIndustries_Companies");
 
             builder.HasOne(d => d.CoreKbIndustry)
                 .WithMany(p => p.CompanyRelatedIndustries)

@@ -142,6 +142,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Areas\Company\Views\Shared\Components\Company\" />
     <Folder Include="Areas\Individuals\Views\Default\" />
     <Folder Include="Data\" />
     <Folder Include="wwwroot\images\flags\" />

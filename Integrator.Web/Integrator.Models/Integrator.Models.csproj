@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Remove="Domain\Common\InterestLevels.cs" />
+    <Compile Remove="Domain\Companies\CompanyRelatedIndustryRepresentives.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +43,10 @@
 
   <ItemGroup>
     <Folder Include="Domain\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

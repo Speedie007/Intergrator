@@ -1,0 +1,442 @@
+﻿@{
+    ViewData["Title"] = "CompanyProfile";
+    Layout = "~/Areas/Company/Views/Shared/_CompanyPortalLayout.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Wizard</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action(" Index", "DashBoard" )">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a>Copmany</a>
+            </li>
+            <li class="active breadcrumb-item">
+                <strong>Profile</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Company Name</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="d-flex flex-column">
+                        <input type="text" class="form-control" />
+                        <button type="button" class="btn btn-primary m-t-sm m-b-sm ">Update Company Name&nbsp;<i class="fa fa-pencil"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Branches</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <!--Address Details According-->
+                    <div class="panel-group" id="MemberAddressAccordion">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <a class="text-white" data-toggle="collapse" data-parent="#MemberAddressAccordion" href="#collapseStreetAddress">
+                                    <h5 class="panel-title">[Branch Name]</h5>
+                                </a>
+                            </div>
+                            <div id="collapseStreetAddress" class="panel-collapse" data-parent="#MemberAddressAccordion">
+                                <div class="panel-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="ibox ">
+                                                <div class="ibox-title bg-info">
+                                                    <h5 nowrap>Contact Person(s)</h5>
+                                                    <div class="ibox-tools">
+                                                        <a class="collapse-link">
+                                                            <i class="fa fa-chevron-up"></i>
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="ibox-content bg-light">
+                                                    <div class="panel border-info">
+                                                        <div class="panel-body ">
+                                                            <div class="ibox ">
+                                                                <div class="ibox-title ">
+                                                                    <h5>Name&nbsp;:&nbsp;Brendan Wood</h5>
+                                                                    <div class="ibox-tools">
+                                                                        <a class="collapse-link">
+                                                                            <i class="fa fa-chevron-up"></i>
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ibox-content ">
+                                                                    <div class="d-flex justify-content-center">
+
+                                                                        <img class="card-img-top img-thumbnail" style="width:200px; height:200px;" src="~/img/ProfilePic.jpg" alt="Card image cap">
+                                                                    </div>
+                                                                    <hr />
+                                                                    <strong>Contact Details:</strong>
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table">
+                                                                                    <tr>
+                                                                                        <td>Email</td>
+                                                                                        <td>:</td>
+                                                                                        <td>Brendanw@mweb.co.za</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Email</td>
+                                                                                        <td>:</td>
+                                                                                        <td>Brendanw@mweb.co.za</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td nowrap>Office Number</td>
+                                                                                        <td>:</td>
+                                                                                        <td>(016) 971-2259</td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="ibox ">
+                                                <div class="ibox-title bg-info">
+                                                    <h5>Address Details</h5>
+                                                    <div class="ibox-tools">
+                                                        <a class="collapse-link">
+                                                            <i class="fa fa-chevron-up"></i>
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="ibox-content bg-light ">
+                                                    <div class="panel panel-default border-info">
+                                                        <div class="panel-body">
+
+                                                            <div class="ibox ">
+                                                                <div class="ibox-title ">
+                                                                    <h5>Street Address</h5>
+                                                                    <div class="ibox-tools">
+                                                                        <a class="collapse-link">
+                                                                            <i class="fa fa-chevron-up"></i>
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ibox-content ">
+                                                                    <table class="table">
+                                                                        <tr>
+                                                                            <td>Number</td>
+                                                                            <td>:</td>
+                                                                            <td>8</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Street Name</td>
+                                                                            <td>:</td>
+                                                                            <td>Jonkershoek</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>City</td>
+                                                                            <td>:</td>
+                                                                            <td>Sasolburg</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Suburb</td>
+                                                                            <td>:</td>
+                                                                            <td>Vaalpark</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Counrty</td>
+                                                                            <td>:</td>
+                                                                            <td>South Africa</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Area/Zip Code</td>
+                                                                            <td>:</td>
+                                                                            <td>1948</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <h4>Type: Street</h4>
+                                                            <hr />
+                                                            <table>
+                                                                <tr>
+                                                                    <td>Number</td>
+                                                                    <td>:</td>
+                                                                    <td>8</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Street Name</td>
+                                                                    <td>:</td>
+                                                                    <td>Jonkershoek</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>City</td>
+                                                                    <td>:</td>
+                                                                    <td>Sasolburg</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Suburb</td>
+                                                                    <td>:</td>
+                                                                    <td>Vaalpark</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Counrty</td>
+                                                                    <td>:</td>
+                                                                    <td>South Africa</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Area/Zip Code</td>
+                                                                    <td>:</td>
+                                                                    <td>1948</td>
+                                                                </tr>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="ibox ">
+                                                <div class="ibox-title bg-info">
+                                                    <h5>Associated Job Listings</h5>
+                                                    <div class="ibox-tools">
+                                                        <a class="collapse-link">
+                                                            <i class="fa fa-chevron-up"></i>
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="ibox-content bg-light ">
+                                                    <div class="panel panel-default border-info">
+                                                        <div class="panel-body">
+                                                            <div id="accordion">
+                                                                <div class="card">
+                                                                    <div class="card-header bg-primary">
+                                                                        <a class="card-link text-white" data-toggle="collapse" href="#collapseOne">
+                                                                            <div class="d-flex flex-row align-items-center">
+
+                                                                                <i class="fa fa-minus fa-1x IndustryNameIndicatior"></i>
+                                                                                <h4 class="p-w-xs">Welder</h4>
+
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                                                        <div class="card-body">
+                                                                            <!--Job Functions-->
+                                                                            <div id="accordion_JobFunction_0">
+
+                                                                                <div class="card">
+                                                                                    <div class="card-body">
+                                                                                        kldj;lksd
+                                                                                    </div>
+                                                                                </div>
+
+
+
+                                                                            </div>
+                                                                            <!--End Job Functions-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="card">
+                                                                    <div class="card-header bg-primary">
+                                                                        <a class="collapsed card-link text-white" data-toggle="collapse" href="#collapseTwo">
+                                                                            <div class="d-flex flex-row align-items-center">
+
+                                                                                <i class="fa fa-plus fa-1x IndustryNameIndicatior"></i>
+                                                                                <h4 class="p-w-xs">BoilerMaker</h4>
+
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                                                        <div class="card-body">
+                                                                            Lorem ipsum..
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="card">
+                                                                    <div class="card-header bg-primary">
+                                                                        <a class="collapsed card-link text-white" data-toggle="collapse" href="#collapseThree">
+                                                                            <div class="d-flex flex-row align-items-center">
+
+                                                                                <i class="fa fa-plus fa-2x IndustryNameIndicatior"></i>
+                                                                                <h3 class="p-w-xs">Industry One</h3>
+
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                                                        <div class="card-body">
+                                                                            Lorem ipsum..
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="ibox ">
+                                                                <div class="ibox-title ">
+                                                                    <h5>Street Address</h5>
+                                                                    <div class="ibox-tools">
+                                                                        <a class="collapse-link">
+                                                                            <i class="fa fa-chevron-up"></i>
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ibox-content ">
+
+                                                                    <table class="table">
+                                                                        <tr>
+                                                                            <td>Number</td>
+                                                                            <td>:</td>
+                                                                            <td>8</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Street Name</td>
+                                                                            <td>:</td>
+                                                                            <td>Jonkershoek</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>City</td>
+                                                                            <td>:</td>
+                                                                            <td>Sasolburg</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Suburb</td>
+                                                                            <td>:</td>
+                                                                            <td>Vaalpark</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Counrty</td>
+                                                                            <td>:</td>
+                                                                            <td>South Africa</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Area/Zip Code</td>
+                                                                            <td>:</td>
+                                                                            <td>1948</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <!--Address Deatils According-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12">
+
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Job Functions</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        @section Styles {
+
+        }
+
+        @section Scripts {
+<environment names="Development,Staging,Production">
+
+</environment>
+
+<script type="text/javascript">
+
+    
+$(document).ready(function () {
+
+
+
+    });
+</script>
+        }
+

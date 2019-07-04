@@ -1,23 +1,35 @@
-﻿CREATE TABLE [dbo].[Addresses] (
+CREATE TABLE [dbo].[Addresses] (
     [AddressID]         INT            IDENTITY (1, 1) NOT NULL,
-    [City]              NVARCHAR (MAX) NULL,
-    [Suburb]            NVARCHAR (MAX) NULL,
     [AreaCode]          NVARCHAR (MAX) NULL,
-    [IntegratorUserID]  INT            NOT NULL,
+    [SuburbID]          INT            NOT NULL,
     [CountryID]         INT            NOT NULL,
-    [Country]           NVARCHAR (MAX) NULL,
     [AddressType]       INT            NOT NULL,
     [ComplexName]       NVARCHAR (MAX) NULL,
     [ComplexUnitNumber] NVARCHAR (MAX) NULL,
     [POBoxNumber]       NVARCHAR (MAX) NULL,
     [StreetNumber]      NVARCHAR (MAX) NULL,
     [StreetName]        NVARCHAR (MAX) NULL,
+    [CityID]            INT            DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED ([AddressID] ASC),
-    CONSTRAINT [FK_Addresses_IntegratorUsers_IntegratorUserID] FOREIGN KEY ([IntegratorUserID]) REFERENCES [dbo].[IntegratorUsers] ([IntegratorUserID]) ON DELETE CASCADE
+    CONSTRAINT [FK_Addresses_Cities] FOREIGN KEY ([CityID]) REFERENCES [dbo].[Cities] ([CityID]),
+    CONSTRAINT [FK_Addresses_Countries] FOREIGN KEY ([CountryID]) REFERENCES [dbo].[Countries] ([CountryID]),
+    CONSTRAINT [FK_Addresses_Suburbs] FOREIGN KEY ([SuburbID]) REFERENCES [dbo].[Suburbs] ([SuburbID])
 );
 
 
+
+
 GO
-CREATE NONCLUSTERED INDEX [IX_Addresses_IntegratorUserID]
-    ON [dbo].[Addresses]([IntegratorUserID] ASC);
+CREATE NONCLUSTERED INDEX [IX_Addresses_SuburbID]
+    ON [dbo].[Addresses]([SuburbID] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Addresses_CountryID]
+    ON [dbo].[Addresses]([CountryID] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Addresses_CityID]
+    ON [dbo].[Addresses]([CityID] ASC);
 

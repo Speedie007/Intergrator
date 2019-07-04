@@ -4,12 +4,27 @@ using System.Linq;
 using System.Text;
 using Integrator.Models.Domain.Authentication;
 using Integrator.Models.ViewModels.Users;
+using Integrator.Services.Companies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Integrator.Factories.Users
 {
+    public partial interface IUserViewModelFactory
+    {
+        /// <summary>
+        /// Prepare the login model
+        /// </summary>
+        /// <returns>Login model</returns>
+        LoginViewModel PrepareLoginModel();
+
+        /// <summary>
+        /// Prepare the Registration model
+        /// </summary>
+        /// <returns>Login model</returns>
+        RegisterViewModel PrepareRegistrationLoginModel(string Role);
+    }
     /// <summary>
     /// Represents the customer model factory
     /// </summary>
@@ -17,12 +32,13 @@ namespace Integrator.Factories.Users
     {
 
         private readonly IServiceProvider _serviceProvider;
-
+        private readonly ICompanyService _companyService;
 
         #region Ctor
-        public UserViewModelFactory(IServiceProvider serviceProvider)
+        public UserViewModelFactory(IServiceProvider serviceProvider, ICompanyService companyService)
         {
             this._serviceProvider = serviceProvider;
+            this._companyService = companyService;
         }
         #endregion
 
@@ -42,6 +58,12 @@ namespace Integrator.Factories.Users
         {
             //Currently No Additional Configuring is required.
             var model = new RegisterViewModel();
+            model.ListOfCompanies = (from a in this._companyService.ListCompanies()
+                            select new SelectListItem()
+                            {
+                                 Text  = a.CompanyName,
+                                  Value = a.Id.ToString()
+                            }).ToList<SelectListItem>();
             model.UserRole = Role;
             //using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             //{

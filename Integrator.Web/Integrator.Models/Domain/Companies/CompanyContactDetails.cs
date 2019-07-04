@@ -10,9 +10,12 @@ namespace Integrator.Models.Domain.Companies
     {
         
         public int ContactDetailID { get; set; }
-        public int CompanyID { get; set; }
+       
+        public int CompanyBranchID { get; set; }
 
-        public virtual Company Company { get; set; }
+     
         public virtual ContactDetail ContactDetail { get; set; }
+
+        public virtual CompanyBranch CompanyBranch { get; set; }
     }
 }

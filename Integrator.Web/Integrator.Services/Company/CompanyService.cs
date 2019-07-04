@@ -9,18 +9,37 @@ using System.Text;
 
 namespace Integrator.Services.Companies
 {
+    public interface ICompanyService
+    {
+        #region Seclect Moethods
+        List<Company> ListCompanies();
+        Company GetCompany(int CompanyID);
+        #endregion
+
+        #region Insert Methods
+        void AddCompany(Company Entity);
+        void AddCompanyRepresentitive(CompanyRepresentative Entity);
+        #endregion
+
+        #region update Methods
+        void UpdateCompany(Company Entity);
+        #endregion
+
+    }
     public partial class CompanyService : ICompanyService
     {
         #region Fields
         private readonly IRepository<Company> _companyRepository;
-
+        private readonly IRepository<CompanyRepresentative> _companyRepresentativeRepository;
 
         #endregion
 
         #region Cstor
-        public CompanyService(IRepository<Company> companyRepository)
+        public CompanyService(IRepository<Company> companyRepository,
+            IRepository<CompanyRepresentative> companyRepresentativeRepository)
         {
             this._companyRepository = companyRepository;
+            this._companyRepresentativeRepository = companyRepresentativeRepository;
         }
         #endregion
         public void AddCompany(Company Entity)
@@ -34,6 +53,18 @@ namespace Integrator.Services.Companies
                 throw e;
             }
 
+        }
+
+        public void AddCompanyRepresentitive(CompanyRepresentative Entity)
+        {
+            try
+            {
+                _companyRepresentativeRepository.Insert(Entity);
+            }
+            catch (IntegratorException e)
+            {
+                throw e;
+            }
         }
 
         public Company GetCompany(int CompanyID)
